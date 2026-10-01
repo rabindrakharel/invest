@@ -14,8 +14,8 @@ them. Locations come from src/agent-sdk/assets/tools/repo/lib/paths.py:
 Price stats come from data/market/<DATE>/yahoo/. A missing symbol is fetched there with
 the macro-data client.
 
-It writes data/research/<DATE>/tickers/<TICKER>.json.  The brief itself is written by the
-agent (see SKILL.md); this file is its evidence.
+It writes data/research/<DATE>/tickers/<TICKER>.json: the mechanical evidence. The agent writes
+its judgment beside it (<TICKER>.judgment.json) and render_brief.py renders the report from the two.
 """
 from __future__ import annotations
 
@@ -50,7 +50,9 @@ def price_stats(sym: str, day: str) -> dict | None:
     if not p.exists():
         return None
     rec = json.loads(p.read_text())
-    s = [v for v in rec["adjclose"] if v]
+    # A null bar (today's, before the close) is dropped with its date, so as_of is the date of the close shown.
+    bars = [(d, v) for d, v in zip(rec["dates"], rec["adjclose"]) if v]
+    s = [v for _, v in bars]
     if len(s) < 60:
         return None
 
@@ -59,9 +61,17 @@ def price_stats(sym: str, day: str) -> dict | None:
 
     def sma(n):
         return sum(s[-n:]) / n if len(s) >= n else None
-    return {"close": round(s[-1], 2), "as_of": rec["dates"][-1], "ret_1m": ret(21), "ret_3m": ret(63), "ret_12m": ret(252),
+    return {"close": round(s[-1], 2), "as_of": bars[-1][0], "ret_1m": ret(21), "ret_3m": ret(63), "ret_12m": ret(252),
             "above_50d": bool(sma(50) and s[-1] > sma(50)), "above_200d": bool(sma(200) and s[-1] > sma(200)),
             "dd_52w_pct": round((s[-1] / max(s[-252:]) - 1) * 100, 1), "source": f"https://finance.yahoo.com/quote/{sym}"}
+
+
+def stale_days(last_day: str | None, day: str) -> int | None:
+    """Days between the corpus's last day and the brief's date (not the sentiment run's date)."""
+    from datetime import date
+    if not last_day:
+        return None
+    return max(0, (date.fromisoformat(day) - date.fromisoformat(last_day)).days)
 
 
 def main() -> None:
@@ -121,8 +131,12 @@ def main() -> None:
     doc = {
         "schema": "ticker-context/1", "ticker": T, "as_of": D,
         "inputs": {"themes": d_themes, "outlook": d_out, "regime": d_reg, "x_sentiment": d_xs,
-                   "corpus_last_day": (xs or {}).get("corpus_last_day"), "corpus_stale_days": (xs or {}).get("corpus_stale_days")},
-        "regime": None if not outlook else {"call": outlook["regime"]["call"], "gross_exposure_pct": outlook["risk_budget"]["gross_exposure_pct"],
+                   "corpus_last_day": (xs or {}).get("corpus_last_day"), "corpus_stale_days": stale_days((xs or {}).get("corpus_last_day"), D)},
+        # The macro call comes from the newest regime.json; the risk budget from the newest outlook, each with its own date.
+        "macro": None if not regime else {"as_of": d_reg, "call": regime["regime"].get("judgment_call") or regime["regime"]["label"],
+                                          "label": regime["regime"]["label"], "composite": regime["regime"]["composite"],
+                                          "duration": regime["regime"].get("duration_regime")},
+        "regime": None if not outlook else {"as_of": d_out, "call": outlook["regime"]["call"], "gross_exposure_pct": outlook["risk_budget"]["gross_exposure_pct"],
                                             "long_duration_cap_pct": outlook["risk_budget"]["long_duration_cap_pct"]},
         "archetype": arch, "macro_fit": None if not fit else {"fit": fit["fit"], "stance": fit["stance"], "runway_macro_fit_pts": fit["runway_macro_fit_pts"],
                                                              "headwinds": fit["headwinds"], "tailwinds": fit["tailwinds"]},

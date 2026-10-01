@@ -9,6 +9,7 @@ import { createPresentServer } from "../assets/tools/present/tool.js";
 import { buildToolCatalog } from "../assets/tools/catalog.js";
 import { loadAgentGraph } from "../src/agents/catalog.js";
 import { EventTranslator, describeTool, type SequencedEvent, type UiEvent } from "../src/web/events.js";
+import { auditToEvents, listRuns, readRunLog } from "../src/web/logs.js";
 import { WebPrompter } from "../src/web/prompter.js";
 import { startServer, type RunningServer } from "../src/web/server.js";
 import type { SessionLike } from "../src/web/session.js";
@@ -42,6 +43,50 @@ test("a lane still open at the end of the turn is settled, and a failed result c
   assert.equal((events[0] as { state: string }).state, "failed");
   assert.equal((events.at(-1) as { ok: boolean; error?: string }).ok, false);
   assert.equal((events.at(-1) as { error?: string }).error, "hit the turn limit");
+});
+
+test("parallel dispatches of one type are numbered and every event carries its lane, with verbose detail and progress", () => {
+  const t = new EventTranslator();
+  const out: UiEvent[] = [];
+  out.push(...t.translate(msg({ type: "assistant", parent_tool_use_id: null, message: { content: [
+    { type: "tool_use", id: "d1", name: "Agent", input: { subagent_type: "ticker-analyst", description: "Ticker brief RKLB", prompt: "Brief RKLB for 2026-09-30" } },
+    { type: "tool_use", id: "d2", name: "Agent", input: { subagent_type: "ticker-analyst", description: "Ticker brief META", prompt: "Brief META" } },
+  ] } })));
+  out.push(...t.translate(msg({ type: "assistant", parent_tool_use_id: "d2", subagent_type: "ticker-analyst", message: { content: [
+    { type: "thinking", thinking: "Check the context first." },
+    { type: "tool_use", id: "x1", name: "Bash", input: { command: "python3 ticker_context.py META" } },
+  ] } })));
+  out.push(...t.translate(msg({ type: "user", parent_tool_use_id: "d2", subagent_type: "ticker-analyst", message: { content: [{ type: "tool_result", tool_use_id: "x1", content: "line one\nline two", is_error: false }] } })));
+  out.push(...t.translate(msg({ type: "system", subtype: "task_progress", tool_use_id: "d2", task_id: "k", description: "", usage: { total_tokens: 12000, tool_uses: 3, duration_ms: 9000 }, last_tool_name: "mcp__invest__ticker_context", summary: "Building the META context" })));
+  out.push(...t.translate(msg({ type: "system", subtype: "task_notification", tool_use_id: "d2", task_id: "k", status: "completed", output_file: "", summary: "Hold", usage: { total_tokens: 20000, tool_uses: 5, duration_ms: 30000 } })));
+  const lanes = out.filter((e): e is Extract<UiEvent, { type: "subagent" }> => e.type === "subagent");
+  assert.deepEqual(lanes.slice(0, 2).map((l) => [l.id, l.label, l.prompt]), [["d1", "ticker-analyst/1", "Brief RKLB for 2026-09-30"], ["d2", "ticker-analyst/2", "Brief META"]]);
+  assert.deepEqual(lanes.at(-1), { type: "subagent", id: "d2", name: "ticker-analyst", state: "done", stats: "Hold", tools: 5, tokens: 20000, durationMs: 30000 });
+  const tool = out.find((e) => e.type === "tool" && e.id === "x1") as Extract<UiEvent, { type: "tool" }>;
+  assert.equal(tool.lane, "d2");
+  assert.match(tool.input ?? "", /"command": "python3 ticker_context.py META"/);
+  const result = out.find((e) => e.type === "tool_result") as Extract<UiEvent, { type: "tool_result" }>;
+  assert.deepEqual([result.lane, result.summary, result.output], ["d2", "line one line two", "line one\nline two"]);
+  assert.deepEqual(out.find((e) => e.type === "thinking"), { type: "thinking", agent: "ticker-analyst", lane: "d2", text: "Check the context first." });
+  assert.deepEqual(out.find((e) => e.type === "progress"), { type: "progress", id: "d2", tools: 3, tokens: 12000, durationMs: 9000, lastTool: "invest › ticker context", summary: "Building the META context" });
+});
+
+test("an audit trail (any run, headless or web) rebuilds into the same events, instances apart", () => {
+  const events = auditToEvents([
+    { event: "run_created", runId: "r1", agent: "chief", at: "t0" },
+    { event: "PreToolUse", at: "t1", data: { agent_type: "chief", tool_name: "Agent", tool_use_id: "a", tool_input: { subagent_type: "ticker-analyst" } } },
+    { event: "SubagentStart", at: "t2", data: { agent_type: "ticker-analyst", agent_id: "i1" } },
+    { event: "SubagentStart", at: "t2", data: { agent_type: "ticker-analyst", agent_id: "i2" } },
+    { event: "PreToolUse", at: "t3", data: { agent_type: "ticker-analyst", agent_id: "i2", tool_name: "Bash", tool_use_id: "b", tool_input: { command: "ls" } } },
+    { event: "PostToolUseFailure", at: "t4", data: { agent_type: "ticker-analyst", agent_id: "i2", tool_name: "Bash", tool_use_id: "b", error: "exit 2" } },
+    { event: "SubagentStop", at: "t5", data: { agent_type: "ticker-analyst", agent_id: "i2", last_assistant_message: "Avoid." } },
+    { event: "Stop", at: "t6", data: { agent_type: "chief", last_assistant_message: "Done." } },
+  ]);
+  assert.deepEqual(events.map((e) => e.type), ["system", "tool", "subagent", "subagent", "tool", "tool_result", "assistant", "subagent", "assistant"]);
+  assert.deepEqual(events.filter((e) => e.type === "subagent").map((e) => (e as { label?: string; state: string }).label ?? (e as { state: string }).state), ["ticker-analyst/1", "ticker-analyst/2", "done"]);
+  const failed = events.find((e) => e.type === "tool_result") as Extract<UiEvent, { type: "tool_result" }>;
+  assert.deepEqual([failed.lane, failed.error, failed.output], ["i2", true, "exit 2"]);
+  assert.equal((events.at(-1) as { lane?: string }).lane, undefined);
 });
 
 test("tool descriptions are one line and never carry a long payload", () => {
@@ -127,6 +172,9 @@ class FakeSession implements SessionLike {
   readonly id = "fake-session-1";
   readonly events: SequencedEvent[] = [];
   readonly sent: string[] = [];
+  readonly startedAt = "2026-09-30T00:00:00.000Z";
+  title = "";
+  state: "idle" | "running" | "closed" = "idle";
   closed = false;
   private listeners = new Set<(e: SequencedEvent) => void>();
   private seq = 0;
@@ -134,7 +182,7 @@ class FakeSession implements SessionLike {
   constructor(readonly agent: string) {}
   push(e: UiEvent) { const s = { ...e, seq: ++this.seq, at: "t" } as SequencedEvent; this.events.push(s); for (const l of this.listeners) l(s); }
   subscribe(l: (e: SequencedEvent) => void) { this.listeners.add(l); return () => this.listeners.delete(l); }
-  async send(text: string) { this.sent.push(text); this.push({ type: "user", text }); this.push({ type: "artifact", n: 1, title: "Regime" }); }
+  async send(text: string) { this.title ||= text; this.sent.push(text); this.push({ type: "user", text }); this.push({ type: "artifact", n: 1, title: "Regime" }); }
   answer(id: string, answers: Parameters<WebPrompter["answer"]>[1]) { return this.prompter.answer(id, answers); }
   async interrupt() { this.push({ type: "notice", text: "stopped" }); }
   close() { this.closed = true; }
@@ -164,12 +212,19 @@ async function seedData(root: string) {
   await put("secret.md", "not for the browser");
 }
 
+let runsDir: string;
 beforeAll(async () => {
   dataDir = await mkdtemp(resolve(tmpdir(), "invest-web-data-"));
   await seedData(dataDir);
-  running = await startServer({ port: 0, dataDir, createSession: (agent) => (fake = new FakeSession(agent)) });
+  runsDir = await mkdtemp(resolve(tmpdir(), "invest-web-runs-"));
+  await mkdir(resolve(runsDir, "2026-10-01T00-58-02-473Z-aaaa"), { recursive: true });
+  await writeFile(resolve(runsDir, "2026-10-01T00-58-02-473Z-aaaa/initial-prompt.md"), "RUN_ROOT=x\n\nUser request:\nProfile RKLB and META.");
+  await writeFile(resolve(runsDir, "2026-10-01T00-58-02-473Z-aaaa/audit.jsonl"), `${JSON.stringify({ event: "run_created", runId: "r", agent: "chief", at: "t" })}\n{torn`);
+  await mkdir(resolve(runsDir, "2026-10-02T00-00-00-000Z-bbbb"), { recursive: true });
+  await writeFile(resolve(runsDir, "2026-10-02T00-00-00-000Z-bbbb/web-events.jsonl"), [{ type: "status", state: "running", agent: "chief", seq: 1, at: "t" }, { type: "user", text: "What about NVDA?", seq: 2, at: "t" }].map((e) => JSON.stringify(e)).join("\n") + "\n");
+  running = await startServer({ port: 0, dataDir, runsDir, createSession: (agent) => (fake = new FakeSession(agent)) });
 });
-afterAll(async () => { await running.close(); await rm(dataDir, { recursive: true, force: true }); });
+afterAll(async () => { await running.close(); await rm(dataDir, { recursive: true, force: true }); await rm(runsDir, { recursive: true, force: true }); });
 
 test("the server only answers loopback hosts, and the page carries the launch token", async () => {
   const page = await fetch(running.url, { headers: { host: `127.0.0.1:${running.port}` } });
@@ -287,4 +342,26 @@ test("documents: only allowlisted areas and extensions, never a traversal; pages
   assert.equal((await fetch(`${running.url}/api/research`)).status, 401);
   assert.equal((await call("/api/research", { method: "POST", body: "{}" })).status, 405);
   for (const asset of ["/ui.js", "/research.js"]) assert.equal((await fetch(`${running.url}${asset}`)).status, 200);
+});
+
+// ------------------------------------------------------------------ the Logs tab
+test("past runs are listed newest first from their web events or their audit trail, and read back", async () => {
+  const { runs } = await (await call("/api/runs")).json() as { runs: { id: string; agent: string; title: string; source: string; events: number }[] };
+  assert.deepEqual(runs.map((r) => [r.id, r.agent, r.title, r.source]), [
+    ["2026-10-02T00-00-00-000Z-bbbb", "chief", "What about NVDA?", "web"],
+    ["2026-10-01T00-58-02-473Z-aaaa", "chief", "Profile RKLB and META.", "audit"],
+  ]);
+  const log = await (await call("/api/runs/2026-10-01T00-58-02-473Z-aaaa/events")).json() as { source: string; events: { type: string }[] };
+  assert.deepEqual([log.source, log.events.map((e) => e.type)], ["audit", ["system"]]);
+  assert.equal((await call("/api/runs/..%2F..%2Fetc/events")).status, 404);
+  await assert.rejects(readRunLog(runsDir, "../x"), /Not a run id/);
+  assert.equal((await listRuns(resolve(runsDir, "missing"))).length, 0);
+});
+
+test("live sessions are listed with their title and state", async () => {
+  const created = await (await call("/api/sessions", { method: "POST", body: JSON.stringify({ agent: "chief" }) })).json() as { id: string };
+  await call(`/api/sessions/${created.id}/messages`, { method: "POST", body: JSON.stringify({ text: "Risk on or off?" }) });
+  const { sessions } = await (await call("/api/sessions")).json() as { sessions: { id: string; title: string; agent: string; state: string }[] };
+  assert.deepEqual(sessions.find((s) => s.id === created.id), { id: created.id, agent: "chief", title: "Risk on or off?", startedAt: "2026-09-30T00:00:00.000Z", state: "idle", closed: false });
+  assert.equal((await fetch(`${running.url}/logs.js`)).status, 200);
 });

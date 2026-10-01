@@ -1,0 +1,71 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "ABCL",
+ "as_of": "2026-09-30",
+ "inputs": {
+  "themes": "2026-09-30",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-30",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": 5
+ },
+ "macro": {
+  "as_of": "2026-09-30",
+  "call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+  "label": "Lean risk-off",
+  "composite": -7.8,
+  "duration": "hostile"
+ },
+ "regime": {
+  "as_of": "2026-09-24",
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": null,
+ "macro_fit": null,
+ "themes": [],
+ "price": {
+  "close": 14.82,
+  "as_of": "2026-09-29",
+  "ret_1m": 30.6,
+  "ret_3m": 88.8,
+  "ret_12m": 212.7,
+  "above_50d": true,
+  "above_200d": true,
+  "dd_52w_pct": 0.0,
+  "source": "https://finance.yahoo.com/quote/ABCL"
+ },
+ "sentiment": null,
+ "runway_score": {
+  "probe": "2026-09-24",
+  "tier": "no_runway",
+  "total": 43,
+  "points": {
+   "earnings": 3,
+   "prospect": 3,
+   "competition": 3,
+   "insider": 3,
+   "institutional": 7,
+   "retail": 6,
+   "upside": 8,
+   "risk_reward": 1,
+   "chart": 5,
+   "macro_fit": 1,
+   "narrative": 3
+  },
+  "gates_failed": [
+   "delivery"
+  ],
+  "upside_pct": 35.415019762845844,
+  "risk_reward": 1.2273972602739722,
+  "close": 12.65,
+  "price_as_of": "2026-09-24"
+ },
+ "verdicts": [],
+ "gaps": [
+  "not in any theme basket: add it to config/themes.json if it recurs",
+  "no allowlist posts in the sentiment window"
+ ]
+}

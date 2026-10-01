@@ -1,0 +1,3234 @@
+{
+ "schema": "macro-regime/1",
+ "as_of": "2026-09-29",
+ "raw_dir": "data/market/2026-09-30",
+ "regime": {
+  "label": "Lean risk-off",
+  "mechanical_label": "Neutral / mixed",
+  "composite": -7.8,
+  "quadrant": {
+   "name": "Goldilocks",
+   "growth": 0.44,
+   "inflation_pressure": -0.0,
+   "conviction": "low",
+   "note": "one axis is within +/-0.25 of zero, so the quadrant is a lean, not a call"
+  },
+  "duration_regime": "hostile",
+  "flags": [
+   {
+    "id": "LONG_END_TANTRUM",
+    "kind": "macro",
+    "text": "30y at or above 5.25% (or +25bp in a month) with elevated bond vol: 2023 and 1994-style duration stress"
+   },
+   {
+    "id": "HIKING_CYCLE",
+    "kind": "macro",
+    "text": "The Fed has raised its target within six months and the 2y prices more: 1994, 2004, 2015 and 2022 all began this way"
+   },
+   {
+    "id": "OIL_SHOCK",
+    "kind": "macro",
+    "text": "Oil up 25%+ in three months: 1973, 1979, 1990, 2008 and 2022 all featured one"
+   }
+  ],
+  "flag_notches": 1,
+  "divergence": "",
+  "coverage": "54/54 signals",
+  "macro_pillars_mean": -0.19,
+  "tape_mean": -0.14,
+  "judgment_call": "Lean risk-off: a hostile discount rate with the first crack in credit"
+ },
+ "pillars": {
+  "rates": {
+   "name": "Rates and duration",
+   "weight": 18,
+   "mean": -1.5,
+   "score_100": -75.0,
+   "signals_ok": 10,
+   "signals_total": 10,
+   "worst": [
+    "R_10Y_1M",
+    "R_10Y_LEVEL",
+    "R_CURVE_SHAPE",
+    "R_FED_PATH",
+    "R_LONG_END",
+    "R_MOVE",
+    "R_REAL10",
+    "R_STOCK_BOND_CORR",
+    "R_TERM_PREMIUM"
+   ],
+   "best": []
+  },
+  "credit": {
+   "name": "Credit",
+   "weight": 18,
+   "mean": -0.17,
+   "score_100": -8.3,
+   "signals_ok": 6,
+   "signals_total": 6,
+   "worst": [
+    "C_CCC_GAP",
+    "C_HY_CHANGE"
+   ],
+   "best": [
+    "C_HYG_IEF_TREND"
+   ]
+  },
+  "liquidity": {
+   "name": "Liquidity and dollar",
+   "weight": 14,
+   "mean": 0.29,
+   "score_100": 14.3,
+   "signals_ok": 7,
+   "signals_total": 7,
+   "worst": [],
+   "best": [
+    "L_NFCI",
+    "L_STLFSI"
+   ]
+  },
+  "growth": {
+   "name": "Growth and labour",
+   "weight": 15,
+   "mean": 0.44,
+   "score_100": 22.2,
+   "signals_ok": 9,
+   "signals_total": 9,
+   "worst": [
+    "G_CURVE_RESTEEPEN"
+   ],
+   "best": [
+    "G_CLAIMS",
+    "G_COPPER_GOLD",
+    "G_GDPNOW",
+    "G_SAHM",
+    "G_UNRATE"
+   ]
+  },
+  "inflation": {
+   "name": "Inflation and oil",
+   "weight": 10,
+   "mean": 0.0,
+   "score_100": 0.0,
+   "signals_ok": 5,
+   "signals_total": 5,
+   "worst": [
+    "I_OIL"
+   ],
+   "best": [
+    "I_CORE_3M",
+    "I_CPI_TREND"
+   ]
+  },
+  "vol": {
+   "name": "Volatility",
+   "weight": 10,
+   "mean": 0.67,
+   "score_100": 33.3,
+   "signals_ok": 3,
+   "signals_total": 3,
+   "worst": [],
+   "best": [
+    "V_TERM",
+    "V_VIX"
+   ]
+  },
+  "internals": {
+   "name": "Equity internals",
+   "weight": 10,
+   "mean": -0.14,
+   "score_100": -7.1,
+   "signals_ok": 7,
+   "signals_total": 7,
+   "worst": [
+    "E_BREADTH_RSP",
+    "E_SECTOR_BREADTH",
+    "E_SMALL_CAPS"
+   ],
+   "best": [
+    "E_DRAWDOWN",
+    "E_TREND"
+   ]
+  },
+  "housing": {
+   "name": "Housing and MBS",
+   "weight": 5,
+   "mean": -0.29,
+   "score_100": -14.3,
+   "signals_ok": 7,
+   "signals_total": 7,
+   "worst": [
+    "H_ITB_REL",
+    "H_MORTGAGE_RATE"
+   ],
+   "best": []
+  }
+ },
+ "signals": [
+  {
+   "id": "R_10Y_LEVEL",
+   "pillar": "rates",
+   "name": "10-year yield level",
+   "rule": "<3.5 +1; 3.5-4.5 0; 4.5-5.0 -1; >=5.0 -2",
+   "status": "ok",
+   "score": -2,
+   "read": "10y at 5.26% (100.0 pctile of 20y)",
+   "value": {
+    "pct": 5.26
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DGS10"
+   ]
+  },
+  {
+   "id": "R_10Y_1M",
+   "pillar": "rates",
+   "name": "10-year one-month change",
+   "rule": "bp: <=-25 +2; -25..-10 +1; -10..+10 0; +10..+30 -1; >+30 -2",
+   "status": "ok",
+   "score": -2,
+   "read": "10y +53bp in a month, +82bp in three",
+   "value": {
+    "chg_1m_bp": 53.0,
+    "chg_3m_bp": 82.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DGS10"
+   ]
+  },
+  {
+   "id": "R_REAL10",
+   "pillar": "rates",
+   "name": "10-year real yield",
+   "rule": "<0 +2; 0-1 +1; 1-2 0; 2-2.5 -1; >=2.5 -2",
+   "status": "ok",
+   "score": -2,
+   "read": "real 10y 2.91% (+71bp 3m); highest discount rate on long-duration cash flows since 2007 when above 2.5",
+   "value": {
+    "pct": 2.91,
+    "chg_3m_bp": 71.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DFII10"
+   ]
+  },
+  {
+   "id": "R_LONG_END",
+   "pillar": "rates",
+   "name": "30-year yield and its momentum",
+   "rule": ">=5.25 or +25bp in 1m -2; >=4.75 or +15bp -1; <4.25 and falling +1; else 0",
+   "status": "ok",
+   "score": -2,
+   "read": "30y 5.59% (+37bp 1m); long-end supply and term premium set the equity discount rate",
+   "value": {
+    "pct": 5.59,
+    "chg_1m_bp": 37.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DGS30"
+   ]
+  },
+  {
+   "id": "R_TERM_PREMIUM",
+   "pillar": "rates",
+   "name": "10-year term premium",
+   "rule": "3m change bp: >+40 -2; +15..+40 -1; -15..+15 0; <-15 +1",
+   "status": "ok",
+   "score": -1,
+   "read": "term premium 1.02% (+34bp 3m): investors demanding pay for duration risk (fiscal, inflation uncertainty)",
+   "value": {
+    "pct": 1.02,
+    "chg_3m_bp": 33.54
+   },
+   "as_of": "2026-09-25",
+   "sources": [
+    "https://fred.stlouisfed.org/series/THREEFYTP10"
+   ]
+  },
+  {
+   "id": "R_CURVE_SHAPE",
+   "pillar": "rates",
+   "name": "Curve move (2y vs 10y over 1m)",
+   "rule": "bear steepening or bear flattening -1; bull flattening +1; bull steepening 0 (easing, but often recession onset); moves under 5bp 0",
+   "status": "ok",
+   "score": -1,
+   "read": "bear flattening: 2y +55bp, 10y +53bp; 2s10s +37bp",
+   "value": {
+    "kind": "bear flattening",
+    "d2_bp": 55.0,
+    "d10_bp": 53.0,
+    "2s10s_bp": 37.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DGS10",
+    "https://fred.stlouisfed.org/series/DGS2"
+   ]
+  },
+  {
+   "id": "R_MOVE",
+   "pillar": "rates",
+   "name": "MOVE index (Treasury implied vol)",
+   "rule": "<80 +1; 80-100 0; 100-120 -1; >=120 -2; one notch lower if +20 in 1m (floor -2)",
+   "status": "ok",
+   "score": -2,
+   "read": "MOVE 110 (+35 1m); bond vol drives MBS convexity hedging, dealer balance sheets and equity multiples",
+   "value": {
+    "level": 110.454,
+    "chg_1m": 35.134
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/^MOVE"
+   ]
+  },
+  {
+   "id": "R_STOCK_BOND_CORR",
+   "pillar": "rates",
+   "name": "Stock-bond correlation (60d SPY vs TLT)",
+   "rule": ">+0.3 -1 (bonds do not hedge: inflation/term-premium regime, 1970s and 2022 style); <-0.2 +1 (bonds hedge); else 0",
+   "status": "ok",
+   "score": -1,
+   "read": "60-day correlation +0.50",
+   "value": {
+    "corr_60d": 0.496
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/SPY",
+    "https://finance.yahoo.com/quote/TLT"
+   ]
+  },
+  {
+   "id": "R_FED_PATH",
+   "pillar": "rates",
+   "name": "Priced Fed path (2-year minus effective fed funds)",
+   "rule": "bp: >=+50 -2 (a hiking cycle priced); +15..+50 -1; -50..+15 0; <-50 +1 (cuts priced; check growth before cheering)",
+   "status": "ok",
+   "score": -2,
+   "read": "2y 4.89% vs fed funds 3.88%: +101bp (+30bp 1m); the 2y is the market's two-year Fed forecast",
+   "value": {
+    "bp": 101.0,
+    "chg_1m_bp": 30.0,
+    "target_chg_6m_bp": 25.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DFF",
+    "https://fred.stlouisfed.org/series/DGS2"
+   ]
+  },
+  {
+   "id": "R_REAL_POLICY",
+   "pillar": "rates",
+   "name": "Real policy rate (fed funds minus core PCE y/y)",
+   "rule": ">2.0 -1 (restrictive); 0-2 0; <0 +1 (accommodative)",
+   "status": "ok",
+   "score": 0,
+   "read": "fed funds 3.88% less core PCE 3.01% = +0.87%",
+   "value": {
+    "real_policy_pct": 0.872,
+    "core_pce_yoy": 3.008
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DFF",
+    "https://fred.stlouisfed.org/series/PCEPILFE"
+   ]
+  },
+  {
+   "id": "C_HY_LEVEL",
+   "pillar": "credit",
+   "name": "High-yield OAS level",
+   "rule": "<3.0 +1; 3.0-4.0 0; 4.0-5.5 -1; >=5.5 -2 (tight spreads are benign but leave no cushion)",
+   "status": "ok",
+   "score": 0,
+   "read": "HY OAS 308bp (53.9 pctile of 20y)",
+   "value": {
+    "bp": 308.0,
+    "pctile_20y": 53.9
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+   ]
+  },
+  {
+   "id": "C_HY_CHANGE",
+   "pillar": "credit",
+   "name": "High-yield OAS momentum",
+   "rule": "1m bp: <-25 +1; -25..+25 0; +25..+75 -1; >=+75 -2; 3m >= +100 forces -2",
+   "status": "ok",
+   "score": -1,
+   "read": "HY OAS +48bp 1m, +33bp 3m",
+   "value": {
+    "chg_1m_bp": 48.0,
+    "chg_3m_bp": 33.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+   ]
+  },
+  {
+   "id": "C_IG_CHANGE",
+   "pillar": "credit",
+   "name": "Investment-grade OAS momentum",
+   "rule": "1m bp: <-10 +1; -10..+15 0; +15..+30 -1; >=+30 -2",
+   "status": "ok",
+   "score": 0,
+   "read": "IG OAS 84bp (+5bp 1m)",
+   "value": {
+    "bp": 84.0,
+    "chg_1m_bp": 5.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/BAMLC0A0CM"
+   ]
+  },
+  {
+   "id": "C_CCC_GAP",
+   "pillar": "credit",
+   "name": "CCC minus HY OAS (the weak tail)",
+   "rule": "gap percentile over 5y: >=85 -1 (weakest borrowers cracking under high rates while the index looks calm); <=30 +1; else 0",
+   "status": "ok",
+   "score": -1,
+   "read": "CCC-HY gap 849bp (100.0 pctile 5y, +154bp 3m)",
+   "value": {
+    "gap_bp": 849.0,
+    "pctile_5y": 100.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+    "https://fred.stlouisfed.org/series/BAMLH0A3HYC"
+   ]
+  },
+  {
+   "id": "C_HYG_IEF_TREND",
+   "pillar": "credit",
+   "name": "HYG / IEF trend (credit risk appetite)",
+   "rule": "above 50d and 200d +1; below both -1; else 0",
+   "status": "ok",
+   "score": 1,
+   "read": "HYG/IEF above 200d, above 50d",
+   "value": {
+    "ratio": 0.865,
+    "sma50": 0.857,
+    "sma200": 0.839
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/HYG",
+    "https://finance.yahoo.com/quote/IEF"
+   ]
+  },
+  {
+   "id": "C_SLOOS",
+   "pillar": "credit",
+   "name": "Senior loan officers: net % tightening C&I",
+   "rule": ">=40 -2; 20-40 -1; 0-20 0; <0 +1 (bank credit supply leads defaults by 2-4 quarters)",
+   "status": "ok",
+   "score": 0,
+   "read": "net +0.0% of banks tightening (2026-07-01)",
+   "value": {
+    "net_pct": 0.0
+   },
+   "as_of": "2026-07-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DRTSCILM"
+   ]
+  },
+  {
+   "id": "V_VIX",
+   "pillar": "vol",
+   "name": "VIX level",
+   "rule": "<20 +1; 20-25 0; 25-30 -1; >=30 -2 (below 13 is complacency; noted, not scored against)",
+   "status": "ok",
+   "score": 1,
+   "read": "VIX 16.3 (1m range 14.2-17.8)",
+   "value": {
+    "level": 16.34
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/^VIX"
+   ]
+  },
+  {
+   "id": "V_TERM",
+   "pillar": "vol",
+   "name": "VIX term structure (VIX / VIX3M)",
+   "rule": "<0.90 +1 (contango, calm); 0.90-1.00 0; >=1.00 -2 (backwardation: acute stress now)",
+   "status": "ok",
+   "score": 1,
+   "read": "VIX/VIX3M 0.89",
+   "value": {
+    "ratio": 0.889
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/^VIX",
+    "https://finance.yahoo.com/quote/^VIX3M"
+   ]
+  },
+  {
+   "id": "V_VVIX",
+   "pillar": "vol",
+   "name": "Vol of VIX",
+   "rule": ">=115 -1 (demand for crash protection); else 0",
+   "status": "ok",
+   "score": 0,
+   "read": "VVIX 89",
+   "value": {
+    "level": 89.48
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/^VVIX"
+   ]
+  },
+  {
+   "id": "L_NET_LIQ",
+   "pillar": "liquidity",
+   "name": "Net Fed liquidity (balance sheet - TGA - RRP)",
+   "rule": "13-week change $bn: >+150 +1; -150..+150 0; <-150 -1; <-300 -2",
+   "status": "ok",
+   "score": 0,
+   "read": "net liquidity $5,770bn (-42bn 13w)",
+   "value": {
+    "bn": 5770.159,
+    "chg_13w_bn": -42.256
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://fred.stlouisfed.org/series/RRPONTSYD",
+    "https://fred.stlouisfed.org/series/WALCL",
+    "https://fred.stlouisfed.org/series/WTREGEN"
+   ]
+  },
+  {
+   "id": "L_FUNDING",
+   "pillar": "liquidity",
+   "name": "Funding pressure (SOFR minus IORB, 5-day avg)",
+   "rule": "bp: >=+10 -2; +3..+10 -1; else 0 (repo above the Fed's floor rate means reserves are getting scarce: Sept 2019)",
+   "status": "ok",
+   "score": 0,
+   "read": "SOFR-IORB -1.4bp",
+   "value": {
+    "bp_5d": -1.4
+   },
+   "as_of": "2026-10-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/IORB",
+    "https://fred.stlouisfed.org/series/SOFR"
+   ]
+  },
+  {
+   "id": "L_DOLLAR",
+   "pillar": "liquidity",
+   "name": "Dollar 3-month change (DXY, else broad index)",
+   "rule": "%: >=+5 -2; +2..+5 -1; -2..+2 0; <-2 +1 (a falling dollar loosens global financial conditions)",
+   "status": "ok",
+   "score": 0,
+   "read": "DXY 101.5 (+0.1% 3m, +2.1% 1m)",
+   "value": {
+    "level": 101.471,
+    "chg_3m_pct": 0.08
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/DX-Y.NYB"
+   ]
+  },
+  {
+   "id": "L_NFCI",
+   "pillar": "liquidity",
+   "name": "Chicago Fed financial conditions",
+   "rule": "<-0.3 +1 (loose); -0.3..0 0; 0..0.5 -1; >=0.5 -2",
+   "status": "ok",
+   "score": 1,
+   "read": "NFCI -0.55 (-0.03 3m)",
+   "value": {
+    "level": -0.548
+   },
+   "as_of": "2026-09-25",
+   "sources": [
+    "https://fred.stlouisfed.org/series/NFCI"
+   ]
+  },
+  {
+   "id": "L_STLFSI",
+   "pillar": "liquidity",
+   "name": "St. Louis Fed financial stress",
+   "rule": "<-0.5 +1; -0.5..0.5 0; 0.5..1.5 -1; >=1.5 -2",
+   "status": "ok",
+   "score": 1,
+   "read": "STLFSI -0.81",
+   "value": {
+    "level": -0.807
+   },
+   "as_of": "2026-09-25",
+   "sources": [
+    "https://fred.stlouisfed.org/series/STLFSI4"
+   ]
+  },
+  {
+   "id": "L_M2",
+   "pillar": "liquidity",
+   "name": "M2 growth y/y",
+   "rule": "%: <0 -1; 0-6 0; >=6 +1",
+   "status": "ok",
+   "score": 0,
+   "read": "M2 +5.7% y/y",
+   "value": {
+    "yoy_pct": 5.659
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/M2SL"
+   ]
+  },
+  {
+   "id": "L_YEN_CARRY",
+   "pillar": "liquidity",
+   "name": "Yen carry unwind (USD/JPY 1m change)",
+   "rule": "%: <=-5 -2; -5..-3 -1; else 0 (a fast yen rally forces deleveraging of funded risk: Aug 2024)",
+   "status": "ok",
+   "score": 0,
+   "read": "USD/JPY 157.9 (-1.2% 1m)",
+   "value": {
+    "level": 157.869,
+    "chg_1m_pct": -1.176
+   },
+   "as_of": "2026-10-01",
+   "sources": [
+    "https://finance.yahoo.com/quote/JPY=X"
+   ]
+  },
+  {
+   "id": "G_CLAIMS",
+   "pillar": "growth",
+   "name": "Initial claims, 4-week average vs 52-week low",
+   "rule": "rise from low %: <5 +1; 5-12 0; 12-20 -1; >=20 -2",
+   "status": "ok",
+   "score": 1,
+   "read": "claims 4wk avg 202k, +2% off the 52w low",
+   "value": {
+    "ma4": 202250.0,
+    "rise_pct": 1.633
+   },
+   "as_of": "2026-09-19",
+   "sources": [
+    "https://fred.stlouisfed.org/series/ICSA"
+   ]
+  },
+  {
+   "id": "G_SAHM",
+   "pillar": "growth",
+   "name": "Sahm rule (real time)",
+   "rule": "<=0.1 +1; 0.1-0.3 0; 0.3-0.5 -1; >=0.5 -2 (triggered)",
+   "status": "ok",
+   "score": 1,
+   "read": "Sahm -0.07 (2026-08-01)",
+   "value": {
+    "level": -0.07
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/SAHMREALTIME"
+   ]
+  },
+  {
+   "id": "G_GDPNOW",
+   "pillar": "growth",
+   "name": "Atlanta Fed GDPNow",
+   "rule": "%: <0 -2; 0-1 -1; 1-2.5 0; >=2.5 +1",
+   "status": "ok",
+   "score": 1,
+   "read": "GDPNow 3.7% for the quarter starting 2026-07-01",
+   "value": {
+    "pct": 3.737
+   },
+   "as_of": "2026-07-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/GDPNOW"
+   ]
+  },
+  {
+   "id": "G_CFNAI",
+   "pillar": "growth",
+   "name": "Chicago Fed activity index, 3-month average",
+   "rule": "<=-0.7 -2 (recession signal); -0.7..-0.35 -1; -0.35..0.2 0; >0.2 +1",
+   "status": "ok",
+   "score": 0,
+   "read": "CFNAI 3m avg +0.01",
+   "value": {
+    "ma3": 0.01
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/CFNAI"
+   ]
+  },
+  {
+   "id": "G_COPPER_GOLD",
+   "pillar": "growth",
+   "name": "Copper / gold ratio, 3-month change",
+   "rule": "%: >=+5 +1; -5..+5 0; <=-5 -1 (the market's own growth-versus-fear gauge)",
+   "status": "ok",
+   "score": 1,
+   "read": "copper/gold +5.5% 3m (22.7 pctile 10y)",
+   "value": {
+    "chg_3m_pct": 5.47
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/GC=F",
+    "https://finance.yahoo.com/quote/HG=F"
+   ]
+  },
+  {
+   "id": "G_CYC_DEF",
+   "pillar": "growth",
+   "name": "Cyclicals vs defensives (XLY/XLP and XLI/XLU, 3m)",
+   "rule": "both up +1; both down -1; mixed 0",
+   "status": "ok",
+   "score": 0,
+   "read": "XLY/XLP -6.0%, XLI/XLU +3.8% over 3m",
+   "value": {
+    "xly_xlp_3m": -5.955,
+    "xli_xlu_3m": 3.771
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/XLI",
+    "https://finance.yahoo.com/quote/XLP",
+    "https://finance.yahoo.com/quote/XLU",
+    "https://finance.yahoo.com/quote/XLY"
+   ]
+  },
+  {
+   "id": "G_UNRATE",
+   "pillar": "growth",
+   "name": "Unemployment rate, 3-month change",
+   "rule": "pp: >=+0.3 -1; <=-0.2 +1; else 0",
+   "status": "ok",
+   "score": 1,
+   "read": "unemployment 4.1% (-0.2pp 3m)",
+   "value": {
+    "pct": 4.1,
+    "chg_3m_pp": -0.2
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/UNRATE"
+   ]
+  },
+  {
+   "id": "G_CURVE_RESTEEPEN",
+   "pillar": "growth",
+   "name": "Re-steepening after inversion (10y-3m)",
+   "rule": "-1 when 10y-3m was below -0.5 within 24 months and is now above 0: historically the window when recessions start; else 0",
+   "status": "ok",
+   "score": -1,
+   "read": "10y-3m +109bp; 24m low -97bp",
+   "value": {
+    "now_bp": 109.0,
+    "low_24m_bp": -97.0
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://fred.stlouisfed.org/series/T10Y3M"
+   ]
+  },
+  {
+   "id": "G_RECPROB",
+   "pillar": "growth",
+   "name": "Smoothed recession probability (Chauvet-Piger)",
+   "rule": "%: >=30 -2; 10-30 -1; else 0",
+   "status": "ok",
+   "score": 0,
+   "read": "recession probability 0.8% (2026-07-01)",
+   "value": {
+    "pct": 0.76
+   },
+   "as_of": "2026-07-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/RECPROUSM156N"
+   ]
+  },
+  {
+   "id": "I_CORE_3M",
+   "pillar": "inflation",
+   "name": "Core CPI, 3-month annualised",
+   "rule": "%: <2.5 +1; 2.5-3.5 0; 3.5-4.5 -1; >=4.5 -2",
+   "status": "ok",
+   "score": 1,
+   "read": "core CPI 2.0% 3m annualised vs 2.4% y/y (2026-08-01)",
+   "value": {
+    "ann_3m": 1.971,
+    "yoy": 2.446
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/CPILFESL"
+   ]
+  },
+  {
+   "id": "I_CPI_TREND",
+   "pillar": "inflation",
+   "name": "Headline CPI momentum (3m annualised vs y/y)",
+   "rule": "3m minus y/y pp: >=+0.5 -1 (accelerating); <=-0.5 +1 (decelerating); else 0",
+   "status": "ok",
+   "score": 1,
+   "read": "CPI 0.2% 3m ann vs 3.4% y/y",
+   "value": {
+    "ann_3m": 0.182,
+    "yoy": 3.353
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/CPIAUCSL"
+   ]
+  },
+  {
+   "id": "I_BREAKEVEN",
+   "pillar": "inflation",
+   "name": "10-year breakeven inflation",
+   "rule": "%: <1.8 -1 (deflation scare); 1.8-2.6 0; 2.6-3.0 -1; >=3.0 -2",
+   "status": "ok",
+   "score": 0,
+   "read": "10y breakeven 2.36%",
+   "value": {
+    "pct": 2.36
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://fred.stlouisfed.org/series/T10YIE"
+   ]
+  },
+  {
+   "id": "I_5Y5Y",
+   "pillar": "inflation",
+   "name": "5y5y forward inflation (anchoring)",
+   "rule": "%: >=2.8 -1 (expectations de-anchoring); else 0",
+   "status": "ok",
+   "score": 0,
+   "read": "5y5y 2.36%",
+   "value": {
+    "pct": 2.36
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://fred.stlouisfed.org/series/T5YIFR"
+   ]
+  },
+  {
+   "id": "I_OIL",
+   "pillar": "inflation",
+   "name": "Oil shock gauge (WTI 3m change and level)",
+   "rule": "3m %: >=+25 -2; +10..+25 -1; -30..+10 0; <=-30 -1 (demand shock); level >=100 one notch lower",
+   "status": "ok",
+   "score": -2,
+   "read": "WTI $90.3 (+31.7% 3m, +5.3% 1m)",
+   "value": {
+    "usd": 90.34,
+    "chg_3m_pct": 31.729
+   },
+   "as_of": "2026-09-30",
+   "sources": [
+    "https://finance.yahoo.com/quote/CL=F"
+   ]
+  },
+  {
+   "id": "H_MORTGAGE_RATE",
+   "pillar": "housing",
+   "name": "30-year mortgage rate",
+   "rule": "%: <6 +1; 6-7 0; 7-7.5 -1; >=7.5 -2",
+   "status": "ok",
+   "score": -1,
+   "read": "30y mortgage 7.03% (+54bp 3m)",
+   "value": {
+    "pct": 7.03
+   },
+   "as_of": "2026-09-24",
+   "sources": [
+    "https://fred.stlouisfed.org/series/MORTGAGE30US"
+   ]
+  },
+  {
+   "id": "H_MORTGAGE_SPREAD",
+   "pillar": "housing",
+   "name": "Mortgage rate minus 10-year (MBS spread proxy)",
+   "rule": "bp: <170 +1; 170-250 0; 250-300 -1; >=300 -2 (wide = MBS buyers absent, rate vol high, Fed running off MBS)",
+   "status": "ok",
+   "score": 0,
+   "read": "mortgage-10y 185bp (56.4 pctile 20y; pre-2022 norm about 170bp)",
+   "value": {
+    "bp": 185.0
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://fred.stlouisfed.org/series/DGS10",
+    "https://fred.stlouisfed.org/series/MORTGAGE30US"
+   ]
+  },
+  {
+   "id": "H_PERMITS",
+   "pillar": "housing",
+   "name": "Building permits, 3m average y/y",
+   "rule": "%: <=-10 -1; >=+5 +1; else 0 (permits lead starts, employment and builder margins)",
+   "status": "ok",
+   "score": 0,
+   "read": "permits 1,403k SAAR (+1.5% y/y)",
+   "value": {
+    "k_saar": 1403.333,
+    "yoy_pct": 1.544
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/PERMIT"
+   ]
+  },
+  {
+   "id": "H_SUPPLY",
+   "pillar": "housing",
+   "name": "Months supply of new homes",
+   "rule": ">=9 -1 (builder inventory glut, margin pressure); <6 +1; else 0",
+   "status": "ok",
+   "score": 0,
+   "read": "new-home supply 8.5 months",
+   "value": {
+    "months": 8.5
+   },
+   "as_of": "2026-08-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/MSACSR"
+   ]
+  },
+  {
+   "id": "H_HOME_PRICES",
+   "pillar": "housing",
+   "name": "Case-Shiller national y/y",
+   "rule": "%: <0 -1 (collateral values falling: bank, MBS and consumer-wealth channel); >=0 0",
+   "status": "ok",
+   "score": 0,
+   "read": "home prices +1.9% y/y (2026-07-01)",
+   "value": {
+    "yoy_pct": 1.929
+   },
+   "as_of": "2026-07-01",
+   "sources": [
+    "https://fred.stlouisfed.org/series/CSUSHPINSA"
+   ]
+  },
+  {
+   "id": "H_ITB_REL",
+   "pillar": "housing",
+   "name": "Homebuilders vs S&P 500, 3m",
+   "rule": "pp: >=+5 +1; <=-5 -1; else 0",
+   "status": "ok",
+   "score": -1,
+   "read": "ITB vs SPY -16.8% 3m",
+   "value": {
+    "rel_3m_pct": -16.848
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/ITB",
+    "https://finance.yahoo.com/quote/SPY"
+   ]
+  },
+  {
+   "id": "H_MBS_REL",
+   "pillar": "housing",
+   "name": "Agency MBS vs Treasuries (MBB / IEF, 3m)",
+   "rule": "%: >=+1 +1; <=-1 -1; else 0 (MBS underperforming = spread widening, convexity selling)",
+   "status": "ok",
+   "score": 0,
+   "read": "MBB vs IEF +0.19% 3m",
+   "value": {
+    "rel_3m_pct": 0.19
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/IEF",
+    "https://finance.yahoo.com/quote/MBB"
+   ]
+  },
+  {
+   "id": "E_TREND",
+   "pillar": "internals",
+   "name": "S&P 500 trend (50d, 200d)",
+   "rule": "above 200d with 50>200 +1; above 200d, 50<200 0; below 200d -1; below with 50<200 and 200d falling -2",
+   "status": "ok",
+   "score": 1,
+   "read": "SPY +6.8% vs 200d; 50d above 200d",
+   "value": {
+    "vs_200d_pct": 6.776
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/SPY"
+   ]
+  },
+  {
+   "id": "E_BREADTH_RSP",
+   "pillar": "internals",
+   "name": "Equal weight vs cap weight (RSP / SPY, 3m)",
+   "rule": "%: >=+2 +1; <=-3 -1 (narrow, mega-cap-led market); else 0",
+   "status": "ok",
+   "score": -1,
+   "read": "RSP vs SPY -3.7% 3m",
+   "value": {
+    "rel_3m_pct": -3.66
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/RSP",
+    "https://finance.yahoo.com/quote/SPY"
+   ]
+  },
+  {
+   "id": "E_SECTOR_BREADTH",
+   "pillar": "internals",
+   "name": "Sectors above their 200-day (of 11)",
+   "rule": ">=8 +1; 5-7 0; 3-4 -1; <=2 -2",
+   "status": "ok",
+   "score": -1,
+   "read": "4 of 11 sectors above 200d",
+   "value": {
+    "above": 4,
+    "of": 11,
+    "names": [
+     "XLK",
+     "XLF",
+     "XLE",
+     "XLV"
+    ]
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/XLB",
+    "https://finance.yahoo.com/quote/XLC",
+    "https://finance.yahoo.com/quote/XLE",
+    "https://finance.yahoo.com/quote/XLF",
+    "https://finance.yahoo.com/quote/XLI",
+    "https://finance.yahoo.com/quote/XLK",
+    "https://finance.yahoo.com/quote/XLP",
+    "https://finance.yahoo.com/quote/XLRE",
+    "https://finance.yahoo.com/quote/XLU",
+    "https://finance.yahoo.com/quote/XLV",
+    "https://finance.yahoo.com/quote/XLY"
+   ]
+  },
+  {
+   "id": "E_HIGH_BETA",
+   "pillar": "internals",
+   "name": "High beta vs low vol (SPHB / SPLV, 3m)",
+   "rule": "%: >=+5 +1; <=-5 -1; else 0",
+   "status": "ok",
+   "score": 0,
+   "read": "SPHB vs SPLV +2.2% 3m",
+   "value": {
+    "rel_3m_pct": 2.183
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/SPHB",
+    "https://finance.yahoo.com/quote/SPLV"
+   ]
+  },
+  {
+   "id": "E_SMALL_CAPS",
+   "pillar": "internals",
+   "name": "Small vs large (IWM / SPY, 3m)",
+   "rule": "%: >=+3 +1; <=-5 -1; else 0",
+   "status": "ok",
+   "score": -1,
+   "read": "IWM vs SPY -9.2% 3m",
+   "value": {
+    "rel_3m_pct": -9.242
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/IWM",
+    "https://finance.yahoo.com/quote/SPY"
+   ]
+  },
+  {
+   "id": "E_DRAWDOWN",
+   "pillar": "internals",
+   "name": "S&P 500 drawdown from 52-week high",
+   "rule": "%: >-5 +1; -5..-10 0; -10..-20 -1; <=-20 -2",
+   "status": "ok",
+   "score": 1,
+   "read": "SPY -1.5% from 52w high",
+   "value": {
+    "dd_pct": -1.515
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/SPY"
+   ]
+  },
+  {
+   "id": "E_BANKS",
+   "pillar": "internals",
+   "name": "Regional banks vs S&P 500 (KRE / SPY, 3m)",
+   "rule": "%: <=-10 -1 (bank stress: 2023 style); >=+5 +1; else 0",
+   "status": "ok",
+   "score": 0,
+   "read": "KRE vs SPY -8.5% 3m",
+   "value": {
+    "rel_3m_pct": -8.542
+   },
+   "as_of": "2026-09-29",
+   "sources": [
+    "https://finance.yahoo.com/quote/KRE",
+    "https://finance.yahoo.com/quote/SPY"
+   ]
+  }
+ ],
+ "archetypes": {
+  "long_duration_growth": {
+   "description": "Pre-profit or early-profit growth; value sits years out (spec tech, biotech, space, early AI infra)",
+   "examples": [
+    "ARKK",
+    "XBI",
+    "RKLB",
+    "ASTS"
+   ],
+   "fit": -1.41,
+   "stance": "headwind",
+   "runway_macro_fit_pts": 1,
+   "headwinds": [
+    "R_REAL10",
+    "R_10Y_1M",
+    "R_LONG_END"
+   ],
+   "tailwinds": [],
+   "drivers": [
+    {
+     "signal": "R_REAL10",
+     "weight": 2,
+     "score": -2,
+     "contribution": -4
+    },
+    {
+     "signal": "R_10Y_1M",
+     "weight": 1.5,
+     "score": -2,
+     "contribution": -3.0
+    },
+    {
+     "signal": "R_LONG_END",
+     "weight": 1,
+     "score": -2,
+     "contribution": -2
+    },
+    {
+     "signal": "R_MOVE",
+     "weight": 1,
+     "score": -2,
+     "contribution": -2
+    },
+    {
+     "signal": "C_HY_CHANGE",
+     "weight": 1,
+     "score": -1,
+     "contribution": -1
+    },
+    {
+     "signal": "L_NET_LIQ",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "E_HIGH_BETA",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    }
+   ]
+  },
+  "quality_megacap": {
+   "description": "Cash-rich platforms with self-funded growth; rate-sensitive through the multiple only",
+   "examples": [
+    "MSFT",
+    "GOOGL",
+    "META",
+    "NVDA"
+   ],
+   "fit": 0.09,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 4,
+   "headwinds": [
+    "R_10Y_1M",
+    "R_REAL10"
+   ],
+   "tailwinds": [
+    "E_TREND",
+    "G_GDPNOW",
+    "V_VIX"
+   ],
+   "drivers": [
+    {
+     "signal": "R_10Y_1M",
+     "weight": 1,
+     "score": -2,
+     "contribution": -2
+    },
+    {
+     "signal": "R_REAL10",
+     "weight": 0.5,
+     "score": -2,
+     "contribution": -1.0
+    },
+    {
+     "signal": "C_HY_LEVEL",
+     "weight": 0.5,
+     "score": 0,
+     "contribution": 0.0
+    },
+    {
+     "signal": "V_VIX",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    },
+    {
+     "signal": "G_GDPNOW",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    },
+    {
+     "signal": "E_TREND",
+     "weight": 1.5,
+     "score": 1,
+     "contribution": 1.5
+    }
+   ]
+  },
+  "cash_flow_value": {
+   "description": "Mature free-cash-flow compounders priced on yield; tolerate a rate plateau",
+   "examples": [
+    "BRK.B",
+    "CAT",
+    "JNJ",
+    "XOM"
+   ],
+   "fit": 0.22,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 4,
+   "headwinds": [
+    "R_10Y_LEVEL",
+    "E_BREADTH_RSP"
+   ],
+   "tailwinds": [
+    "G_CLAIMS",
+    "G_GDPNOW",
+    "V_VIX"
+   ],
+   "drivers": [
+    {
+     "signal": "R_10Y_LEVEL",
+     "weight": 0.5,
+     "score": -2,
+     "contribution": -1.0
+    },
+    {
+     "signal": "E_BREADTH_RSP",
+     "weight": 0.5,
+     "score": -1,
+     "contribution": -0.5
+    },
+    {
+     "signal": "C_HY_LEVEL",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "V_VIX",
+     "weight": 0.5,
+     "score": 1,
+     "contribution": 0.5
+    },
+    {
+     "signal": "G_GDPNOW",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    },
+    {
+     "signal": "G_CLAIMS",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    }
+   ]
+  },
+  "small_caps": {
+   "description": "Domestic, floating-rate borrowers; first hurt by rising yields and wider spreads",
+   "examples": [
+    "IWM"
+   ],
+   "fit": -0.44,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 3,
+   "headwinds": [
+    "R_10Y_1M",
+    "C_HY_CHANGE",
+    "E_SMALL_CAPS"
+   ],
+   "tailwinds": [
+    "L_NFCI",
+    "G_CLAIMS"
+   ],
+   "drivers": [
+    {
+     "signal": "R_10Y_1M",
+     "weight": 1.5,
+     "score": -2,
+     "contribution": -3.0
+    },
+    {
+     "signal": "C_HY_CHANGE",
+     "weight": 1.5,
+     "score": -1,
+     "contribution": -1.5
+    },
+    {
+     "signal": "E_SMALL_CAPS",
+     "weight": 1,
+     "score": -1,
+     "contribution": -1
+    },
+    {
+     "signal": "C_HY_LEVEL",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "R_REAL_POLICY",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "G_CLAIMS",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    },
+    {
+     "signal": "L_NFCI",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    }
+   ]
+  },
+  "banks": {
+   "description": "Net-interest-margin earners; like a steep curve, fear credit losses and deposit flight",
+   "examples": [
+    "KRE",
+    "XLF",
+    "JPM"
+   ],
+   "fit": -0.09,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 4,
+   "headwinds": [
+    "C_HY_CHANGE",
+    "C_CCC_GAP"
+   ],
+   "tailwinds": [
+    "G_CLAIMS"
+   ],
+   "drivers": [
+    {
+     "signal": "C_HY_CHANGE",
+     "weight": 1,
+     "score": -1,
+     "contribution": -1
+    },
+    {
+     "signal": "C_CCC_GAP",
+     "weight": 0.5,
+     "score": -1,
+     "contribution": -0.5
+    },
+    {
+     "signal": "C_SLOOS",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "E_BANKS",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "L_FUNDING",
+     "weight": 0.5,
+     "score": 0,
+     "contribution": 0.0
+    },
+    {
+     "signal": "H_HOME_PRICES",
+     "weight": 0.5,
+     "score": 0,
+     "contribution": 0.0
+    },
+    {
+     "signal": "G_CLAIMS",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    }
+   ]
+  },
+  "homebuilders_reits": {
+   "description": "Rate-driven real assets; mortgage rate and MBS spread are the whole story at the margin",
+   "examples": [
+    "ITB",
+    "XLRE",
+    "DHI"
+   ],
+   "fit": -0.73,
+   "stance": "headwind",
+   "runway_macro_fit_pts": 3,
+   "headwinds": [
+    "R_10Y_1M",
+    "H_MORTGAGE_RATE",
+    "H_ITB_REL"
+   ],
+   "tailwinds": [],
+   "drivers": [
+    {
+     "signal": "R_10Y_1M",
+     "weight": 1.5,
+     "score": -2,
+     "contribution": -3.0
+    },
+    {
+     "signal": "H_MORTGAGE_RATE",
+     "weight": 2,
+     "score": -1,
+     "contribution": -2
+    },
+    {
+     "signal": "H_ITB_REL",
+     "weight": 0.5,
+     "score": -1,
+     "contribution": -0.5
+    },
+    {
+     "signal": "H_MORTGAGE_SPREAD",
+     "weight": 1.5,
+     "score": 0,
+     "contribution": 0.0
+    },
+    {
+     "signal": "H_PERMITS",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "H_SUPPLY",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    }
+   ]
+  },
+  "energy": {
+   "description": "Oil and gas producers and services; paid by oil up, a weaker dollar and global growth",
+   "examples": [
+    "XLE",
+    "FANG"
+   ],
+   "fit": 1.12,
+   "stance": "tailwind",
+   "runway_macro_fit_pts": 6,
+   "headwinds": [],
+   "tailwinds": [
+    "I_OIL",
+    "G_COPPER_GOLD",
+    "G_GDPNOW"
+   ],
+   "drivers": [
+    {
+     "signal": "L_DOLLAR",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "G_GDPNOW",
+     "weight": 0.5,
+     "score": 1,
+     "contribution": 0.5
+    },
+    {
+     "signal": "G_COPPER_GOLD",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    },
+    {
+     "signal": "I_OIL",
+     "weight": -1.5,
+     "score": -2,
+     "contribution": 3.0
+    }
+   ]
+  },
+  "materials_industrials": {
+   "description": "Global cyclicals; copper, capex and a softer dollar",
+   "examples": [
+    "XLB",
+    "XLI"
+   ],
+   "fit": 0.45,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 5,
+   "headwinds": [],
+   "tailwinds": [
+    "G_COPPER_GOLD",
+    "G_GDPNOW"
+   ],
+   "drivers": [
+    {
+     "signal": "G_CYC_DEF",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "L_DOLLAR",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "G_CFNAI",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "G_GDPNOW",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    },
+    {
+     "signal": "G_COPPER_GOLD",
+     "weight": 1.5,
+     "score": 1,
+     "contribution": 1.5
+    }
+   ]
+  },
+  "defensives": {
+   "description": "Staples, utilities, health care; win relatively when growth scares and yields fall",
+   "examples": [
+    "XLP",
+    "XLU",
+    "XLV"
+   ],
+   "fit": -1.0,
+   "stance": "headwind",
+   "runway_macro_fit_pts": 2,
+   "headwinds": [
+    "R_10Y_1M",
+    "G_GDPNOW",
+    "G_CLAIMS"
+   ],
+   "tailwinds": [
+    "I_CORE_3M"
+   ],
+   "drivers": [
+    {
+     "signal": "R_10Y_1M",
+     "weight": 1,
+     "score": -2,
+     "contribution": -2
+    },
+    {
+     "signal": "G_GDPNOW",
+     "weight": -1,
+     "score": 1,
+     "contribution": -1
+    },
+    {
+     "signal": "G_CLAIMS",
+     "weight": -1,
+     "score": 1,
+     "contribution": -1
+    },
+    {
+     "signal": "E_TREND",
+     "weight": -0.5,
+     "score": 1,
+     "contribution": -0.5
+    },
+    {
+     "signal": "I_CORE_3M",
+     "weight": 0.5,
+     "score": 1,
+     "contribution": 0.5
+    }
+   ]
+  },
+  "em_international": {
+   "description": "Non-US equities; the dollar and global liquidity dominate",
+   "examples": [
+    "EEM",
+    "EFA"
+   ],
+   "fit": -0.4,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 3,
+   "headwinds": [
+    "R_REAL10",
+    "C_HY_CHANGE"
+   ],
+   "tailwinds": [
+    "G_COPPER_GOLD"
+   ],
+   "drivers": [
+    {
+     "signal": "R_REAL10",
+     "weight": 1,
+     "score": -2,
+     "contribution": -2
+    },
+    {
+     "signal": "C_HY_CHANGE",
+     "weight": 1,
+     "score": -1,
+     "contribution": -1
+    },
+    {
+     "signal": "L_DOLLAR",
+     "weight": 2,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "G_COPPER_GOLD",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    }
+   ]
+  },
+  "gold_hard_assets": {
+   "description": "Gold and miners; like falling real yields, a weak dollar, fiscal and geopolitical fear",
+   "examples": [
+    "GLD",
+    "GDX"
+   ],
+   "fit": -0.12,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 4,
+   "headwinds": [
+    "R_REAL10",
+    "V_VIX"
+   ],
+   "tailwinds": [
+    "R_TERM_PREMIUM"
+   ],
+   "drivers": [
+    {
+     "signal": "R_REAL10",
+     "weight": 0.5,
+     "score": -2,
+     "contribution": -1.0
+    },
+    {
+     "signal": "V_VIX",
+     "weight": -0.5,
+     "score": 1,
+     "contribution": -0.5
+    },
+    {
+     "signal": "L_DOLLAR",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "I_BREAKEVEN",
+     "weight": -1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "R_TERM_PREMIUM",
+     "weight": -1,
+     "score": -1,
+     "contribution": 1
+    }
+   ]
+  },
+  "crypto_high_beta": {
+   "description": "Bitcoin and levered beta; the purest liquidity trade",
+   "examples": [
+    "BTC",
+    "COIN",
+    "MSTR"
+   ],
+   "fit": -0.17,
+   "stance": "neutral",
+   "runway_macro_fit_pts": 4,
+   "headwinds": [
+    "R_REAL10"
+   ],
+   "tailwinds": [
+    "V_VIX"
+   ],
+   "drivers": [
+    {
+     "signal": "R_REAL10",
+     "weight": 1,
+     "score": -2,
+     "contribution": -2
+    },
+    {
+     "signal": "L_NET_LIQ",
+     "weight": 2,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "L_DOLLAR",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "E_HIGH_BETA",
+     "weight": 1,
+     "score": 0,
+     "contribution": 0
+    },
+    {
+     "signal": "V_VIX",
+     "weight": 1,
+     "score": 1,
+     "contribution": 1
+    }
+   ]
+  }
+ },
+ "tilts": {
+  "quadrant": "Goldilocks",
+  "overweight": [
+   "XLK",
+   "XLC",
+   "growth",
+   "momentum",
+   "high beta",
+   "semis",
+   "XLE",
+   "short-duration cash yield",
+   "quality",
+   "gold"
+  ],
+  "underweight": [
+   "XLU",
+   "XLP",
+   "min vol",
+   "airlines and transports",
+   "chemicals",
+   "XLY",
+   "long-duration growth",
+   "XLRE",
+   "long Treasuries",
+   "levered small caps",
+   "CCC credit",
+   "homebuilders",
+   "housing-linked retail"
+  ],
+  "duration": "short",
+  "overlays": [
+   "oil shock: producers over consumers of energy",
+   "hostile duration: rising real and long yields de-rate distant cash flows first",
+   "credit tail under strain: own balance sheets",
+   "mortgage rate above 7% and builders lagging",
+   "stocks and bonds falling together: Treasuries are not a hedge; use cash, T-bills, gold or options"
+  ]
+ },
+ "runway_read": {
+  "long_duration": "headwind (fit -1.4); against: R_REAL10, R_10Y_1M, R_LONG_END; for: none",
+  "cash_flow": "neutral (fit +0.2); against: R_10Y_LEVEL, E_BREADTH_RSP; for: G_CLAIMS, G_GDPNOW, V_VIX",
+  "small_caps": "neutral (fit -0.4); against: R_10Y_1M, C_HY_CHANGE, E_SMALL_CAPS; for: L_NFCI, G_CLAIMS",
+  "regime": "Lean risk-off (-7.8)"
+ },
+ "series": {
+  "DFEDTARL": {
+   "value": 3.75,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/DFEDTARL",
+   "chg_1m": 0.25,
+   "chg_3m": 0.25,
+   "chg_12m": -0.25,
+   "pctile_5y": 42.5,
+   "pctile_20y": 83.8
+  },
+  "DFEDTARU": {
+   "value": 4.0,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/DFEDTARU",
+   "chg_1m": 0.25,
+   "chg_3m": 0.25,
+   "chg_12m": -0.25,
+   "pctile_5y": 42.5,
+   "pctile_20y": 83.8
+  },
+  "DFF": {
+   "value": 3.88,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DFF",
+   "chg_1m": 0.25,
+   "chg_3m": 0.25,
+   "chg_12m": -0.21,
+   "pctile_5y": 41.8,
+   "pctile_20y": 78.9
+  },
+  "DGS3MO": {
+   "value": 4.25,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DGS3MO",
+   "chg_1m": 0.35,
+   "chg_3m": 0.38,
+   "chg_12m": 0.21,
+   "pctile_5y": 43.7,
+   "pctile_20y": 81.4
+  },
+  "DGS2": {
+   "value": 4.89,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DGS2",
+   "chg_1m": 0.55,
+   "chg_3m": 0.75,
+   "chg_12m": 1.26,
+   "pctile_5y": 92.7,
+   "pctile_20y": 97.3
+  },
+  "DGS5": {
+   "value": 5.06,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DGS5",
+   "chg_1m": 0.58,
+   "chg_3m": 0.87,
+   "chg_12m": 1.32,
+   "pctile_5y": 100.0,
+   "pctile_20y": 99.8
+  },
+  "DGS10": {
+   "value": 5.26,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DGS10",
+   "chg_1m": 0.53,
+   "chg_3m": 0.82,
+   "chg_12m": 1.11,
+   "pctile_5y": 100.0,
+   "pctile_20y": 100.0
+  },
+  "DGS30": {
+   "value": 5.59,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DGS30",
+   "chg_1m": 0.37,
+   "chg_3m": 0.68,
+   "chg_12m": 0.88,
+   "pctile_5y": 100.0,
+   "pctile_20y": 100.0
+  },
+  "DFII10": {
+   "value": 2.91,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DFII10",
+   "chg_1m": 0.49,
+   "chg_3m": 0.71,
+   "chg_12m": 1.11,
+   "pctile_5y": 100.0,
+   "pctile_20y": 99.7
+  },
+  "T10Y2Y": {
+   "value": 0.41,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/T10Y2Y",
+   "chg_1m": 0.0,
+   "chg_3m": 0.1,
+   "chg_12m": -0.15,
+   "pctile_5y": 66.9,
+   "pctile_20y": 30.2
+  },
+  "T10Y3M": {
+   "value": 1.09,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/T10Y3M",
+   "chg_1m": 0.25,
+   "chg_3m": 0.46,
+   "chg_12m": 0.95,
+   "pctile_5y": 84.9,
+   "pctile_20y": 42.3
+  },
+  "THREEFYTP10": {
+   "value": 1.02,
+   "as_of": "2026-09-25",
+   "source": "https://fred.stlouisfed.org/series/THREEFYTP10",
+   "chg_1m": 0.18,
+   "chg_3m": 0.34,
+   "chg_12m": 0.51,
+   "pctile_5y": 99.9,
+   "pctile_20y": 97.4
+  },
+  "T10YIE": {
+   "value": 2.36,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/T10YIE",
+   "chg_1m": 0.05,
+   "chg_3m": 0.13,
+   "chg_12m": 0.0,
+   "pctile_5y": 64.5,
+   "pctile_20y": 81.4
+  },
+  "T5YIFR": {
+   "value": 2.36,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/T5YIFR",
+   "chg_1m": 0.05,
+   "chg_3m": 0.16,
+   "chg_12m": 0.06,
+   "pctile_5y": 85.2,
+   "pctile_20y": 66.5
+  },
+  "^MOVE": {
+   "value": 110.45,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/^MOVE",
+   "chg_1m": 35.13,
+   "chg_3m": 41.89,
+   "chg_12m": 32.52,
+   "pctile_5y": 63.2,
+   "pctile_20y": 81.0
+  },
+  "VIXCLS": {
+   "value": 16.04,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/VIXCLS",
+   "chg_1m": 1.61,
+   "chg_3m": -0.41,
+   "chg_12m": -0.08,
+   "pctile_5y": 32.7,
+   "pctile_20y": 40.3
+  },
+  "^VIX": {
+   "value": 16.34,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/^VIX",
+   "chg_1m": 1.42,
+   "chg_3m": -0.25,
+   "chg_12m": 0.06,
+   "pctile_5y": 35.4,
+   "pctile_20y": 44.9
+  },
+  "^VIX3M": {
+   "value": 18.37,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/^VIX3M",
+   "chg_1m": 0.84,
+   "chg_3m": -0.79,
+   "chg_12m": -0.4,
+   "pctile_5y": 28.8,
+   "pctile_20y": 42.3
+  },
+  "BAMLC0A0CM": {
+   "value": 0.84,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/BAMLC0A0CM",
+   "chg_1m": 0.05,
+   "chg_3m": 0.08,
+   "chg_12m": 0.09,
+   "pctile_5y": 49.9,
+   "pctile_20y": 49.9
+  },
+  "BAMLH0A0HYM2": {
+   "value": 3.08,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+   "chg_1m": 0.48,
+   "chg_3m": 0.33,
+   "chg_12m": 0.34,
+   "pctile_5y": 53.9,
+   "pctile_20y": 53.9
+  },
+  "BAMLH0A3HYC": {
+   "value": 11.57,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/BAMLH0A3HYC",
+   "chg_1m": 1.31,
+   "chg_3m": 1.87,
+   "chg_12m": 3.59,
+   "pctile_5y": 100.0,
+   "pctile_20y": 100.0
+  },
+  "MORTGAGE30US": {
+   "value": 7.03,
+   "as_of": "2026-09-24",
+   "source": "https://fred.stlouisfed.org/series/MORTGAGE30US",
+   "chg_1m": 0.38,
+   "chg_3m": 0.54,
+   "chg_12m": 0.77,
+   "pctile_5y": 91.2,
+   "pctile_20y": 97.8
+  },
+  "DX-Y.NYB": {
+   "value": 101.47,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/DX-Y.NYB",
+   "chg_1m": 2.04,
+   "chg_3m": 0.08,
+   "chg_12m": 3.7,
+   "pctile_5y": 44.3,
+   "pctile_20y": 70.8
+  },
+  "DTWEXBGS": {
+   "value": 120.33,
+   "as_of": "2026-09-25",
+   "source": "https://fred.stlouisfed.org/series/DTWEXBGS",
+   "chg_1m": 1.88,
+   "chg_3m": -0.56,
+   "chg_12m": -0.21,
+   "pctile_5y": 43.0,
+   "pctile_20y": 84.6
+  },
+  "JPY=X": {
+   "value": 157.87,
+   "as_of": "2026-10-01",
+   "source": "https://finance.yahoo.com/quote/JPY=X",
+   "chg_1m": -1.88,
+   "chg_3m": -4.67,
+   "chg_12m": 9.87,
+   "pctile_5y": 88.2,
+   "pctile_20y": 94.1
+  },
+  "CL=F": {
+   "value": 90.34,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/CL=F",
+   "chg_1m": 4.58,
+   "chg_3m": 21.76,
+   "chg_12m": 27.97,
+   "pctile_5y": 82.5,
+   "pctile_20y": 91.2
+  },
+  "DCOILWTICO": {
+   "value": 96.16,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/DCOILWTICO",
+   "chg_1m": 11.59,
+   "chg_3m": 25.6,
+   "chg_12m": 31.89,
+   "pctile_5y": 87.3,
+   "pctile_20y": 84.0
+  },
+  "GC=F": {
+   "value": 4174.4,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/GC=F",
+   "chg_1m": -307.1,
+   "chg_3m": 92.0,
+   "chg_12m": 301.2,
+   "pctile_5y": 85.5,
+   "pctile_20y": 92.8
+  },
+  "HG=F": {
+   "value": 6.6,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/HG=F",
+   "chg_1m": 0.01,
+   "chg_3m": 0.48,
+   "chg_12m": 1.8,
+   "pctile_5y": 98.8,
+   "pctile_20y": 99.4
+  },
+  "BTC-USD": {
+   "value": 83485.22,
+   "as_of": "2026-10-01",
+   "source": "https://finance.yahoo.com/quote/BTC-USD",
+   "chg_1m": 6081.59,
+   "chg_3m": 21999.92,
+   "chg_12m": -35163.71,
+   "pctile_5y": 76.0,
+   "pctile_20y": 88.0
+  },
+  "NFCI": {
+   "value": -0.55,
+   "as_of": "2026-09-25",
+   "source": "https://fred.stlouisfed.org/series/NFCI",
+   "chg_1m": 0.01,
+   "chg_3m": -0.03,
+   "chg_12m": -0.02,
+   "pctile_5y": 10.7,
+   "pctile_20y": 35.2
+  },
+  "STLFSI4": {
+   "value": -0.81,
+   "as_of": "2026-09-25",
+   "source": "https://fred.stlouisfed.org/series/STLFSI4",
+   "chg_1m": 0.0,
+   "chg_3m": -0.17,
+   "chg_12m": -0.22,
+   "pctile_5y": 13.0,
+   "pctile_20y": 6.9
+  },
+  "UNRATE": {
+   "value": 4.1,
+   "as_of": "2026-08-01",
+   "source": "https://fred.stlouisfed.org/series/UNRATE",
+   "chg_1m": 0.0,
+   "chg_3m": -0.2,
+   "chg_12m": -0.2,
+   "pctile_5y": 65.0,
+   "pctile_20y": 27.5
+  },
+  "ICSA": {
+   "value": 197000.0,
+   "as_of": "2026-09-19",
+   "source": "https://fred.stlouisfed.org/series/ICSA",
+   "chg_1m": -10000.0,
+   "chg_3m": -19000.0,
+   "chg_12m": -36000.0,
+   "pctile_5y": 2.3,
+   "pctile_20y": 0.8
+  },
+  "GDPNOW": {
+   "value": 3.74,
+   "as_of": "2026-07-01",
+   "source": "https://fred.stlouisfed.org/series/GDPNOW",
+   "chg_1m": 2.2,
+   "chg_3m": 2.2,
+   "chg_12m": 0.26,
+   "pctile_5y": 85.7,
+   "pctile_20y": 85.2
+  },
+  "SPY": {
+   "value": 764.2,
+   "as_of": "2026-09-29",
+   "source": "https://finance.yahoo.com/quote/SPY",
+   "chg_1m": -3.24,
+   "chg_3m": 19.28,
+   "chg_12m": 107.6,
+   "pctile_5y": 98.2,
+   "pctile_20y": 99.1
+  },
+  "QQQ": {
+   "value": 737.93,
+   "as_of": "2026-09-29",
+   "source": "https://finance.yahoo.com/quote/QQQ",
+   "chg_1m": 22.25,
+   "chg_3m": 2.3,
+   "chg_12m": 142.0,
+   "pctile_5y": 99.1,
+   "pctile_20y": 99.6
+  },
+  "IWM": {
+   "value": 279.01,
+   "as_of": "2026-09-29",
+   "source": "https://finance.yahoo.com/quote/IWM",
+   "chg_1m": -15.97,
+   "chg_3m": -20.66,
+   "chg_12m": 39.82,
+   "pctile_5y": 92.3,
+   "pctile_20y": 96.1
+  },
+  "UMCSENT": {
+   "value": 51.7,
+   "as_of": "2026-08-01",
+   "source": "https://fred.stlouisfed.org/series/UMCSENT",
+   "chg_1m": -3.5,
+   "chg_3m": 6.9,
+   "chg_12m": -6.5,
+   "pctile_5y": 11.5,
+   "pctile_20y": 2.9
+  },
+  "JTSJOL": {
+   "value": 7079.0,
+   "as_of": "2026-08-01",
+   "source": "https://fred.stlouisfed.org/series/JTSJOL",
+   "chg_1m": -256.0,
+   "chg_3m": -458.0,
+   "chg_12m": 160.0,
+   "pctile_5y": 13.1,
+   "pctile_20y": 68.5
+  },
+  "A091RC1Q027SBEA": {
+   "value": 1279.73,
+   "as_of": "2026-04-01",
+   "source": "https://fred.stlouisfed.org/series/A091RC1Q027SBEA",
+   "chg_1m": 26.88,
+   "chg_3m": 14.68,
+   "chg_12m": 82.6,
+   "pctile_5y": 100.0,
+   "pctile_20y": 100.0
+  },
+  "GFDEBTN": {
+   "value": 39065421.0,
+   "as_of": "2026-01-01",
+   "source": "https://fred.stlouisfed.org/series/GFDEBTN",
+   "chg_1m": 551412.0,
+   "chg_3m": 551412.0,
+   "chg_12m": 2851111.48,
+   "pctile_5y": 100.0,
+   "pctile_20y": 100.0
+  },
+  "WSHOMCB": {
+   "value": 1910409.0,
+   "as_of": "2026-09-23",
+   "source": "https://fred.stlouisfed.org/series/WSHOMCB",
+   "chg_1m": -20319.0,
+   "chg_3m": -51181.0,
+   "chg_12m": -192374.0,
+   "pctile_5y": 0.4,
+   "pctile_20y": 68.7
+  },
+  "WRESBAL": {
+   "value": 2930193.0,
+   "as_of": "2026-09-23",
+   "source": "https://fred.stlouisfed.org/series/WRESBAL",
+   "chg_1m": -5094.0,
+   "chg_3m": -21223.0,
+   "chg_12m": -143162.0,
+   "pctile_5y": 5.4,
+   "pctile_20y": 71.0
+  },
+  "RRPONTSYD": {
+   "value": 11.54,
+   "as_of": "2026-09-30",
+   "source": "https://fred.stlouisfed.org/series/RRPONTSYD",
+   "chg_1m": 4.81,
+   "chg_3m": 10.54,
+   "chg_12m": -37.53,
+   "pctile_5y": 18.4,
+   "pctile_20y": 29.6
+  },
+  "HOUST": {
+   "value": 1275.0,
+   "as_of": "2026-08-01",
+   "source": "https://fred.stlouisfed.org/series/HOUST",
+   "chg_1m": -34.0,
+   "chg_3m": 93.0,
+   "chg_12m": -16.0,
+   "pctile_5y": 6.6,
+   "pctile_20y": 59.3
+  },
+  "EXHOSLUSM495S": {
+   "value": 3980000.0,
+   "as_of": "2026-08-01",
+   "source": "https://fred.stlouisfed.org/series/EXHOSLUSM495S",
+   "chg_1m": -80000.0,
+   "chg_3m": -210000.0,
+   "chg_12m": -50000.0,
+   "pctile_5y": null,
+   "pctile_20y": null
+  },
+  "HSN1F": {
+   "value": 684.0,
+   "as_of": "2026-08-01",
+   "source": "https://fred.stlouisfed.org/series/HSN1F",
+   "chg_1m": 41.0,
+   "chg_3m": 48.0,
+   "chg_12m": -14.0,
+   "pctile_5y": 63.9,
+   "pctile_20y": 73.9
+  }
+ },
+ "derived": {
+  "NET_LIQ_BN": {
+   "value": 5770.16,
+   "as_of": "2026-09-23",
+   "source": "WALCL - WTREGEN - RRPONTSYD (FRED)",
+   "chg_1m": -21.61,
+   "chg_3m": -42.26,
+   "chg_12m": -68.1,
+   "pctile_5y": 8.8,
+   "pctile_20y": 73.3
+  },
+  "MORTGAGE_SPREAD": {
+   "value": 1.85,
+   "as_of": "2026-09-24",
+   "source": "https://fred.stlouisfed.org/series/MORTGAGE30US minus https://fred.stlouisfed.org/series/DGS10",
+   "chg_1m": -0.11,
+   "chg_3m": -0.24,
+   "chg_12m": -0.3,
+   "pctile_5y": 9.2,
+   "pctile_20y": 56.4
+  },
+  "CCC_HY_GAP": {
+   "value": 8.49,
+   "as_of": "2026-09-29",
+   "source": "https://fred.stlouisfed.org/series/BAMLH0A3HYC minus https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+   "chg_1m": 0.83,
+   "chg_3m": 1.54,
+   "chg_12m": 3.25,
+   "pctile_5y": 100.0,
+   "pctile_20y": 100.0
+  },
+  "COPPER_GOLD": {
+   "value": 0.0,
+   "as_of": "2026-09-30",
+   "source": "https://finance.yahoo.com/quote/HG=F / https://finance.yahoo.com/quote/GC=F",
+   "chg_1m": 0.0,
+   "chg_3m": 0.0,
+   "chg_12m": 0.0,
+   "pctile_5y": 34.3,
+   "pctile_20y": 22.7
+  }
+ },
+ "performance": {
+  "indexes": [
+   {
+    "symbol": "BZ=F",
+    "name": "Brent front month",
+    "as_of": "2026-09-30",
+    "ret_1m": 8.5,
+    "ret_3m": 37.2,
+    "ret_6m": -3.0,
+    "ret_12m": 46.5,
+    "above_200d": true,
+    "rel_1m": 8.9,
+    "rel_3m": 34.6
+   },
+   {
+    "symbol": "BTC-USD",
+    "name": "Bitcoin",
+    "as_of": "2026-10-01",
+    "ret_1m": 7.9,
+    "ret_3m": 35.8,
+    "ret_6m": 24.8,
+    "ret_12m": -29.6,
+    "above_200d": true,
+    "rel_1m": 8.3,
+    "rel_3m": 33.2
+   },
+   {
+    "symbol": "CL=F",
+    "name": "WTI front month",
+    "as_of": "2026-09-30",
+    "ret_1m": 5.3,
+    "ret_3m": 31.7,
+    "ret_6m": -9.8,
+    "ret_12m": 44.8,
+    "above_200d": true,
+    "rel_1m": 5.8,
+    "rel_3m": 29.1
+   },
+   {
+    "symbol": "HG=F",
+    "name": "Copper",
+    "as_of": "2026-09-30",
+    "ret_1m": 0.2,
+    "ret_3m": 7.8,
+    "ret_6m": 17.4,
+    "ret_12m": 37.4,
+    "above_200d": true,
+    "rel_1m": 0.6,
+    "rel_3m": 5.3
+   },
+   {
+    "symbol": "SPY",
+    "name": "S&P 500 ETF",
+    "as_of": "2026-09-29",
+    "ret_1m": -0.4,
+    "ret_3m": 2.6,
+    "ret_6m": 18.1,
+    "ret_12m": 16.4,
+    "above_200d": true
+   },
+   {
+    "symbol": "GC=F",
+    "name": "Gold",
+    "as_of": "2026-09-30",
+    "ret_1m": -6.9,
+    "ret_3m": 2.3,
+    "ret_6m": -13.3,
+    "ret_12m": 7.8,
+    "above_200d": false,
+    "rel_1m": -6.4,
+    "rel_3m": -0.3
+   },
+   {
+    "symbol": "^GSPC",
+    "name": "S&P 500",
+    "as_of": "2026-09-30",
+    "ret_1m": -0.5,
+    "ret_3m": 2.2,
+    "ret_6m": 16.4,
+    "ret_12m": 14.4,
+    "above_200d": true,
+    "rel_1m": -0.0,
+    "rel_3m": -0.3
+   },
+   {
+    "symbol": "EFA",
+    "name": "Developed ex-US",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.0,
+    "ret_3m": 0.6,
+    "ret_6m": 9.3,
+    "ret_12m": 16.3,
+    "above_200d": true,
+    "rel_1m": -2.5,
+    "rel_3m": -2.0
+   },
+   {
+    "symbol": "QQQ",
+    "name": "Nasdaq-100",
+    "as_of": "2026-09-29",
+    "ret_1m": 3.1,
+    "ret_3m": 0.3,
+    "ret_6m": 28.1,
+    "ret_12m": 23.8,
+    "above_200d": true,
+    "rel_1m": 3.5,
+    "rel_3m": -2.3
+   },
+   {
+    "symbol": "DX-Y.NYB",
+    "name": "US dollar index (DXY)",
+    "as_of": "2026-09-30",
+    "ret_1m": 2.1,
+    "ret_3m": 0.1,
+    "ret_6m": 1.8,
+    "ret_12m": 3.8,
+    "above_200d": true,
+    "rel_1m": 2.5,
+    "rel_3m": -2.5
+   },
+   {
+    "symbol": "SHY",
+    "name": "1-3 year Treasuries",
+    "as_of": "2026-09-29",
+    "ret_1m": -0.6,
+    "ret_3m": -0.3,
+    "ret_6m": 0.1,
+    "ret_12m": 1.5,
+    "above_200d": false,
+    "rel_1m": -0.2,
+    "rel_3m": -2.9
+   },
+   {
+    "symbol": "RSP",
+    "name": "S&P 500 equal weight",
+    "as_of": "2026-09-29",
+    "ret_1m": -4.7,
+    "ret_3m": -1.2,
+    "ret_6m": 10.0,
+    "ret_12m": 12.5,
+    "above_200d": true,
+    "rel_1m": -4.3,
+    "rel_3m": -3.8
+   },
+   {
+    "symbol": "EEM",
+    "name": "Emerging markets",
+    "as_of": "2026-09-29",
+    "ret_1m": 0.4,
+    "ret_3m": -1.5,
+    "ret_6m": 19.3,
+    "ret_12m": 29.2,
+    "above_200d": true,
+    "rel_1m": 0.8,
+    "rel_3m": -4.1
+   },
+   {
+    "symbol": "HYG",
+    "name": "High-yield corporates",
+    "as_of": "2026-09-29",
+    "ret_1m": -2.5,
+    "ret_3m": -1.8,
+    "ret_6m": 0.2,
+    "ret_12m": 1.0,
+    "above_200d": false,
+    "rel_1m": -2.0,
+    "rel_3m": -4.4
+   },
+   {
+    "symbol": "JPY=X",
+    "name": "USD/JPY",
+    "as_of": "2026-10-01",
+    "ret_1m": -1.2,
+    "ret_3m": -2.9,
+    "ret_6m": -0.5,
+    "ret_12m": 6.7,
+    "above_200d": false,
+    "rel_1m": -0.8,
+    "rel_3m": -5.5
+   },
+   {
+    "symbol": "TIP",
+    "name": "TIPS",
+    "as_of": "2026-09-29",
+    "ret_1m": -2.7,
+    "ret_3m": -3.3,
+    "ret_6m": -2.5,
+    "ret_12m": -2.2,
+    "above_200d": false,
+    "rel_1m": -2.3,
+    "rel_3m": -5.9
+   },
+   {
+    "symbol": "MBB",
+    "name": "Agency MBS",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.6,
+    "ret_3m": -4.3,
+    "ret_6m": -3.7,
+    "ret_12m": -1.9,
+    "above_200d": false,
+    "rel_1m": -3.1,
+    "rel_3m": -6.8
+   },
+   {
+    "symbol": "IEF",
+    "name": "7-10 year Treasuries",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.3,
+    "ret_3m": -4.4,
+    "ret_6m": -4.4,
+    "ret_12m": -3.6,
+    "above_200d": false,
+    "rel_1m": -2.9,
+    "rel_3m": -7.0
+   },
+   {
+    "symbol": "LQD",
+    "name": "Investment-grade corporates",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.3,
+    "ret_3m": -5.0,
+    "ret_6m": -3.8,
+    "ret_12m": -3.9,
+    "above_200d": false,
+    "rel_1m": -2.9,
+    "rel_3m": -7.6
+   },
+   {
+    "symbol": "NG=F",
+    "name": "Henry Hub natural gas",
+    "as_of": "2026-09-30",
+    "ret_1m": 2.2,
+    "ret_3m": -6.9,
+    "ret_6m": 6.4,
+    "ret_12m": -9.2,
+    "above_200d": false,
+    "rel_1m": 2.6,
+    "rel_3m": -9.5
+   },
+   {
+    "symbol": "IWM",
+    "name": "Russell 2000",
+    "as_of": "2026-09-29",
+    "ret_1m": -5.4,
+    "ret_3m": -6.9,
+    "ret_6m": 13.1,
+    "ret_12m": 16.6,
+    "above_200d": true,
+    "rel_1m": -5.0,
+    "rel_3m": -9.5
+   },
+   {
+    "symbol": "TLT",
+    "name": "20+ year Treasuries",
+    "as_of": "2026-09-29",
+    "ret_1m": -5.2,
+    "ret_3m": -8.4,
+    "ret_6m": -7.6,
+    "ret_12m": -8.7,
+    "above_200d": false,
+    "rel_1m": -4.8,
+    "rel_3m": -11.0
+   }
+  ],
+  "sectors": [
+   {
+    "symbol": "XLE",
+    "name": "Energy",
+    "as_of": "2026-09-29",
+    "ret_1m": -1.2,
+    "ret_3m": 16.6,
+    "ret_6m": 1.8,
+    "ret_12m": 40.2,
+    "above_200d": true,
+    "rel_1m": -0.8,
+    "rel_3m": 14.0
+   },
+   {
+    "symbol": "XLV",
+    "name": "Health care",
+    "as_of": "2026-09-29",
+    "ret_1m": 0.1,
+    "ret_3m": 8.0,
+    "ret_6m": 17.4,
+    "ret_12m": 27.7,
+    "above_200d": true,
+    "rel_1m": 0.6,
+    "rel_3m": 5.4
+   },
+   {
+    "symbol": "XLC",
+    "name": "Communication services",
+    "as_of": "2026-09-29",
+    "ret_1m": -1.0,
+    "ret_3m": 4.4,
+    "ret_6m": 1.1,
+    "ret_12m": -4.8,
+    "above_200d": false,
+    "rel_1m": -0.6,
+    "rel_3m": 1.8
+   },
+   {
+    "symbol": "XLK",
+    "name": "Technology",
+    "as_of": "2026-09-29",
+    "ret_1m": 4.9,
+    "ret_3m": 2.2,
+    "ret_6m": 46.7,
+    "ret_12m": 39.5,
+    "above_200d": true,
+    "rel_1m": 5.3,
+    "rel_3m": -0.4
+   },
+   {
+    "symbol": "XLF",
+    "name": "Financials",
+    "as_of": "2026-09-29",
+    "ret_1m": -6.7,
+    "ret_3m": 1.1,
+    "ret_6m": 10.2,
+    "ret_12m": 1.4,
+    "above_200d": true,
+    "rel_1m": -6.3,
+    "rel_3m": -1.5
+   },
+   {
+    "symbol": "XLP",
+    "name": "Consumer staples",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.6,
+    "ret_3m": -0.8,
+    "ret_6m": 1.2,
+    "ret_12m": 7.7,
+    "above_200d": false,
+    "rel_1m": -3.2,
+    "rel_3m": -3.4
+   },
+   {
+    "symbol": "XLB",
+    "name": "Materials",
+    "as_of": "2026-09-29",
+    "ret_1m": -7.2,
+    "ret_3m": -3.0,
+    "ret_6m": -0.9,
+    "ret_12m": 12.1,
+    "above_200d": false,
+    "rel_1m": -6.8,
+    "rel_3m": -5.5
+   },
+   {
+    "symbol": "XLRE",
+    "name": "Real estate",
+    "as_of": "2026-09-29",
+    "ret_1m": -6.3,
+    "ret_3m": -5.3,
+    "ret_6m": 3.0,
+    "ret_12m": 2.0,
+    "above_200d": false,
+    "rel_1m": -5.9,
+    "rel_3m": -7.9
+   },
+   {
+    "symbol": "XLY",
+    "name": "Consumer discretionary",
+    "as_of": "2026-09-29",
+    "ret_1m": -6.7,
+    "ret_3m": -6.7,
+    "ret_6m": 0.6,
+    "ret_12m": -8.6,
+    "above_200d": false,
+    "rel_1m": -6.2,
+    "rel_3m": -9.3
+   },
+   {
+    "symbol": "XLI",
+    "name": "Industrials",
+    "as_of": "2026-09-29",
+    "ret_1m": -4.3,
+    "ret_3m": -8.4,
+    "ret_6m": 5.1,
+    "ret_12m": 11.8,
+    "above_200d": false,
+    "rel_1m": -3.8,
+    "rel_3m": -11.0
+   },
+   {
+    "symbol": "XLU",
+    "name": "Utilities",
+    "as_of": "2026-09-29",
+    "ret_1m": -6.4,
+    "ret_3m": -11.8,
+    "ret_6m": -12.3,
+    "ret_12m": -6.2,
+    "above_200d": false,
+    "rel_1m": -6.0,
+    "rel_3m": -14.4
+   }
+  ],
+  "factors": [
+   {
+    "symbol": "GDX",
+    "name": "Gold miners",
+    "as_of": "2026-09-29",
+    "ret_1m": -10.6,
+    "ret_3m": 18.1,
+    "ret_6m": -2.9,
+    "ret_12m": 18.5,
+    "above_200d": false,
+    "rel_1m": -10.2,
+    "rel_3m": 15.5
+   },
+   {
+    "symbol": "IGV",
+    "name": "Software",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.9,
+    "ret_3m": 16.1,
+    "ret_6m": 31.5,
+    "ret_12m": -9.3,
+    "above_200d": true,
+    "rel_1m": -3.5,
+    "rel_3m": 13.5
+   },
+   {
+    "symbol": "ARKK",
+    "name": "Speculative growth",
+    "as_of": "2026-09-29",
+    "ret_1m": 5.7,
+    "ret_3m": 10.7,
+    "ret_6m": 32.3,
+    "ret_12m": 3.8,
+    "above_200d": true,
+    "rel_1m": 6.2,
+    "rel_3m": 8.1
+   },
+   {
+    "symbol": "QUAL",
+    "name": "Quality factor",
+    "as_of": "2026-09-29",
+    "ret_1m": 0.0,
+    "ret_3m": 2.0,
+    "ret_6m": 16.8,
+    "ret_12m": 16.5,
+    "above_200d": true,
+    "rel_1m": 0.5,
+    "rel_3m": -0.6
+   },
+   {
+    "symbol": "USMV",
+    "name": "Minimum volatility",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.6,
+    "ret_3m": 1.7,
+    "ret_6m": 6.1,
+    "ret_12m": 4.8,
+    "above_200d": true,
+    "rel_1m": -3.1,
+    "rel_3m": -0.9
+   },
+   {
+    "symbol": "VLUE",
+    "name": "Value factor",
+    "as_of": "2026-09-29",
+    "ret_1m": -0.9,
+    "ret_3m": -0.1,
+    "ret_6m": 40.8,
+    "ret_12m": 62.1,
+    "above_200d": true,
+    "rel_1m": -0.4,
+    "rel_3m": -2.7
+   },
+   {
+    "symbol": "XBI",
+    "name": "Biotech",
+    "as_of": "2026-09-29",
+    "ret_1m": -3.4,
+    "ret_3m": -0.9,
+    "ret_6m": 22.9,
+    "ret_12m": 58.4,
+    "above_200d": true,
+    "rel_1m": -3.0,
+    "rel_3m": -3.5
+   },
+   {
+    "symbol": "SPHB",
+    "name": "High beta",
+    "as_of": "2026-09-29",
+    "ret_1m": 3.9,
+    "ret_3m": -2.3,
+    "ret_6m": 31.2,
+    "ret_12m": 39.3,
+    "above_200d": true,
+    "rel_1m": 4.4,
+    "rel_3m": -4.9
+   },
+   {
+    "symbol": "SPLV",
+    "name": "Low volatility",
+    "as_of": "2026-09-29",
+    "ret_1m": -5.0,
+    "ret_3m": -4.4,
+    "ret_6m": -1.6,
+    "ret_12m": -0.3,
+    "above_200d": false,
+    "rel_1m": -4.6,
+    "rel_3m": -7.0
+   },
+   {
+    "symbol": "KRE",
+    "name": "Regional banks",
+    "as_of": "2026-09-29",
+    "ret_1m": -5.5,
+    "ret_3m": -6.2,
+    "ret_6m": 8.4,
+    "ret_12m": 12.5,
+    "above_200d": true,
+    "rel_1m": -5.1,
+    "rel_3m": -8.8
+   },
+   {
+    "symbol": "MTUM",
+    "name": "Momentum factor",
+    "as_of": "2026-09-29",
+    "ret_1m": 6.0,
+    "ret_3m": -7.4,
+    "ret_6m": 32.5,
+    "ret_12m": 24.8,
+    "above_200d": true,
+    "rel_1m": 6.4,
+    "rel_3m": -10.0
+   },
+   {
+    "symbol": "SMH",
+    "name": "Semiconductors",
+    "as_of": "2026-09-29",
+    "ret_1m": 9.7,
+    "ret_3m": -7.5,
+    "ret_6m": 58.3,
+    "ret_12m": 88.7,
+    "above_200d": true,
+    "rel_1m": 10.1,
+    "rel_3m": -10.1
+   },
+   {
+    "symbol": "ITB",
+    "name": "Homebuilders",
+    "as_of": "2026-09-29",
+    "ret_1m": -7.6,
+    "ret_3m": -14.7,
+    "ret_6m": -1.4,
+    "ret_12m": -16.7,
+    "above_200d": false,
+    "rel_1m": -7.1,
+    "rel_3m": -17.3
+   }
+  ]
+ },
+ "analogs": {
+  "status": "ok",
+  "now_month": "2026-08",
+  "now_features": {
+   "10y level": 4.68,
+   "10y 12m change": 0.42,
+   "CPI y/y": 3.35,
+   "CPI y/y 12m change": 0.41,
+   "unemployment 12m change": -0.2,
+   "real fed funds": 0.28,
+   "10y minus 3m": 0.96,
+   "Baa minus 10y": 1.64,
+   "oil y/y (log)": 0.26
+  },
+  "method": "z-scored Euclidean distance over 9 monthly features since 1954-07; excludes the last 36 months; picks are at least 18 months apart; equity returns from the OECD US share price index (price only, monthly average)",
+  "analogs": [
+   {
+    "month": "2005-11",
+    "distance": 0.6,
+    "era": "Credit and housing boom, commodity super-cycle",
+    "features": {
+     "10y level": 4.54,
+     "10y 12m change": 0.35,
+     "CPI y/y": 3.34,
+     "CPI y/y 12m change": -0.28,
+     "unemployment 12m change": -0.4,
+     "real fed funds": 0.66,
+     "10y minus 3m": 0.66,
+     "Baa minus 10y": 1.85,
+     "oil y/y (log)": 0.18
+    },
+    "eq_fwd_6m_pct": 10.0,
+    "eq_fwd_12m_pct": 16.7,
+    "eq_max_dd_12m_pct": 0.0,
+    "ten_year_chg_12m_pp": 0.06
+   },
+   {
+    "month": "2018-10",
+    "distance": 0.86,
+    "era": "Late-cycle expansion, QT and 2018 tightening scare, 2019 repo spike",
+    "features": {
+     "10y level": 3.15,
+     "10y 12m change": 0.79,
+     "CPI y/y": 2.49,
+     "CPI y/y 12m change": 0.47,
+     "unemployment 12m change": -0.4,
+     "real fed funds": -0.3,
+     "10y minus 3m": 0.9,
+     "Baa minus 10y": 1.92,
+     "oil y/y (log)": 0.32
+    },
+    "eq_fwd_6m_pct": 3.1,
+    "eq_fwd_12m_pct": 3.3,
+    "eq_max_dd_12m_pct": -7.4,
+    "ten_year_chg_12m_pp": -1.44
+   },
+   {
+    "month": "1996-11",
+    "distance": 0.93,
+    "era": "Productivity boom and dot-com mania",
+    "features": {
+     "10y level": 6.2,
+     "10y 12m change": 0.27,
+     "CPI y/y": 3.25,
+     "CPI y/y 12m change": 0.65,
+     "unemployment 12m change": -0.2,
+     "real fed funds": 2.06,
+     "10y minus 3m": 1.17,
+     "Baa minus 10y": 1.59,
+     "oil y/y (log)": 0.28
+    },
+    "eq_fwd_6m_pct": 11.5,
+    "eq_fwd_12m_pct": 26.6,
+    "eq_max_dd_12m_pct": 0.0,
+    "ten_year_chg_12m_pp": -0.32
+   },
+   {
+    "month": "1967-07",
+    "distance": 1.13,
+    "era": "Go-go years and Nifty Fifty; inflation starts to build, guns and butter",
+    "features": {
+     "10y level": 5.16,
+     "10y 12m change": 0.14,
+     "CPI y/y": 2.93,
+     "CPI y/y 12m change": 0.17,
+     "unemployment 12m change": 0.0,
+     "real fed funds": 0.86,
+     "10y minus 3m": 0.95,
+     "Baa minus 10y": 1.1,
+     "oil y/y (log)": 0.03
+    },
+    "eq_fwd_6m_pct": 3.0,
+    "eq_fwd_12m_pct": 9.2,
+    "eq_max_dd_12m_pct": -4.3,
+    "ten_year_chg_12m_pp": 0.34
+   },
+   {
+    "month": "2007-09",
+    "distance": 1.18,
+    "era": "Global financial crisis",
+    "features": {
+     "10y level": 4.52,
+     "10y 12m change": -0.2,
+     "CPI y/y": 2.83,
+     "CPI y/y 12m change": 0.82,
+     "unemployment 12m change": 0.2,
+     "real fed funds": 2.11,
+     "10y minus 3m": 0.63,
+     "Baa minus 10y": 2.07,
+     "oil y/y (log)": 0.22
+    },
+    "eq_fwd_6m_pct": -10.2,
+    "eq_fwd_12m_pct": -19.0,
+    "eq_max_dd_12m_pct": -19.0,
+    "ten_year_chg_12m_pp": -0.83
+   },
+   {
+    "month": "1957-11",
+    "distance": 1.19,
+    "era": "Post-war boom: financial repression, industrial build-out, low inflation",
+    "features": {
+     "10y level": 3.72,
+     "10y 12m change": 0.23,
+     "CPI y/y": 3.27,
+     "CPI y/y 12m change": 0.93,
+     "unemployment 12m change": 0.8,
+     "real fed funds": 0.01,
+     "10y minus 3m": 0.41,
+     "Baa minus 10y": 1.37,
+     "oil y/y (log)": 0.08
+    },
+    "eq_fwd_6m_pct": 5.4,
+    "eq_fwd_12m_pct": 27.5,
+    "eq_max_dd_12m_pct": 0.0,
+    "ten_year_chg_12m_pp": 0.02
+   }
+  ],
+  "summary": {
+   "median_fwd_12m_pct": 12.9,
+   "share_positive_12m": 0.83,
+   "worst_dd_12m_pct": -19.0
+  }
+ },
+ "missing": [],
+ "delta": {
+  "prev_as_of": "2026-09-24",
+  "composite_prev": -4.8,
+  "label_prev": "Lean risk-off",
+  "pillars": {
+   "rates": 0.0,
+   "credit": -16.6,
+   "liquidity": 0.0,
+   "growth": 5.5,
+   "inflation": 0,
+   "vol": 0.0,
+   "internals": -7.1,
+   "housing": 0.0
+  },
+  "signals_changed": [
+   {
+    "id": "C_HY_LEVEL",
+    "from": 1,
+    "to": 0
+   },
+   {
+    "id": "C_HY_CHANGE",
+    "from": 0,
+    "to": -1
+   },
+   {
+    "id": "G_COPPER_GOLD",
+    "from": 0,
+    "to": 1
+   },
+   {
+    "id": "E_SECTOR_BREADTH",
+    "from": 0,
+    "to": -1
+   }
+  ]
+ },
+ "narrative": {
+  "as_of": "2026-09-30",
+  "judgment": {
+   "regime_call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+   "agrees_with_composite": true,
+   "override_reason": "",
+   "confidence": "medium",
+   "horizon": "3-6 months",
+   "summary": "The discount rate is still the story and it got worse since 2026-09-24: 10y 5.26% (R_10Y_LEVEL, 100th pctile of 20y, 2026-09-29), +53bp in a month (R_10Y_1M), real 10y 2.91% (R_REAL10, +71bp 3m), 30y 5.59% (R_LONG_END), term premium 1.02% (R_TERM_PREMIUM, 2026-09-25) and MOVE 110 (R_MOVE, +35 1m, 2026-09-30). The move is mostly real yield plus a priced Fed: the 2y sits 101bp over fed funds (R_FED_PATH) while breakevens are flat at 2.36% (I_BREAKEVEN), so this is a policy and term-premium repricing, not an inflation scare. The new information this week is credit: HY OAS widened 48bp in a month to 308bp (C_HY_CHANGE, C_HY_LEVEL dropped to 0), and the CCC-HY gap is 849bp at its 5-year high (C_CCC_GAP); that drove the composite from -4.8 to -7.8 (delta, credit pillar -17). Equity vol has not followed (VIX 16.3, VIX/VIX3M 0.89, V_VIX, V_TERM, 2026-09-30) and NFCI is loose (-0.55, L_NFCI, 2026-09-25). Growth is solid (claims 202k 4wk avg G_CLAIMS 2026-09-19; unemployment 4.1% G_UNRATE 2026-08-01), but the tape is narrow: RSP -3.7pp and IWM -9.2pp vs SPY over 3m, 4 of 11 sectors above 200d (E_BREADTH_RSP, E_SMALL_CAPS, E_SECTOR_BREADTH). Stocks and bonds are falling together (R_STOCK_BOND_CORR +0.50), so Treasuries do not hedge. The call stays Lean risk-off: hold quality cash-flow and energy, keep long-duration and rate-sensitive exposure small, and treat the index's strength (SPY -1.5% from high, E_DRAWDOWN) as earnings-carried, not multiple-supported.",
+   "drivers": [
+    {
+     "signal": "R_REAL10",
+     "why": "real 10y 2.91% (+71bp 3m, as of 2026-09-29): the highest discount rate on distant cash flows since 2007; the main headwind for long-duration growth"
+    },
+    {
+     "signal": "R_10Y_1M",
+     "why": "10y +53bp in a month, +82bp in three, to 5.26% (2026-09-29); speed de-rates multiples"
+    },
+    {
+     "signal": "R_FED_PATH",
+     "why": "2y 4.89% vs fed funds 3.88% = +101bp (+30bp 1m, 2026-09-29): a hiking cycle is priced"
+    },
+    {
+     "signal": "R_MOVE",
+     "why": "MOVE 110 (+35 1m, 2026-09-30) against VIX 16.3: bond vol pricing a risk equity vol is not"
+    },
+    {
+     "signal": "C_HY_CHANGE",
+     "why": "HY OAS +48bp in a month to 308bp (2026-09-29): new this week, the first confirmation from the index spread"
+    },
+    {
+     "signal": "C_CCC_GAP",
+     "why": "CCC-HY gap 849bp, 100th pctile of 5y, +154bp 3m (2026-09-29): the weak tail is breaking first, the 2007/2015 pattern"
+    },
+    {
+     "signal": "I_OIL",
+     "why": "WTI $90.3, +31.7% in 3m (2026-09-30): OIL_SHOCK flag; limits the Fed's room to ease"
+    },
+    {
+     "signal": "E_SMALL_CAPS",
+     "why": "IWM -9.2pp vs SPY in 3m (2026-09-29): rate- and credit-sensitive equities are already pricing the damage"
+    }
+   ],
+   "historical_frame": [
+    {
+     "era": "2018 Q4 (analog 2018-10, distance 0.86)",
+     "similar": "multi-year-high 10y, hiking Fed, tight index credit with the tail widening, narrow leadership",
+     "different": "an oil shock on top (WTI +31.7% 3m) and a higher starting real yield (2.91% vs about 1.1%); the analog's 12m max drawdown was -7.4% on monthly averages, the intra-quarter fall was about -20%"
+    },
+    {
+     "era": "1994 bond massacre",
+     "similar": "Fed hiking into growth, long-end rout with MOVE rising, housing hit first (ITB -16.8% vs SPY 3m, H_ITB_REL)",
+     "different": "breakevens are flat (I_BREAKEVEN 2.36%), so this is real-rate and term-premium driven rather than an inflation-expectations scare"
+    },
+    {
+     "era": "2005-06 (analog 2005-11, nearest distance 0.6)",
+     "similar": "measured hikes, rising oil, housing rolling over while the index grinds higher",
+     "different": "the term premium is rising (1.02%), not suppressed as in the 'conundrum'"
+    }
+   ],
+   "positioning": [
+    "Risk budget: 60% gross (Lean risk-off), unchanged from 2026-09-24; the rest in T-bills, not long Treasuries, because R_STOCK_BOND_CORR is +0.50",
+    "long_duration_growth is a headwind (fit -1.4, runway 1/8): cap pre-profit and speculative growth (e.g. space, biotech platforms such as RKLB, ABCL) at a small sleeve; do not average down while R_REAL10 is rising",
+    "quality_megacap is neutral (fit +0.1, runway 4/8): free-cash-flow mega caps (e.g. META, AMZN) remain the place to hold equity beta, sized for multiple compression risk from R_10Y_1M",
+    "energy is the only tailwind archetype (fit +1.1, runway 6/8): the oil-shock hedge",
+    "Avoid homebuilders_reits (fit -0.7), banks (see override) and levered small caps until MOVE and the HY spread both turn down",
+    "Hedge with index puts rather than duration: VIX 16.3 in contango (V_VIX, V_TERM) is cheap against MOVE 110"
+   ],
+   "archetype_overrides": [
+    {
+     "archetype": "banks",
+     "fit_adjustment": -1,
+     "reason": "bear flattening (R_CURVE_SHAPE), long-end AFS losses and HY widening (C_HY_CHANGE +48bp); KRE -8.5pp vs SPY 3m (E_BANKS). The mechanical -0.1 understates it"
+    },
+    {
+     "archetype": "crypto_high_beta",
+     "fit_adjustment": -1,
+     "reason": "the mechanical fit sees a low VIX but not credit-tail widening (C_CCC_GAP) and rising real yields; high-beta funding-sensitive names are exposed first"
+    }
+   ],
+   "erp": {
+    "forward_pe": 22.2,
+    "earnings_yield_pct": 4.5,
+    "real_10y_pct": 2.91,
+    "erp_pct": 1.59,
+    "nominal_gap_pct": -0.76,
+    "source": "forward P/E from FactSet 2026-09-11 via data/research/2026-09-24/macro/news.json (stale, not refreshed); real and nominal 10y from R_REAL10 and R_10Y_LEVEL, 2026-09-29"
+   },
+   "what_changes_my_mind": [
+    "Upgrade to Neutral: 10y back below 4.75% with MOVE under 90 (R_10Y_LEVEL, R_MOVE). Tells: 10y auction 2026-10-07, 30y auction 2026-10-08, Treasury refunding statement 2026-11-04 (dates from the 2026-09-24 news.json)",
+    "Downgrade to Risk-off and cut gross to 40%: HY OAS a further +27bp to a +75bp 1m move (CREDIT_BREAK), VIX above VIX3M (V_TERM), or USD/JPY -5% in a month (L_YEN_CARRY; BoJ 2026-10-30)",
+    "The hiking path: September payrolls 2026-10-02 and September CPI 2026-10-14 decide the 2026-10-28 FOMC; a cooling print that pulls R_FED_PATH under +60bp removes the HIKING_CYCLE pressure"
+   ]
+  },
+  "fed": {
+   "target": "not collected for 2026-09-30; per 2026-09-24 news.json: 3.75-4.00% after a 25bp hike on 2026-09-16; fed funds 3.88% (R_FED_PATH, 2026-09-29)",
+   "last_decision": "not collected (see 2026-09-24 narrative)",
+   "priced_path": "2y 4.89%, +101bp over fed funds (R_FED_PATH, 2026-09-29); FedWatch odds not collected",
+   "sources": [
+    "data/research/2026-09-30/macro/regime.json",
+    "data/research/2026-09-24/macro/news.json"
+   ]
+  },
+  "themes": [
+   {
+    "theme": "not collected",
+    "direction": "stable",
+    "counter": "",
+    "evidence": "news.json for 2026-09-30 was not collected; /macro-news was not run in this dispatch",
+    "source": "not collected"
+   }
+  ],
+  "events": [
+   {
+    "date": "2026-10-02",
+    "event": "September payrolls (carried from 2026-09-24 news.json; today's news not collected)",
+    "why_it_matters": "hot print cements an October hike"
+   },
+   {
+    "date": "2026-10-07",
+    "event": "10-year auction (30-year on 2026-10-08) (carried forward)",
+    "why_it_matters": "a tail is the long-end tantrum signal"
+   },
+   {
+    "date": "2026-10-14",
+    "event": "September CPI (carried forward)",
+    "why_it_matters": "energy pass-through to core"
+   },
+   {
+    "date": "2026-10-28",
+    "event": "FOMC decision (carried forward)",
+    "why_it_matters": "second hike of the cycle or a pause"
+   },
+   {
+    "date": "2026-10-30",
+    "event": "BoJ decision (carried forward)",
+    "why_it_matters": "yen carry unwind risk"
+   },
+   {
+    "date": "2026-11-04",
+    "event": "Treasury quarterly refunding (carried forward)",
+    "why_it_matters": "coupon sizes decide the long end"
+   }
+  ],
+  "risks": [
+   {
+    "risk": "credit tail spreads into the index (CCC to HY to IG)",
+    "probability": "medium",
+    "impact": "Risk-off; small caps, banks, high beta hit first",
+    "tell": "C_HY_CHANGE reaching +75bp 1m; C_IG_CHANGE turning negative"
+   },
+   {
+    "risk": "long-end tantrum extends (30y toward 6%)",
+    "probability": "medium",
+    "impact": "multiple compression in long-duration growth and mega caps",
+    "tell": "auction tails 2026-10-07/08; R_MOVE above 120"
+   },
+   {
+    "risk": "oil shock reverses on a ceasefire",
+    "probability": "low",
+    "impact": "energy tilt loses its support; rates relief",
+    "tell": "I_OIL WTI 3m change back under +25%"
+   }
+  ],
+  "outlooks": [
+   {
+    "house": "not collected",
+    "view": "not collected",
+    "source": "not collected"
+   }
+  ],
+  "reconciliation": [
+   {
+    "item": "regime.md header date",
+    "data": "regime.as_of 2026-09-29 (last full daily FRED bar); research folder 2026-09-30",
+    "news": "n/a",
+    "used": "data; Yahoo-sourced signals are as of 2026-09-30 close (fetched_at 2026-10-01T00:58Z, after the close)"
+   },
+   {
+    "item": "monthly inputs",
+    "data": "CPI, unemployment, Sahm, CFNAI, permits as of 2026-08-01; Case-Shiller, SLOOS, GDPNow quarter 2026-07-01",
+    "news": "n/a",
+    "used": "data; the inflation pillar (0.0) understates the oil shock because the last CPI print predates part of the WTI move"
+   }
+  ]
+ }
+}

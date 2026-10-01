@@ -1,0 +1,3548 @@
+{
+ "schema": "theme-pulse/1",
+ "as_of": "2026-09-29",
+ "themes_version": "2026-09-24",
+ "benchmarks": [
+  {
+   "symbol": "SPY",
+   "name": "S&P 500",
+   "ret_1w": -1.2,
+   "ret_1m": -0.4,
+   "ret_3m": 2.6,
+   "ret_6m": 21.5,
+   "ret_12m": 16.7,
+   "vs_200d_pct": 6.8
+  },
+  {
+   "symbol": "QQQ",
+   "name": "Nasdaq-100",
+   "ret_1w": -1.3,
+   "ret_1m": 3.1,
+   "ret_3m": 0.3,
+   "ret_6m": 32.5,
+   "ret_12m": 24.4,
+   "vs_200d_pct": 10.9
+  },
+  {
+   "symbol": "RSP",
+   "name": "S&P 500 equal weight",
+   "ret_1w": -1.6,
+   "ret_1m": -4.7,
+   "ret_3m": -1.2,
+   "ret_6m": 12.2,
+   "ret_12m": 12.9,
+   "vs_200d_pct": 2.7
+  },
+  {
+   "symbol": "IWM",
+   "name": "Russell 2000",
+   "ret_1w": -2.9,
+   "ret_1m": -5.4,
+   "ret_3m": -6.9,
+   "ret_6m": 17.0,
+   "ret_12m": 16.8,
+   "vs_200d_pct": 1.6
+  },
+  {
+   "symbol": "MDY",
+   "name": "S&P 400 mid caps",
+   "ret_1w": -1.5,
+   "ret_1m": -4.2,
+   "ret_3m": -5.9,
+   "ret_6m": 10.8,
+   "ret_12m": 11.9,
+   "vs_200d_pct": 0.4
+  }
+ ],
+ "concentration": {
+  "mag7_minus_rsp_3m_pp": 12.7,
+  "mag7_minus_rsp_12m_pp": 2.6,
+  "read": "mega-cap concentration rising"
+ },
+ "groups": {
+  "software": 24.3,
+  "mega-cap": 8.9,
+  "commodities": 6.6,
+  "crypto": 5.5,
+  "internet": 2.7,
+  "biotech": 1.3,
+  "defensive": -4.8,
+  "financials": -5.4,
+  "industrial": -8.3,
+  "cyclical": -12.2,
+  "semis": -16.6,
+  "ai-infra": -16.9,
+  "energy-transition": -20.5,
+  "rate-sensitive": -22.5,
+  "frontier": -24.9
+ },
+ "themes": [
+  {
+   "id": "cybersecurity",
+   "name": "Internet security",
+   "group": "software",
+   "benchmark": "IGV",
+   "archetype": "quality_megacap",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": 0.7,
+    "1m": 11.5,
+    "3m": 31.0,
+    "6m": 124.9,
+    "12m": 62.3
+   },
+   "rel_benchmark": {
+    "1w": 2.1,
+    "1m": 15.4,
+    "3m": 14.9,
+    "6m": 89.3,
+    "12m": 70.8
+   },
+   "rel_spy": {
+    "1w": 1.9,
+    "1m": 11.9,
+    "3m": 28.4,
+    "6m": 103.4,
+    "12m": 45.6
+   },
+   "trend": "uptrend",
+   "direction": "accelerating",
+   "breadth_above_50d_pct": 100.0,
+   "breadth_above_200d_pct": 100.0,
+   "dd_52w_pct": -2.0,
+   "dispersion_3m_pp": 17.4,
+   "leaders_1m": [
+    "OKTA +23.3%",
+    "RBRK +23.3%",
+    "CRWD +20.3%"
+   ],
+   "laggards_1m": [
+    "TENB -7.1%",
+    "PANW +4.5%",
+    "FTNT +6.0%"
+   ],
+   "price_score": 2,
+   "etf_check": {
+    "etf": "CIBR",
+    "etf_ret_3m": 13.5,
+    "basket_ret_3m": 31.0
+   },
+   "members": [
+    {
+     "symbol": "CRWD",
+     "ret_1m": 20.3,
+     "ret_3m": 37.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": 0.0
+    },
+    {
+     "symbol": "PANW",
+     "ret_1m": 4.5,
+     "ret_3m": 13.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -1.9
+    },
+    {
+     "symbol": "ZS",
+     "ret_1m": 7.7,
+     "ret_3m": 40.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -41.0
+    },
+    {
+     "symbol": "FTNT",
+     "ret_1m": 6.0,
+     "ret_3m": 14.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -1.6
+    },
+    {
+     "symbol": "NET",
+     "ret_1m": 17.5,
+     "ret_3m": 43.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -1.8
+    },
+    {
+     "symbol": "S",
+     "ret_1m": 8.2,
+     "ret_3m": 37.4,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.3
+    },
+    {
+     "symbol": "OKTA",
+     "ret_1m": 23.3,
+     "ret_3m": 50.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -0.9
+    },
+    {
+     "symbol": "TENB",
+     "ret_1m": -7.1,
+     "ret_3m": -5.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -18.0
+    },
+    {
+     "symbol": "RBRK",
+     "ret_1m": 23.3,
+     "ret_3m": 43.0,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -0.7
+    }
+   ],
+   "macro_fit": 0.09,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 1
+  },
+  {
+   "id": "cloud_software",
+   "name": "Cloud and software",
+   "group": "software",
+   "benchmark": "QQQ",
+   "archetype": "quality_megacap",
+   "status": "ok",
+   "members_priced": 13,
+   "members_total": 13,
+   "returns": {
+    "1w": -4.3,
+    "1m": -10.6,
+    "3m": 30.6,
+    "6m": 43.2,
+    "12m": -10.7
+   },
+   "rel_benchmark": {
+    "1w": -3.0,
+    "1m": -13.7,
+    "3m": 30.3,
+    "6m": 10.7,
+    "12m": -35.1
+   },
+   "rel_spy": {
+    "1w": -3.1,
+    "1m": -10.2,
+    "3m": 28.0,
+    "6m": 21.7,
+    "12m": -27.4
+   },
+   "trend": "uptrend",
+   "direction": "fading",
+   "breadth_above_50d_pct": 62.0,
+   "breadth_above_200d_pct": 62.0,
+   "dd_52w_pct": -13.9,
+   "dispersion_3m_pp": 34.1,
+   "leaders_1m": [
+    "DDOG +13.3%",
+    "SNOW +0.7%",
+    "MSFT -0.9%"
+   ],
+   "laggards_1m": [
+    "INTU -25.1%",
+    "MDB -24.5%",
+    "HUBS -24.2%"
+   ],
+   "price_score": 2,
+   "etf_check": {
+    "etf": "IGV",
+    "etf_ret_3m": 16.1,
+    "basket_ret_3m": 30.6
+   },
+   "members": [
+    {
+     "symbol": "MSFT",
+     "ret_1m": -0.9,
+     "ret_3m": 36.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -5.3
+    },
+    {
+     "symbol": "ORCL",
+     "ret_1m": -8.7,
+     "ret_3m": -5.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -55.6
+    },
+    {
+     "symbol": "CRM",
+     "ret_1m": -11.8,
+     "ret_3m": 44.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -14.8
+    },
+    {
+     "symbol": "NOW",
+     "ret_1m": -10.2,
+     "ret_3m": 30.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -31.3
+    },
+    {
+     "symbol": "SNOW",
+     "ret_1m": 0.7,
+     "ret_3m": 29.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.3
+    },
+    {
+     "symbol": "DDOG",
+     "ret_1m": 13.3,
+     "ret_3m": 3.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -6.8
+    },
+    {
+     "symbol": "MDB",
+     "ret_1m": -24.5,
+     "ret_3m": 0.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -28.6
+    },
+    {
+     "symbol": "ADBE",
+     "ret_1m": -20.0,
+     "ret_3m": 13.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -35.2
+    },
+    {
+     "symbol": "WDAY",
+     "ret_1m": -7.6,
+     "ret_3m": 54.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -23.6
+    },
+    {
+     "symbol": "TEAM",
+     "ret_1m": -7.6,
+     "ret_3m": 126.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -10.1
+    },
+    {
+     "symbol": "HUBS",
+     "ret_1m": -24.2,
+     "ret_3m": 8.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -62.0
+    },
+    {
+     "symbol": "INTU",
+     "ret_1m": -25.1,
+     "ret_3m": 3.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -61.0
+    },
+    {
+     "symbol": "ESTC",
+     "ret_1m": -11.1,
+     "ret_3m": 55.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -11.1
+    }
+   ],
+   "macro_fit": 0.09,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 2
+  },
+  {
+   "id": "ai_health_diagnostics",
+   "name": "AI health and diagnostics",
+   "group": "biotech",
+   "benchmark": "XBI",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 6,
+   "members_total": 6,
+   "returns": {
+    "1w": 3.8,
+    "1m": 13.9,
+    "3m": 21.9,
+    "6m": 64.6,
+    "12m": 37.3
+   },
+   "rel_benchmark": {
+    "1w": 6.9,
+    "1m": 17.3,
+    "3m": 22.8,
+    "6m": 32.5,
+    "12m": -23.5
+   },
+   "rel_spy": {
+    "1w": 5.0,
+    "1m": 14.3,
+    "3m": 19.3,
+    "6m": 43.1,
+    "12m": 20.6
+   },
+   "trend": "uptrend",
+   "direction": "accelerating",
+   "breadth_above_50d_pct": 100.0,
+   "breadth_above_200d_pct": 67.0,
+   "dd_52w_pct": 0.0,
+   "dispersion_3m_pp": 24.6,
+   "leaders_1m": [
+    "TEM +29.0%",
+    "NTRA +27.1%",
+    "ISRG +10.6%"
+   ],
+   "laggards_1m": [
+    "DOCS -0.8%",
+    "VCYT +6.3%",
+    "GH +10.0%"
+   ],
+   "price_score": 2,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "TEM",
+     "ret_1m": 29.0,
+     "ret_3m": 42.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -20.0
+    },
+    {
+     "symbol": "NTRA",
+     "ret_1m": 27.1,
+     "ret_3m": 52.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": 0.0
+    },
+    {
+     "symbol": "GH",
+     "ret_1m": 10.0,
+     "ret_3m": 18.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -2.9
+    },
+    {
+     "symbol": "VCYT",
+     "ret_1m": 6.3,
+     "ret_3m": -21.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -23.8
+    },
+    {
+     "symbol": "ISRG",
+     "ret_1m": 10.6,
+     "ret_3m": 3.6,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -30.5
+    },
+    {
+     "symbol": "DOCS",
+     "ret_1m": -0.8,
+     "ret_3m": 27.9,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -64.7
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 3
+  },
+  {
+   "id": "ai_software",
+   "name": "AI applications and data",
+   "group": "software",
+   "benchmark": "IGV",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 8,
+   "members_total": 8,
+   "returns": {
+    "1w": -3.2,
+    "1m": -3.4,
+    "3m": 19.0,
+    "6m": 65.9,
+    "12m": 24.8
+   },
+   "rel_benchmark": {
+    "1w": -1.8,
+    "1m": 0.5,
+    "3m": 2.9,
+    "6m": 30.3,
+    "12m": 33.3
+   },
+   "rel_spy": {
+    "1w": -2.0,
+    "1m": -3.0,
+    "3m": 16.4,
+    "6m": 44.4,
+    "12m": 8.1
+   },
+   "trend": "uptrend",
+   "direction": "steady leader",
+   "breadth_above_50d_pct": 62.0,
+   "breadth_above_200d_pct": 62.0,
+   "dd_52w_pct": -4.5,
+   "dispersion_3m_pp": 30.3,
+   "leaders_1m": [
+    "TEM +29.0%",
+    "DDOG +13.3%",
+    "SNOW +0.7%"
+   ],
+   "laggards_1m": [
+    "PATH -32.1%",
+    "MDB -24.5%",
+    "ZETA -5.2%"
+   ],
+   "price_score": 1,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "PLTR",
+     "ret_1m": 0.4,
+     "ret_3m": 60.3,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -9.8
+    },
+    {
+     "symbol": "APP",
+     "ret_1m": -3.8,
+     "ret_3m": -40.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -58.3
+    },
+    {
+     "symbol": "SNOW",
+     "ret_1m": 0.7,
+     "ret_3m": 29.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.3
+    },
+    {
+     "symbol": "DDOG",
+     "ret_1m": 13.3,
+     "ret_3m": 3.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -6.8
+    },
+    {
+     "symbol": "MDB",
+     "ret_1m": -24.5,
+     "ret_3m": 0.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -28.6
+    },
+    {
+     "symbol": "PATH",
+     "ret_1m": -32.1,
+     "ret_3m": 13.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -36.1
+    },
+    {
+     "symbol": "TEM",
+     "ret_1m": 29.0,
+     "ret_3m": 42.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -20.0
+    },
+    {
+     "symbol": "ZETA",
+     "ret_1m": -5.2,
+     "ret_3m": 47.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -11.4
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 4
+  },
+  {
+   "id": "energy",
+   "name": "Oil and gas",
+   "group": "commodities",
+   "benchmark": "SPY",
+   "archetype": "energy",
+   "status": "ok",
+   "members_priced": 8,
+   "members_total": 8,
+   "returns": {
+    "1w": -0.4,
+    "1m": -2.8,
+    "3m": 19.0,
+    "6m": 1.6,
+    "12m": 40.5
+   },
+   "rel_benchmark": {
+    "1w": 0.8,
+    "1m": -2.4,
+    "3m": 16.4,
+    "6m": -19.9,
+    "12m": 23.8
+   },
+   "rel_spy": {
+    "1w": 0.8,
+    "1m": -2.4,
+    "3m": 16.4,
+    "6m": -19.9,
+    "12m": 23.8
+   },
+   "trend": "above 200d, pulling back",
+   "direction": "fading",
+   "breadth_above_50d_pct": 38.0,
+   "breadth_above_200d_pct": 88.0,
+   "dd_52w_pct": -8.8,
+   "dispersion_3m_pp": 14.6,
+   "leaders_1m": [
+    "MPC +6.3%",
+    "XOM +3.0%",
+    "CVX +1.2%"
+   ],
+   "laggards_1m": [
+    "SLB -12.6%",
+    "FANG -6.9%",
+    "OXY -6.6%"
+   ],
+   "price_score": 0,
+   "etf_check": {
+    "etf": "XLE",
+    "etf_ret_3m": 16.6,
+    "basket_ret_3m": 19.0
+   },
+   "members": [
+    {
+     "symbol": "XOM",
+     "ret_1m": 3.0,
+     "ret_3m": 18.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -4.7
+    },
+    {
+     "symbol": "CVX",
+     "ret_1m": 1.2,
+     "ret_3m": 24.4,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -6.1
+    },
+    {
+     "symbol": "COP",
+     "ret_1m": -3.8,
+     "ret_3m": 21.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -11.2
+    },
+    {
+     "symbol": "EOG",
+     "ret_1m": -2.6,
+     "ret_3m": 8.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -9.2
+    },
+    {
+     "symbol": "FANG",
+     "ret_1m": -6.9,
+     "ret_3m": 5.2,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -13.0
+    },
+    {
+     "symbol": "OXY",
+     "ret_1m": -6.6,
+     "ret_3m": 13.6,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -16.3
+    },
+    {
+     "symbol": "SLB",
+     "ret_1m": -12.6,
+     "ret_3m": 7.8,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -16.6
+    },
+    {
+     "symbol": "MPC",
+     "ret_1m": 6.3,
+     "ret_3m": 53.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.7
+    }
+   ],
+   "macro_fit": 1.12,
+   "macro_stance": "tailwind",
+   "rs_rank_3m": 5
+  },
+  {
+   "id": "biotech_large",
+   "name": "Large biotech and pharma",
+   "group": "biotech",
+   "benchmark": "SPY",
+   "archetype": "defensives",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": 0.1,
+    "1m": -0.7,
+    "3m": 13.4,
+    "6m": 16.5,
+    "12m": 53.0
+   },
+   "rel_benchmark": {
+    "1w": 1.3,
+    "1m": -0.3,
+    "3m": 10.8,
+    "6m": -5.0,
+    "12m": 36.3
+   },
+   "rel_spy": {
+    "1w": 1.3,
+    "1m": -0.3,
+    "3m": 10.8,
+    "6m": -5.0,
+    "12m": 36.3
+   },
+   "trend": "uptrend",
+   "direction": "fading",
+   "breadth_above_50d_pct": 78.0,
+   "breadth_above_200d_pct": 100.0,
+   "dd_52w_pct": -3.7,
+   "dispersion_3m_pp": 7.6,
+   "leaders_1m": [
+    "GILD +4.4%",
+    "PFE +2.7%",
+    "MRK +1.2%"
+   ],
+   "laggards_1m": [
+    "BMY -5.6%",
+    "REGN -5.5%",
+    "VRTX -2.8%"
+   ],
+   "price_score": 2,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "LLY",
+     "ret_1m": 0.9,
+     "ret_3m": -1.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.5
+    },
+    {
+     "symbol": "VRTX",
+     "ret_1m": -2.8,
+     "ret_3m": 6.0,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -5.6
+    },
+    {
+     "symbol": "REGN",
+     "ret_1m": -5.5,
+     "ret_3m": 20.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -11.9
+    },
+    {
+     "symbol": "AMGN",
+     "ret_1m": -2.0,
+     "ret_3m": 17.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -4.6
+    },
+    {
+     "symbol": "GILD",
+     "ret_1m": 4.4,
+     "ret_3m": 20.4,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -1.2
+    },
+    {
+     "symbol": "BMY",
+     "ret_1m": -5.6,
+     "ret_3m": 10.3,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -7.7
+    },
+    {
+     "symbol": "MRK",
+     "ret_1m": 1.2,
+     "ret_3m": 16.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -4.0
+    },
+    {
+     "symbol": "PFE",
+     "ret_1m": 2.7,
+     "ret_3m": 21.4,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -1.0
+    },
+    {
+     "symbol": "JNJ",
+     "ret_1m": -0.2,
+     "ret_3m": 5.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.9
+    }
+   ],
+   "macro_fit": -1.0,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 6
+  },
+  {
+   "id": "mag7",
+   "name": "Magnificent 7",
+   "group": "mega-cap",
+   "benchmark": "RSP",
+   "archetype": "quality_megacap",
+   "status": "ok",
+   "members_priced": 7,
+   "members_total": 7,
+   "returns": {
+    "1w": -2.0,
+    "1m": 3.7,
+    "3m": 11.5,
+    "6m": 30.9,
+    "12m": 15.5
+   },
+   "rel_benchmark": {
+    "1w": -0.4,
+    "1m": 8.4,
+    "3m": 12.7,
+    "6m": 18.7,
+    "12m": 2.6
+   },
+   "rel_spy": {
+    "1w": -0.8,
+    "1m": 4.1,
+    "3m": 8.9,
+    "6m": 9.4,
+    "12m": -1.2
+   },
+   "trend": "uptrend",
+   "direction": "accelerating",
+   "breadth_above_50d_pct": 71.0,
+   "breadth_above_200d_pct": 86.0,
+   "dd_52w_pct": -2.3,
+   "dispersion_3m_pp": 17.4,
+   "leaders_1m": [
+    "META +27.9%",
+    "NVDA +4.6%",
+    "AAPL +3.0%"
+   ],
+   "laggards_1m": [
+    "AMZN -7.4%",
+    "GOOGL -1.6%",
+    "MSFT -0.9%"
+   ],
+   "price_score": 2,
+   "etf_check": {
+    "etf": "MAGS",
+    "etf_ret_3m": 11.0,
+    "basket_ret_3m": 11.5
+   },
+   "members": [
+    {
+     "symbol": "AAPL",
+     "ret_1m": 3.0,
+     "ret_3m": 13.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.4
+    },
+    {
+     "symbol": "MSFT",
+     "ret_1m": -0.9,
+     "ret_3m": 36.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -5.3
+    },
+    {
+     "symbol": "GOOGL",
+     "ret_1m": -1.6,
+     "ret_3m": -4.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -15.2
+    },
+    {
+     "symbol": "AMZN",
+     "ret_1m": -7.4,
+     "ret_3m": 3.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -13.2
+    },
+    {
+     "symbol": "META",
+     "ret_1m": 27.9,
+     "ret_3m": 31.3,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -5.0
+    },
+    {
+     "symbol": "NVDA",
+     "ret_1m": 4.6,
+     "ret_3m": 13.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.4
+    },
+    {
+     "symbol": "TSLA",
+     "ret_1m": 1.2,
+     "ret_3m": -16.1,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -28.0
+    }
+   ],
+   "macro_fit": 0.09,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 7
+  },
+  {
+   "id": "crypto_equities",
+   "name": "Crypto equities",
+   "group": "crypto",
+   "benchmark": "QQQ",
+   "archetype": "crypto_high_beta",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": -11.5,
+    "1m": 10.4,
+    "3m": 8.1,
+    "6m": 53.1,
+    "12m": 2.8
+   },
+   "rel_benchmark": {
+    "1w": -10.2,
+    "1m": 7.3,
+    "3m": 7.8,
+    "6m": 20.6,
+    "12m": -21.6
+   },
+   "rel_spy": {
+    "1w": -10.3,
+    "1m": 10.8,
+    "3m": 5.5,
+    "6m": 31.6,
+    "12m": -13.9
+   },
+   "trend": "uptrend",
+   "direction": "accelerating",
+   "breadth_above_50d_pct": 56.0,
+   "breadth_above_200d_pct": 56.0,
+   "dd_52w_pct": -23.2,
+   "dispersion_3m_pp": 32.5,
+   "leaders_1m": [
+    "MSTR +21.5%",
+    "HUT +16.9%",
+    "IREN +16.7%"
+   ],
+   "laggards_1m": [
+    "CRCL -3.9%",
+    "GLXY -0.6%",
+    "BTDR +5.6%"
+   ],
+   "price_score": 2,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "COIN",
+     "ret_1m": 6.4,
+     "ret_3m": 30.0,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -50.9
+    },
+    {
+     "symbol": "MSTR",
+     "ret_1m": 21.5,
+     "ret_3m": 77.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -57.0
+    },
+    {
+     "symbol": "HOOD",
+     "ret_1m": 11.5,
+     "ret_3m": 15.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -23.8
+    },
+    {
+     "symbol": "GLXY",
+     "ret_1m": -0.6,
+     "ret_3m": -15.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -46.2
+    },
+    {
+     "symbol": "CRCL",
+     "ret_1m": -3.9,
+     "ret_3m": 33.6,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -44.4
+    },
+    {
+     "symbol": "IREN",
+     "ret_1m": 16.7,
+     "ret_3m": -9.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -45.8
+    },
+    {
+     "symbol": "CLSK",
+     "ret_1m": 14.2,
+     "ret_3m": -8.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -42.6
+    },
+    {
+     "symbol": "BTDR",
+     "ret_1m": 5.6,
+     "ret_3m": -31.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -57.9
+    },
+    {
+     "symbol": "HUT",
+     "ret_1m": 16.9,
+     "ret_3m": -19.6,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -30.2
+    }
+   ],
+   "macro_fit": -0.17,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 8
+  },
+  {
+   "id": "internet_platforms",
+   "name": "Internet platforms",
+   "group": "internet",
+   "benchmark": "QQQ",
+   "archetype": "quality_megacap",
+   "status": "ok",
+   "members_priced": 12,
+   "members_total": 12,
+   "returns": {
+    "1w": -2.4,
+    "1m": -8.4,
+    "3m": 5.3,
+    "6m": 17.1,
+    "12m": -10.0
+   },
+   "rel_benchmark": {
+    "1w": -1.1,
+    "1m": -11.5,
+    "3m": 5.0,
+    "6m": -15.4,
+    "12m": -34.4
+   },
+   "rel_spy": {
+    "1w": -1.2,
+    "1m": -8.0,
+    "3m": 2.7,
+    "6m": -4.4,
+    "12m": -26.7
+   },
+   "trend": "above 200d, pulling back",
+   "direction": "fading",
+   "breadth_above_50d_pct": 17.0,
+   "breadth_above_200d_pct": 42.0,
+   "dd_52w_pct": -10.9,
+   "dispersion_3m_pp": 13.6,
+   "leaders_1m": [
+    "META +27.9%",
+    "GOOGL -1.6%",
+    "SHOP -3.0%"
+   ],
+   "laggards_1m": [
+    "DASH -21.0%",
+    "BKNG -20.9%",
+    "ABNB -17.1%"
+   ],
+   "price_score": 0,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "GOOGL",
+     "ret_1m": -1.6,
+     "ret_3m": -4.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -15.2
+    },
+    {
+     "symbol": "META",
+     "ret_1m": 27.9,
+     "ret_3m": 31.3,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -5.0
+    },
+    {
+     "symbol": "AMZN",
+     "ret_1m": -7.4,
+     "ret_3m": 3.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -13.2
+    },
+    {
+     "symbol": "NFLX",
+     "ret_1m": -14.0,
+     "ret_3m": -1.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -43.4
+    },
+    {
+     "symbol": "UBER",
+     "ret_1m": -12.0,
+     "ret_3m": -3.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -30.7
+    },
+    {
+     "symbol": "DASH",
+     "ret_1m": -21.0,
+     "ret_3m": 1.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -33.6
+    },
+    {
+     "symbol": "ABNB",
+     "ret_1m": -17.1,
+     "ret_3m": 9.7,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -17.6
+    },
+    {
+     "symbol": "SHOP",
+     "ret_1m": -3.0,
+     "ret_3m": 29.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -17.2
+    },
+    {
+     "symbol": "SPOT",
+     "ret_1m": -9.8,
+     "ret_3m": 7.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -32.2
+    },
+    {
+     "symbol": "RDDT",
+     "ret_1m": -5.0,
+     "ret_3m": -16.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -43.9
+    },
+    {
+     "symbol": "MELI",
+     "ret_1m": -12.3,
+     "ret_3m": 1.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -31.0
+    },
+    {
+     "symbol": "BKNG",
+     "ret_1m": -20.9,
+     "ret_3m": -8.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -25.6
+    }
+   ],
+   "macro_fit": 0.09,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 9
+  },
+  {
+   "id": "gene_editing_rna",
+   "name": "Gene editing and RNA",
+   "group": "biotech",
+   "benchmark": "XBI",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 6,
+   "members_total": 6,
+   "returns": {
+    "1w": -2.1,
+    "1m": -6.2,
+    "3m": 4.6,
+    "6m": 45.3,
+    "12m": 74.9
+   },
+   "rel_benchmark": {
+    "1w": 1.0,
+    "1m": -2.8,
+    "3m": 5.5,
+    "6m": 13.2,
+    "12m": 14.1
+   },
+   "rel_spy": {
+    "1w": -0.9,
+    "1m": -5.8,
+    "3m": 2.0,
+    "6m": 23.8,
+    "12m": 58.2
+   },
+   "trend": "uptrend",
+   "direction": "fading",
+   "breadth_above_50d_pct": 50.0,
+   "breadth_above_200d_pct": 33.0,
+   "dd_52w_pct": -12.0,
+   "dispersion_3m_pp": 80.8,
+   "leaders_1m": [
+    "MRNA +47.4%",
+    "CRSP -3.0%",
+    "NTLA -6.5%"
+   ],
+   "laggards_1m": [
+    "IONS -24.8%",
+    "ARWR -22.0%",
+    "BEAM -16.4%"
+   ],
+   "price_score": 1,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "CRSP",
+     "ret_1m": -3.0,
+     "ret_3m": 2.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -27.1
+    },
+    {
+     "symbol": "NTLA",
+     "ret_1m": -6.5,
+     "ret_3m": -28.9,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -57.0
+    },
+    {
+     "symbol": "BEAM",
+     "ret_1m": -16.4,
+     "ret_3m": -28.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -35.3
+    },
+    {
+     "symbol": "IONS",
+     "ret_1m": -24.8,
+     "ret_3m": -42.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -46.9
+    },
+    {
+     "symbol": "MRNA",
+     "ret_1m": 47.4,
+     "ret_3m": 190.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": 0.0
+    },
+    {
+     "symbol": "ARWR",
+     "ret_1m": -22.0,
+     "ret_3m": -18.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -26.1
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 10
+  },
+  {
+   "id": "biotech_smid",
+   "name": "SMID biotech",
+   "group": "biotech",
+   "benchmark": "SPY",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": -1.5,
+    "1m": -2.8,
+    "3m": 2.9,
+    "6m": 23.8,
+    "12m": 60.1
+   },
+   "rel_benchmark": {
+    "1w": -0.3,
+    "1m": -2.4,
+    "3m": 0.3,
+    "6m": 2.3,
+    "12m": 43.4
+   },
+   "rel_spy": {
+    "1w": -0.3,
+    "1m": -2.4,
+    "3m": 0.3,
+    "6m": 2.3,
+    "12m": 43.4
+   },
+   "trend": "uptrend",
+   "direction": "fading",
+   "breadth_above_50d_pct": 33.0,
+   "breadth_above_200d_pct": 56.0,
+   "dd_52w_pct": -6.7,
+   "dispersion_3m_pp": 23.2,
+   "leaders_1m": [
+    "NTRA +27.1%",
+    "EXEL +7.7%",
+    "RVMD -1.6%"
+   ],
+   "laggards_1m": [
+    "IONS -24.8%",
+    "SRPT -10.6%",
+    "BMRN -7.4%"
+   ],
+   "price_score": 0,
+   "etf_check": {
+    "etf": "XBI",
+    "etf_ret_3m": -0.9,
+    "basket_ret_3m": 2.9
+   },
+   "members": [
+    {
+     "symbol": "INSM",
+     "ret_1m": -2.5,
+     "ret_3m": 8.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -45.3
+    },
+    {
+     "symbol": "RVMD",
+     "ret_1m": -1.6,
+     "ret_3m": 9.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.5
+    },
+    {
+     "symbol": "IONS",
+     "ret_1m": -24.8,
+     "ret_3m": -42.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -46.9
+    },
+    {
+     "symbol": "BMRN",
+     "ret_1m": -7.4,
+     "ret_3m": 4.6,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -14.8
+    },
+    {
+     "symbol": "SRPT",
+     "ret_1m": -10.6,
+     "ret_3m": 3.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -23.8
+    },
+    {
+     "symbol": "KRYS",
+     "ret_1m": -4.7,
+     "ret_3m": -9.9,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -11.4
+    },
+    {
+     "symbol": "NTRA",
+     "ret_1m": 27.1,
+     "ret_3m": 52.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": 0.0
+    },
+    {
+     "symbol": "MDGL",
+     "ret_1m": -4.6,
+     "ret_3m": -5.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -15.5
+    },
+    {
+     "symbol": "EXEL",
+     "ret_1m": 7.7,
+     "ret_3m": 7.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -0.8
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 11
+  },
+  {
+   "id": "fintech",
+   "name": "Fintech and brokers",
+   "group": "financials",
+   "benchmark": "SPY",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 8,
+   "members_total": 8,
+   "returns": {
+    "1w": -6.1,
+    "1m": -6.2,
+    "3m": -0.3,
+    "6m": 26.5,
+    "12m": -21.4
+   },
+   "rel_benchmark": {
+    "1w": -4.9,
+    "1m": -5.8,
+    "3m": -2.9,
+    "6m": 5.0,
+    "12m": -38.1
+   },
+   "rel_spy": {
+    "1w": -4.9,
+    "1m": -5.8,
+    "3m": -2.9,
+    "6m": 5.0,
+    "12m": -38.1
+   },
+   "trend": "below 200d",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 25.0,
+   "breadth_above_200d_pct": 62.0,
+   "dd_52w_pct": -27.1,
+   "dispersion_3m_pp": 20.6,
+   "leaders_1m": [
+    "HOOD +11.5%",
+    "COIN +6.4%",
+    "PYPL +0.7%"
+   ],
+   "laggards_1m": [
+    "UPST -20.4%",
+    "NU -13.6%",
+    "SOFI -11.9%"
+   ],
+   "price_score": -1,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "HOOD",
+     "ret_1m": 11.5,
+     "ret_3m": 15.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -23.8
+    },
+    {
+     "symbol": "SOFI",
+     "ret_1m": -11.9,
+     "ret_3m": -11.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -50.6
+    },
+    {
+     "symbol": "AFRM",
+     "ret_1m": -10.9,
+     "ret_3m": -15.0,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -19.2
+    },
+    {
+     "symbol": "PYPL",
+     "ret_1m": 0.7,
+     "ret_3m": 25.1,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -28.4
+    },
+    {
+     "symbol": "XYZ",
+     "ret_1m": -11.4,
+     "ret_3m": -2.6,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -12.7
+    },
+    {
+     "symbol": "NU",
+     "ret_1m": -13.6,
+     "ret_3m": -7.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -34.2
+    },
+    {
+     "symbol": "UPST",
+     "ret_1m": -20.4,
+     "ret_3m": -34.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -56.2
+    },
+    {
+     "symbol": "COIN",
+     "ret_1m": 6.4,
+     "ret_3m": 30.0,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -50.9
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 12
+  },
+  {
+   "id": "gold_miners",
+   "name": "Gold and metals",
+   "group": "commodities",
+   "benchmark": "SPY",
+   "archetype": "gold_hard_assets",
+   "status": "ok",
+   "members_priced": 6,
+   "members_total": 6,
+   "returns": {
+    "1w": -8.2,
+    "1m": -10.0,
+    "3m": -0.6,
+    "6m": 3.1,
+    "12m": 32.5
+   },
+   "rel_benchmark": {
+    "1w": -7.0,
+    "1m": -9.6,
+    "3m": -3.2,
+    "6m": -18.4,
+    "12m": 15.8
+   },
+   "rel_spy": {
+    "1w": -7.0,
+    "1m": -9.6,
+    "3m": -3.2,
+    "6m": -18.4,
+    "12m": 15.8
+   },
+   "trend": "downtrend",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 50.0,
+   "breadth_above_200d_pct": 33.0,
+   "dd_52w_pct": -22.3,
+   "dispersion_3m_pp": 23.8,
+   "leaders_1m": [
+    "GOLD -3.4%",
+    "FCX -7.4%",
+    "NEM -8.3%"
+   ],
+   "laggards_1m": [
+    "MP -19.1%",
+    "UAMY -13.8%",
+    "AEM -9.7%"
+   ],
+   "price_score": -1,
+   "etf_check": {
+    "etf": "GDX",
+    "etf_ret_3m": 18.1,
+    "basket_ret_3m": -0.6
+   },
+   "members": [
+    {
+     "symbol": "NEM",
+     "ret_1m": -8.3,
+     "ret_3m": 25.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -13.2
+    },
+    {
+     "symbol": "AEM",
+     "ret_1m": -9.7,
+     "ret_3m": 20.1,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -26.0
+    },
+    {
+     "symbol": "GOLD",
+     "ret_1m": -3.4,
+     "ret_3m": 5.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -30.8
+    },
+    {
+     "symbol": "FCX",
+     "ret_1m": -7.4,
+     "ret_3m": 12.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -11.4
+    },
+    {
+     "symbol": "MP",
+     "ret_1m": -19.1,
+     "ret_3m": -18.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -53.9
+    },
+    {
+     "symbol": "UAMY",
+     "ret_1m": -13.8,
+     "ret_3m": -42.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -76.1
+    }
+   ],
+   "macro_fit": -0.12,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 13
+  },
+  {
+   "id": "consumer_defensive",
+   "name": "Consumer defensive",
+   "group": "defensive",
+   "benchmark": "SPY",
+   "archetype": "defensives",
+   "status": "ok",
+   "members_priced": 6,
+   "members_total": 6,
+   "returns": {
+    "1w": -1.8,
+    "1m": -2.9,
+    "3m": -2.2,
+    "6m": -7.0,
+    "12m": 2.4
+   },
+   "rel_benchmark": {
+    "1w": -0.6,
+    "1m": -2.5,
+    "3m": -4.8,
+    "6m": -28.5,
+    "12m": -14.3
+   },
+   "rel_spy": {
+    "1w": -0.6,
+    "1m": -2.5,
+    "3m": -4.8,
+    "6m": -28.5,
+    "12m": -14.3
+   },
+   "trend": "downtrend",
+   "direction": "lagging",
+   "breadth_above_50d_pct": 17.0,
+   "breadth_above_200d_pct": 33.0,
+   "dd_52w_pct": -13.2,
+   "dispersion_3m_pp": 6.3,
+   "leaders_1m": [
+    "WMT +3.6%",
+    "PG +3.2%",
+    "COST -2.2%"
+   ],
+   "laggards_1m": [
+    "MCD -11.1%",
+    "PEP -7.8%",
+    "KO -2.6%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "XLP",
+    "etf_ret_3m": -0.8,
+    "basket_ret_3m": -2.2
+   },
+   "members": [
+    {
+     "symbol": "COST",
+     "ret_1m": -2.2,
+     "ret_3m": -1.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -15.4
+    },
+    {
+     "symbol": "WMT",
+     "ret_1m": 3.6,
+     "ret_3m": -5.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -20.2
+    },
+    {
+     "symbol": "PG",
+     "ret_1m": 3.2,
+     "ret_3m": 1.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -10.0
+    },
+    {
+     "symbol": "KO",
+     "ret_1m": -2.6,
+     "ret_3m": 7.5,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -5.0
+    },
+    {
+     "symbol": "PEP",
+     "ret_1m": -7.8,
+     "ret_3m": -3.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -22.2
+    },
+    {
+     "symbol": "MCD",
+     "ret_1m": -11.1,
+     "ret_3m": -12.8,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -30.1
+    }
+   ],
+   "macro_fit": -1.0,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 14
+  },
+  {
+   "id": "banks",
+   "name": "Banks",
+   "group": "financials",
+   "benchmark": "SPY",
+   "archetype": "banks",
+   "status": "ok",
+   "members_priced": 10,
+   "members_total": 10,
+   "returns": {
+    "1w": -2.4,
+    "1m": -7.9,
+    "3m": -5.3,
+    "6m": 16.4,
+    "12m": 16.1
+   },
+   "rel_benchmark": {
+    "1w": -1.2,
+    "1m": -7.5,
+    "3m": -7.9,
+    "6m": -5.1,
+    "12m": -0.6
+   },
+   "rel_spy": {
+    "1w": -1.2,
+    "1m": -7.5,
+    "3m": -7.9,
+    "6m": -5.1,
+    "12m": -0.6
+   },
+   "trend": "above 200d, pulling back",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 0.0,
+   "breadth_above_200d_pct": 50.0,
+   "dd_52w_pct": -11.2,
+   "dispersion_3m_pp": 3.7,
+   "leaders_1m": [
+    "C -1.6%",
+    "JPM -6.3%",
+    "USB -6.9%"
+   ],
+   "laggards_1m": [
+    "BAC -11.4%",
+    "GS -11.0%",
+    "MS -10.2%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "KRE",
+    "etf_ret_3m": -6.2,
+    "basket_ret_3m": -5.3
+   },
+   "members": [
+    {
+     "symbol": "JPM",
+     "ret_1m": -6.3,
+     "ret_3m": 2.8,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -8.3
+    },
+    {
+     "symbol": "BAC",
+     "ret_1m": -11.4,
+     "ret_3m": -3.1,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -14.8
+    },
+    {
+     "symbol": "WFC",
+     "ret_1m": -7.2,
+     "ret_3m": -2.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -15.1
+    },
+    {
+     "symbol": "C",
+     "ret_1m": -1.6,
+     "ret_3m": -6.1,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -9.8
+    },
+    {
+     "symbol": "GS",
+     "ret_1m": -11.0,
+     "ret_3m": -9.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -20.1
+    },
+    {
+     "symbol": "MS",
+     "ret_1m": -10.2,
+     "ret_3m": -7.3,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -15.2
+    },
+    {
+     "symbol": "PNC",
+     "ret_1m": -8.5,
+     "ret_3m": -9.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -13.7
+    },
+    {
+     "symbol": "USB",
+     "ret_1m": -6.9,
+     "ret_3m": -3.7,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -11.1
+    },
+    {
+     "symbol": "ZION",
+     "ret_1m": -7.6,
+     "ret_3m": -8.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -14.0
+    },
+    {
+     "symbol": "CFG",
+     "ret_1m": -8.3,
+     "ret_3m": -8.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -14.5
+    }
+   ],
+   "macro_fit": -0.09,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 15
+  },
+  {
+   "id": "semis",
+   "name": "Semiconductors",
+   "group": "semis",
+   "benchmark": "QQQ",
+   "archetype": "quality_megacap",
+   "status": "ok",
+   "members_priced": 14,
+   "members_total": 14,
+   "returns": {
+    "1w": -1.4,
+    "1m": 13.1,
+    "3m": -5.4,
+    "6m": 88.7,
+    "12m": 112.8
+   },
+   "rel_benchmark": {
+    "1w": -0.1,
+    "1m": 10.0,
+    "3m": -5.7,
+    "6m": 56.2,
+    "12m": 88.4
+   },
+   "rel_spy": {
+    "1w": -0.2,
+    "1m": 13.5,
+    "3m": -8.0,
+    "6m": 67.2,
+    "12m": 96.1
+   },
+   "trend": "uptrend",
+   "direction": "improving",
+   "breadth_above_50d_pct": 86.0,
+   "breadth_above_200d_pct": 79.0,
+   "dd_52w_pct": -12.1,
+   "dispersion_3m_pp": 9.0,
+   "leaders_1m": [
+    "AMD +30.5%",
+    "INTC +29.6%",
+    "ARM +22.8%"
+   ],
+   "laggards_1m": [
+    "AVGO -3.5%",
+    "ON +4.6%",
+    "NVDA +4.6%"
+   ],
+   "price_score": 0,
+   "etf_check": {
+    "etf": "SMH",
+    "etf_ret_3m": -7.5,
+    "basket_ret_3m": -5.4
+   },
+   "members": [
+    {
+     "symbol": "NVDA",
+     "ret_1m": 4.6,
+     "ret_3m": 13.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.4
+    },
+    {
+     "symbol": "AVGO",
+     "ret_1m": -3.5,
+     "ret_3m": -5.8,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -26.0
+    },
+    {
+     "symbol": "AMD",
+     "ret_1m": 30.5,
+     "ret_3m": 4.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.7
+    },
+    {
+     "symbol": "TSM",
+     "ret_1m": 9.7,
+     "ret_3m": -4.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -4.1
+    },
+    {
+     "symbol": "ASML",
+     "ret_1m": 8.1,
+     "ret_3m": -7.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.7
+    },
+    {
+     "symbol": "MU",
+     "ret_1m": 14.2,
+     "ret_3m": -7.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -12.2
+    },
+    {
+     "symbol": "QCOM",
+     "ret_1m": 12.7,
+     "ret_3m": 0.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -26.0
+    },
+    {
+     "symbol": "TXN",
+     "ret_1m": 8.9,
+     "ret_3m": -5.0,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -14.8
+    },
+    {
+     "symbol": "MRVL",
+     "ret_1m": 21.5,
+     "ret_3m": -11.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -16.8
+    },
+    {
+     "symbol": "ARM",
+     "ret_1m": 22.8,
+     "ret_3m": -17.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -33.2
+    },
+    {
+     "symbol": "INTC",
+     "ret_1m": 29.6,
+     "ret_3m": -17.0,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -17.7
+    },
+    {
+     "symbol": "ON",
+     "ret_1m": 4.6,
+     "ret_3m": -19.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -43.3
+    },
+    {
+     "symbol": "ADI",
+     "ret_1m": 10.4,
+     "ret_3m": 0.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -10.3
+    },
+    {
+     "symbol": "NXPI",
+     "ret_1m": 6.2,
+     "ret_3m": -15.5,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -28.4
+    }
+   ],
+   "macro_fit": 0.09,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 16
+  },
+  {
+   "id": "glp1_obesity",
+   "name": "GLP-1 and obesity",
+   "group": "biotech",
+   "benchmark": "XBI",
+   "archetype": "defensives",
+   "status": "ok",
+   "members_priced": 5,
+   "members_total": 5,
+   "returns": {
+    "1w": -5.4,
+    "1m": -2.7,
+    "3m": -5.7,
+    "6m": 31.3,
+    "12m": 15.5
+   },
+   "rel_benchmark": {
+    "1w": -2.3,
+    "1m": 0.7,
+    "3m": -4.8,
+    "6m": -0.8,
+    "12m": -45.3
+   },
+   "rel_spy": {
+    "1w": -4.2,
+    "1m": -2.3,
+    "3m": -8.3,
+    "6m": 9.8,
+    "12m": -1.2
+   },
+   "trend": "above 200d, pulling back",
+   "direction": "improving",
+   "breadth_above_50d_pct": 40.0,
+   "breadth_above_200d_pct": 60.0,
+   "dd_52w_pct": -9.6,
+   "dispersion_3m_pp": 14.3,
+   "leaders_1m": [
+    "LLY +0.9%",
+    "HIMS -0.5%",
+    "VKTX -1.1%"
+   ],
+   "laggards_1m": [
+    "NVO -16.0%",
+    "AMGN -2.0%",
+    "VKTX -1.1%"
+   ],
+   "price_score": 0,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "LLY",
+     "ret_1m": 0.9,
+     "ret_3m": -1.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.5
+    },
+    {
+     "symbol": "NVO",
+     "ret_1m": -16.0,
+     "ret_3m": -19.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -37.1
+    },
+    {
+     "symbol": "VKTX",
+     "ret_1m": -1.1,
+     "ret_3m": -18.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -24.5
+    },
+    {
+     "symbol": "AMGN",
+     "ret_1m": -2.0,
+     "ret_3m": 17.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -4.6
+    },
+    {
+     "symbol": "HIMS",
+     "ret_1m": -0.5,
+     "ret_3m": -17.2,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -54.3
+    }
+   ],
+   "macro_fit": -1.0,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 17
+  },
+  {
+   "id": "defense",
+   "name": "Defense and drones",
+   "group": "industrial",
+   "benchmark": "SPY",
+   "archetype": "cash_flow_value",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": -3.3,
+    "1m": -8.4,
+    "3m": -5.7,
+    "6m": -16.3,
+    "12m": -24.1
+   },
+   "rel_benchmark": {
+    "1w": -2.1,
+    "1m": -8.0,
+    "3m": -8.3,
+    "6m": -37.8,
+    "12m": -40.8
+   },
+   "rel_spy": {
+    "1w": -2.1,
+    "1m": -8.0,
+    "3m": -8.3,
+    "6m": -37.8,
+    "12m": -40.8
+   },
+   "trend": "downtrend",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 11.0,
+   "breadth_above_200d_pct": 11.0,
+   "dd_52w_pct": -35.2,
+   "dispersion_3m_pp": 27.3,
+   "leaders_1m": [
+    "PLTR +0.4%",
+    "AVAV -3.2%",
+    "NOC -7.1%"
+   ],
+   "laggards_1m": [
+    "KTOS -17.2%",
+    "GD -12.4%",
+    "RTX -11.7%"
+   ],
+   "price_score": -2,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "LMT",
+     "ret_1m": -8.6,
+     "ret_3m": 1.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -23.3
+    },
+    {
+     "symbol": "NOC",
+     "ret_1m": -7.1,
+     "ret_3m": -0.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -33.7
+    },
+    {
+     "symbol": "RTX",
+     "ret_1m": -11.7,
+     "ret_3m": -1.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -17.1
+    },
+    {
+     "symbol": "GD",
+     "ret_1m": -12.4,
+     "ret_3m": -5.8,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -16.1
+    },
+    {
+     "symbol": "LHX",
+     "ret_1m": -9.6,
+     "ret_3m": -18.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -36.7
+    },
+    {
+     "symbol": "KTOS",
+     "ret_1m": -17.2,
+     "ret_3m": -13.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -67.1
+    },
+    {
+     "symbol": "AVAV",
+     "ret_1m": -3.2,
+     "ret_3m": -13.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -65.0
+    },
+    {
+     "symbol": "PLTR",
+     "ret_1m": 0.4,
+     "ret_3m": 60.3,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -9.8
+    },
+    {
+     "symbol": "BYRN",
+     "ret_1m": -7.2,
+     "ret_3m": -50.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -87.9
+    }
+   ],
+   "macro_fit": 0.22,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 18
+  },
+  {
+   "id": "consumer_discretionary",
+   "name": "Consumer discretionary",
+   "group": "cyclical",
+   "benchmark": "SPY",
+   "archetype": "small_caps",
+   "status": "ok",
+   "members_priced": 10,
+   "members_total": 10,
+   "returns": {
+    "1w": 0.0,
+    "1m": -8.8,
+    "3m": -9.6,
+    "6m": -1.1,
+    "12m": -8.5
+   },
+   "rel_benchmark": {
+    "1w": 1.2,
+    "1m": -8.4,
+    "3m": -12.2,
+    "6m": -22.6,
+    "12m": -25.2
+   },
+   "rel_spy": {
+    "1w": 1.2,
+    "1m": -8.4,
+    "3m": -12.2,
+    "6m": -22.6,
+    "12m": -25.2
+   },
+   "trend": "downtrend",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 10.0,
+   "breadth_above_200d_pct": 20.0,
+   "dd_52w_pct": -17.4,
+   "dispersion_3m_pp": 22.6,
+   "leaders_1m": [
+    "ONON +2.4%",
+    "DKS +0.7%",
+    "CROX +0.3%"
+   ],
+   "laggards_1m": [
+    "CAVA -20.6%",
+    "LULU -19.8%",
+    "CMG -16.2%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "XLY",
+    "etf_ret_3m": -6.7,
+    "basket_ret_3m": -9.6
+   },
+   "members": [
+    {
+     "symbol": "NKE",
+     "ret_1m": -8.5,
+     "ret_3m": -11.8,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -50.4
+    },
+    {
+     "symbol": "LULU",
+     "ret_1m": -19.8,
+     "ret_3m": -15.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -55.1
+    },
+    {
+     "symbol": "CMG",
+     "ret_1m": -16.2,
+     "ret_3m": -6.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -24.7
+    },
+    {
+     "symbol": "SBUX",
+     "ret_1m": -11.5,
+     "ret_3m": -6.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -12.0
+    },
+    {
+     "symbol": "DKS",
+     "ret_1m": 0.7,
+     "ret_3m": -40.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -43.1
+    },
+    {
+     "symbol": "ANF",
+     "ret_1m": -10.0,
+     "ret_3m": 48.4,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -12.2
+    },
+    {
+     "symbol": "CROX",
+     "ret_1m": 0.3,
+     "ret_3m": 1.6,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -13.1
+    },
+    {
+     "symbol": "RCL",
+     "ret_1m": -6.2,
+     "ret_3m": -17.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -23.9
+    },
+    {
+     "symbol": "ONON",
+     "ret_1m": 2.4,
+     "ret_3m": -16.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -41.6
+    },
+    {
+     "symbol": "CAVA",
+     "ret_1m": -20.6,
+     "ret_3m": -32.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -45.4
+    }
+   ],
+   "macro_fit": -0.44,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 19
+  },
+  {
+   "id": "ai_power",
+   "name": "AI power and grid",
+   "group": "ai-infra",
+   "benchmark": "SPY",
+   "archetype": "cash_flow_value",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": 0.0,
+    "1m": 4.4,
+    "3m": -10.7,
+    "6m": 17.0,
+    "12m": 37.6
+   },
+   "rel_benchmark": {
+    "1w": 1.2,
+    "1m": 4.8,
+    "3m": -13.3,
+    "6m": -4.5,
+    "12m": 20.9
+   },
+   "rel_spy": {
+    "1w": 1.2,
+    "1m": 4.8,
+    "3m": -13.3,
+    "6m": -4.5,
+    "12m": 20.9
+   },
+   "trend": "uptrend",
+   "direction": "improving",
+   "breadth_above_50d_pct": 33.0,
+   "breadth_above_200d_pct": 44.0,
+   "dd_52w_pct": -13.7,
+   "dispersion_3m_pp": 12.0,
+   "leaders_1m": [
+    "BE +38.2%",
+    "PWR +8.1%",
+    "ETN +7.6%"
+   ],
+   "laggards_1m": [
+    "NRG -12.6%",
+    "CEG -4.4%",
+    "VRT -3.4%"
+   ],
+   "price_score": 0,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "CEG",
+     "ret_1m": -4.4,
+     "ret_3m": 6.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -34.1
+    },
+    {
+     "symbol": "VST",
+     "ret_1m": 2.9,
+     "ret_3m": -11.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -32.8
+    },
+    {
+     "symbol": "GEV",
+     "ret_1m": 5.5,
+     "ret_3m": -18.1,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -18.1
+    },
+    {
+     "symbol": "ETN",
+     "ret_1m": 7.6,
+     "ret_3m": 1.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -5.8
+    },
+    {
+     "symbol": "PWR",
+     "ret_1m": 8.1,
+     "ret_3m": -9.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -17.0
+    },
+    {
+     "symbol": "VRT",
+     "ret_1m": -3.4,
+     "ret_3m": -25.8,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -34.0
+    },
+    {
+     "symbol": "BE",
+     "ret_1m": 38.2,
+     "ret_3m": -3.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -15.8
+    },
+    {
+     "symbol": "NRG",
+     "ret_1m": -12.6,
+     "ret_3m": -33.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -46.8
+    },
+    {
+     "symbol": "HUBB",
+     "ret_1m": 0.2,
+     "ret_3m": -12.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -17.2
+    }
+   ],
+   "macro_fit": 0.22,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 20
+  },
+  {
+   "id": "psychedelics_cns",
+   "name": "Psychedelics and CNS",
+   "group": "biotech",
+   "benchmark": "XBI",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 2,
+   "members_total": 3,
+   "returns": {
+    "1w": -12.3,
+    "1m": -7.1,
+    "3m": -13.5,
+    "6m": 133.6,
+    "12m": 111.0
+   },
+   "rel_benchmark": {
+    "1w": -9.2,
+    "1m": -3.7,
+    "3m": -12.6,
+    "6m": 101.5,
+    "12m": 50.2
+   },
+   "rel_spy": {
+    "1w": -11.1,
+    "1m": -6.7,
+    "3m": -16.1,
+    "6m": 112.1,
+    "12m": 94.3
+   },
+   "trend": "above 200d, pulling back",
+   "direction": "lagging",
+   "breadth_above_50d_pct": 0.0,
+   "breadth_above_200d_pct": 50.0,
+   "dd_52w_pct": -18.8,
+   "dispersion_3m_pp": null,
+   "leaders_1m": [
+    "ATAI +1.7%",
+    "CMPS -5.6%"
+   ],
+   "laggards_1m": [
+    "CMPS -5.6%",
+    "ATAI +1.7%"
+   ],
+   "price_score": -2,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "CMPS",
+     "ret_1m": -5.6,
+     "ret_3m": -8.4,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -14.7
+    },
+    {
+     "symbol": "ATAI",
+     "ret_1m": 1.7,
+     "ret_3m": null,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -1.2
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 21
+  },
+  {
+   "id": "neocloud_datacenter",
+   "name": "Neoclouds and data centers",
+   "group": "ai-infra",
+   "benchmark": "QQQ",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 9,
+   "members_total": 9,
+   "returns": {
+    "1w": -7.8,
+    "1m": 3.0,
+    "3m": -14.1,
+    "6m": 38.1,
+    "12m": 31.6
+   },
+   "rel_benchmark": {
+    "1w": -6.5,
+    "1m": -0.1,
+    "3m": -14.4,
+    "6m": 5.6,
+    "12m": 7.2
+   },
+   "rel_spy": {
+    "1w": -6.6,
+    "1m": 3.4,
+    "3m": -16.7,
+    "6m": 16.6,
+    "12m": 14.9
+   },
+   "trend": "above 200d, pulling back",
+   "direction": "lagging",
+   "breadth_above_50d_pct": 11.0,
+   "breadth_above_200d_pct": 22.0,
+   "dd_52w_pct": -26.3,
+   "dispersion_3m_pp": 13.4,
+   "leaders_1m": [
+    "IREN +16.7%",
+    "NBIS +13.5%",
+    "CIFR +8.8%"
+   ],
+   "laggards_1m": [
+    "ORCL -8.7%",
+    "DLR -4.2%",
+    "EQIX -2.8%"
+   ],
+   "price_score": -2,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "CRWV",
+     "ret_1m": 2.0,
+     "ret_3m": -13.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -39.9
+    },
+    {
+     "symbol": "NBIS",
+     "ret_1m": 13.5,
+     "ret_3m": -14.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -17.2
+    },
+    {
+     "symbol": "ORCL",
+     "ret_1m": -8.7,
+     "ret_3m": -5.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -55.6
+    },
+    {
+     "symbol": "EQIX",
+     "ret_1m": -2.8,
+     "ret_3m": -2.1,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -8.6
+    },
+    {
+     "symbol": "DLR",
+     "ret_1m": -4.2,
+     "ret_3m": -1.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -12.2
+    },
+    {
+     "symbol": "APLD",
+     "ret_1m": 0.3,
+     "ret_3m": -31.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -48.8
+    },
+    {
+     "symbol": "IREN",
+     "ret_1m": 16.7,
+     "ret_3m": -9.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -45.8
+    },
+    {
+     "symbol": "CIFR",
+     "ret_1m": 8.8,
+     "ret_3m": -32.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -43.4
+    },
+    {
+     "symbol": "WULF",
+     "ret_1m": -1.7,
+     "ret_3m": -38.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -47.9
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 22
+  },
+  {
+   "id": "semi_memory",
+   "name": "Memory and storage",
+   "group": "semis",
+   "benchmark": "SMH",
+   "archetype": "materials_industrials",
+   "status": "ok",
+   "members_priced": 4,
+   "members_total": 4,
+   "returns": {
+    "1w": -3.5,
+    "1m": 10.0,
+    "3m": -15.7,
+    "6m": 170.9,
+    "12m": 643.8
+   },
+   "rel_benchmark": {
+    "1w": -3.4,
+    "1m": 0.3,
+    "3m": -8.2,
+    "6m": 103.5,
+    "12m": 554.6
+   },
+   "rel_spy": {
+    "1w": -2.3,
+    "1m": 10.4,
+    "3m": -18.3,
+    "6m": 149.4,
+    "12m": 627.1
+   },
+   "trend": "uptrend",
+   "direction": "improving",
+   "breadth_above_50d_pct": 75.0,
+   "breadth_above_200d_pct": 100.0,
+   "dd_52w_pct": -21.5,
+   "dispersion_3m_pp": 10.2,
+   "leaders_1m": [
+    "SNDK +16.5%",
+    "MU +14.2%",
+    "STX +10.2%"
+   ],
+   "laggards_1m": [
+    "WDC -1.3%",
+    "STX +10.2%",
+    "MU +14.2%"
+   ],
+   "price_score": 0,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "MU",
+     "ret_1m": 14.2,
+     "ret_3m": -7.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -12.2
+    },
+    {
+     "symbol": "SNDK",
+     "ret_1m": 16.5,
+     "ret_3m": -23.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -25.9
+    },
+    {
+     "symbol": "WDC",
+     "ret_1m": -1.3,
+     "ret_3m": -29.0,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -39.2
+    },
+    {
+     "symbol": "STX",
+     "ret_1m": 10.2,
+     "ret_3m": -5.3,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -16.4
+    }
+   ],
+   "macro_fit": 0.45,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 23
+  },
+  {
+   "id": "nuclear",
+   "name": "Nuclear and uranium",
+   "group": "energy-transition",
+   "benchmark": "SPY",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 7,
+   "members_total": 7,
+   "returns": {
+    "1w": -7.9,
+    "1m": -13.7,
+    "3m": -17.9,
+    "6m": -18.0,
+    "12m": -39.7
+   },
+   "rel_benchmark": {
+    "1w": -6.7,
+    "1m": -13.3,
+    "3m": -20.5,
+    "6m": -39.5,
+    "12m": -56.4
+   },
+   "rel_spy": {
+    "1w": -6.7,
+    "1m": -13.3,
+    "3m": -20.5,
+    "6m": -39.5,
+    "12m": -56.4
+   },
+   "trend": "downtrend",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 0.0,
+   "breadth_above_200d_pct": 0.0,
+   "dd_52w_pct": -54.7,
+   "dispersion_3m_pp": 11.5,
+   "leaders_1m": [
+    "CEG -4.4%",
+    "OKLO -7.5%",
+    "BWXT -9.7%"
+   ],
+   "laggards_1m": [
+    "UUUU -25.1%",
+    "LEU -21.4%",
+    "SMR -16.5%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "NLR",
+    "etf_ret_3m": -10.2,
+    "basket_ret_3m": -17.9
+   },
+   "members": [
+    {
+     "symbol": "CEG",
+     "ret_1m": -4.4,
+     "ret_3m": 6.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -34.1
+    },
+    {
+     "symbol": "OKLO",
+     "ret_1m": -7.5,
+     "ret_3m": -29.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -78.7
+    },
+    {
+     "symbol": "SMR",
+     "ret_1m": -16.5,
+     "ret_3m": -22.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -85.5
+    },
+    {
+     "symbol": "CCJ",
+     "ret_1m": -13.1,
+     "ret_3m": -14.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -35.2
+    },
+    {
+     "symbol": "LEU",
+     "ret_1m": -21.4,
+     "ret_3m": -17.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -68.3
+    },
+    {
+     "symbol": "BWXT",
+     "ret_1m": -9.7,
+     "ret_3m": -29.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -41.9
+    },
+    {
+     "symbol": "UUUU",
+     "ret_1m": -25.1,
+     "ret_3m": -24.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -60.4
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 24
+  },
+  {
+   "id": "ai_networking",
+   "name": "AI networking and optics",
+   "group": "ai-infra",
+   "benchmark": "SMH",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 8,
+   "members_total": 8,
+   "returns": {
+    "1w": -1.9,
+    "1m": 2.7,
+    "3m": -18.0,
+    "6m": 71.6,
+    "12m": 189.9
+   },
+   "rel_benchmark": {
+    "1w": -1.8,
+    "1m": -7.0,
+    "3m": -10.5,
+    "6m": 4.2,
+    "12m": 100.7
+   },
+   "rel_spy": {
+    "1w": -0.7,
+    "1m": 3.1,
+    "3m": -20.6,
+    "6m": 50.1,
+    "12m": 173.2
+   },
+   "trend": "uptrend",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 50.0,
+   "breadth_above_200d_pct": 75.0,
+   "dd_52w_pct": -18.0,
+   "dispersion_3m_pp": 20.4,
+   "leaders_1m": [
+    "ALAB +23.6%",
+    "LITE +8.8%",
+    "GLW +6.7%"
+   ],
+   "laggards_1m": [
+    "CRDO -17.4%",
+    "CIEN -6.2%",
+    "AAOI -5.2%"
+   ],
+   "price_score": -1,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "ANET",
+     "ret_1m": 3.8,
+     "ret_3m": 19.4,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -3.6
+    },
+    {
+     "symbol": "CIEN",
+     "ret_1m": -6.2,
+     "ret_3m": -27.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -43.4
+    },
+    {
+     "symbol": "COHR",
+     "ret_1m": 4.7,
+     "ret_3m": -25.9,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -31.5
+    },
+    {
+     "symbol": "CRDO",
+     "ret_1m": -17.4,
+     "ret_3m": -29.3,
+     "above_50d": false,
+     "above_200d": true,
+     "dd_52w_pct": -36.4
+    },
+    {
+     "symbol": "LITE",
+     "ret_1m": 8.8,
+     "ret_3m": 13.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.6
+    },
+    {
+     "symbol": "AAOI",
+     "ret_1m": -5.2,
+     "ret_3m": -32.1,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -54.9
+    },
+    {
+     "symbol": "ALAB",
+     "ret_1m": 23.6,
+     "ret_3m": -25.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -25.9
+    },
+    {
+     "symbol": "GLW",
+     "ret_1m": 6.7,
+     "ret_3m": -37.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -37.8
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 25
+  },
+  {
+   "id": "quantum",
+   "name": "Quantum computing",
+   "group": "frontier",
+   "benchmark": "QQQ",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 4,
+   "members_total": 4,
+   "returns": {
+    "1w": -2.6,
+    "1m": 3.4,
+    "3m": -19.8,
+    "6m": 39.1,
+    "12m": -43.1
+   },
+   "rel_benchmark": {
+    "1w": -1.3,
+    "1m": 0.3,
+    "3m": -20.1,
+    "6m": 6.6,
+    "12m": -67.5
+   },
+   "rel_spy": {
+    "1w": -1.4,
+    "1m": 3.8,
+    "3m": -22.4,
+    "6m": 17.6,
+    "12m": -59.8
+   },
+   "trend": "downtrend",
+   "direction": "improving",
+   "breadth_above_50d_pct": 50.0,
+   "breadth_above_200d_pct": 25.0,
+   "dd_52w_pct": -59.0,
+   "dispersion_3m_pp": 6.9,
+   "leaders_1m": [
+    "IONQ +12.0%",
+    "QUBT +3.8%",
+    "RGTI +1.0%"
+   ],
+   "laggards_1m": [
+    "QBTS -3.3%",
+    "RGTI +1.0%",
+    "QUBT +3.8%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "QTUM",
+    "etf_ret_3m": -7.9,
+    "basket_ret_3m": -19.8
+   },
+   "members": [
+    {
+     "symbol": "IONQ",
+     "ret_1m": 12.0,
+     "ret_3m": -17.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -46.5
+    },
+    {
+     "symbol": "RGTI",
+     "ret_1m": 1.0,
+     "ret_3m": -18.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -72.1
+    },
+    {
+     "symbol": "QBTS",
+     "ret_1m": -3.3,
+     "ret_3m": -31.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -63.3
+    },
+    {
+     "symbol": "QUBT",
+     "ret_1m": 3.8,
+     "ret_3m": -12.8,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -65.6
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 26
+  },
+  {
+   "id": "homebuilders",
+   "name": "Homebuilders and housing",
+   "group": "rate-sensitive",
+   "benchmark": "SPY",
+   "archetype": "homebuilders_reits",
+   "status": "ok",
+   "members_priced": 8,
+   "members_total": 8,
+   "returns": {
+    "1w": -3.5,
+    "1m": -10.2,
+    "3m": -19.9,
+    "6m": -4.6,
+    "12m": -27.8
+   },
+   "rel_benchmark": {
+    "1w": -2.3,
+    "1m": -9.8,
+    "3m": -22.5,
+    "6m": -26.1,
+    "12m": -44.5
+   },
+   "rel_spy": {
+    "1w": -2.3,
+    "1m": -9.8,
+    "3m": -22.5,
+    "6m": -26.1,
+    "12m": -44.5
+   },
+   "trend": "downtrend",
+   "direction": "lagging, worsening",
+   "breadth_above_50d_pct": 0.0,
+   "breadth_above_200d_pct": 0.0,
+   "dd_52w_pct": -30.6,
+   "dispersion_3m_pp": 10.6,
+   "leaders_1m": [
+    "NVR -2.5%",
+    "LEN -3.8%",
+    "DHI -5.4%"
+   ],
+   "laggards_1m": [
+    "DFH -25.5%",
+    "BLDR -15.0%",
+    "KBH -13.6%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "ITB",
+    "etf_ret_3m": -14.7,
+    "basket_ret_3m": -19.9
+   },
+   "members": [
+    {
+     "symbol": "DHI",
+     "ret_1m": -5.4,
+     "ret_3m": -14.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -19.4
+    },
+    {
+     "symbol": "LEN",
+     "ret_1m": -3.8,
+     "ret_3m": -7.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -36.7
+    },
+    {
+     "symbol": "PHM",
+     "ret_1m": -7.6,
+     "ret_3m": -13.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -16.3
+    },
+    {
+     "symbol": "TOL",
+     "ret_1m": -7.1,
+     "ret_3m": -17.4,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -17.9
+    },
+    {
+     "symbol": "KBH",
+     "ret_1m": -13.6,
+     "ret_3m": -23.9,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -27.9
+    },
+    {
+     "symbol": "NVR",
+     "ret_1m": -2.5,
+     "ret_3m": -8.5,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -23.8
+    },
+    {
+     "symbol": "BLDR",
+     "ret_1m": -15.0,
+     "ret_3m": -35.7,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -55.6
+    },
+    {
+     "symbol": "DFH",
+     "ret_1m": -25.5,
+     "ret_3m": -36.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -58.4
+    }
+   ],
+   "macro_fit": -0.73,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 27
+  },
+  {
+   "id": "semi_equipment",
+   "name": "Semicap equipment",
+   "group": "semis",
+   "benchmark": "SMH",
+   "archetype": "materials_industrials",
+   "status": "ok",
+   "members_priced": 8,
+   "members_total": 8,
+   "returns": {
+    "1w": 4.5,
+    "1m": 13.3,
+    "3m": -20.8,
+    "6m": 75.6,
+    "12m": 175.4
+   },
+   "rel_benchmark": {
+    "1w": 4.6,
+    "1m": 3.6,
+    "3m": -13.3,
+    "6m": 8.2,
+    "12m": 86.2
+   },
+   "rel_spy": {
+    "1w": 5.7,
+    "1m": 13.7,
+    "3m": -23.4,
+    "6m": 54.1,
+    "12m": 158.7
+   },
+   "trend": "uptrend",
+   "direction": "improving",
+   "breadth_above_50d_pct": 100.0,
+   "breadth_above_200d_pct": 100.0,
+   "dd_52w_pct": -20.8,
+   "dispersion_3m_pp": 14.4,
+   "leaders_1m": [
+    "AEHR +24.7%",
+    "UCTT +15.8%",
+    "TER +13.6%"
+   ],
+   "laggards_1m": [
+    "LRCX +7.4%",
+    "ASML +8.1%",
+    "AMAT +10.9%"
+   ],
+   "price_score": 0,
+   "etf_check": null,
+   "members": [
+    {
+     "symbol": "ASML",
+     "ret_1m": 8.1,
+     "ret_3m": -7.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -7.7
+    },
+    {
+     "symbol": "AMAT",
+     "ret_1m": 10.9,
+     "ret_3m": -29.1,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -29.1
+    },
+    {
+     "symbol": "LRCX",
+     "ret_1m": 7.4,
+     "ret_3m": -25.2,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -25.2
+    },
+    {
+     "symbol": "KLAC",
+     "ret_1m": 12.0,
+     "ret_3m": -34.8,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -34.8
+    },
+    {
+     "symbol": "TER",
+     "ret_1m": 13.6,
+     "ret_3m": -16.7,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -16.7
+    },
+    {
+     "symbol": "ONTO",
+     "ret_1m": 12.5,
+     "ret_3m": -19.5,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -19.5
+    },
+    {
+     "symbol": "AEHR",
+     "ret_1m": 24.7,
+     "ret_3m": 4.9,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -30.8
+    },
+    {
+     "symbol": "UCTT",
+     "ret_1m": 15.8,
+     "ret_3m": -43.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -43.6
+    }
+   ],
+   "macro_fit": 0.45,
+   "macro_stance": "neutral",
+   "rs_rank_3m": 28
+  },
+  {
+   "id": "space",
+   "name": "Space",
+   "group": "frontier",
+   "benchmark": "QQQ",
+   "archetype": "long_duration_growth",
+   "status": "ok",
+   "members_priced": 7,
+   "members_total": 7,
+   "returns": {
+    "1w": -4.8,
+    "1m": -1.3,
+    "3m": -24.8,
+    "6m": 15.8,
+    "12m": 91.1
+   },
+   "rel_benchmark": {
+    "1w": -3.5,
+    "1m": -4.4,
+    "3m": -25.1,
+    "6m": -16.7,
+    "12m": 66.7
+   },
+   "rel_spy": {
+    "1w": -3.6,
+    "1m": -0.9,
+    "3m": -27.4,
+    "6m": -5.7,
+    "12m": 74.4
+   },
+   "trend": "downtrend",
+   "direction": "lagging",
+   "breadth_above_50d_pct": 43.0,
+   "breadth_above_200d_pct": 29.0,
+   "dd_52w_pct": -47.8,
+   "dispersion_3m_pp": 16.2,
+   "leaders_1m": [
+    "RKLB +8.2%",
+    "IRDM +3.2%",
+    "ASTS +2.3%"
+   ],
+   "laggards_1m": [
+    "PL -18.0%",
+    "LUNR -5.3%",
+    "RDW -1.3%"
+   ],
+   "price_score": -2,
+   "etf_check": {
+    "etf": "ARKX",
+    "etf_ret_3m": -6.4,
+    "basket_ret_3m": -24.8
+   },
+   "members": [
+    {
+     "symbol": "RKLB",
+     "ret_1m": 8.2,
+     "ret_3m": -31.4,
+     "above_50d": true,
+     "above_200d": false,
+     "dd_52w_pct": -53.6
+    },
+    {
+     "symbol": "ASTS",
+     "ret_1m": 2.3,
+     "ret_3m": -33.2,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -55.4
+    },
+    {
+     "symbol": "LUNR",
+     "ret_1m": -5.3,
+     "ret_3m": -32.0,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -68.2
+    },
+    {
+     "symbol": "PL",
+     "ret_1m": -18.0,
+     "ret_3m": -50.6,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -68.1
+    },
+    {
+     "symbol": "RDW",
+     "ret_1m": -1.3,
+     "ret_3m": -12.3,
+     "above_50d": false,
+     "above_200d": false,
+     "dd_52w_pct": -58.6
+    },
+    {
+     "symbol": "IRDM",
+     "ret_1m": 3.2,
+     "ret_3m": -12.3,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -13.7
+    },
+    {
+     "symbol": "GSAT",
+     "ret_1m": 1.0,
+     "ret_3m": 1.6,
+     "above_50d": true,
+     "above_200d": true,
+     "dd_52w_pct": -2.2
+    }
+   ],
+   "macro_fit": -1.41,
+   "macro_stance": "headwind",
+   "rs_rank_3m": 29
+  }
+ ],
+ "missing_symbols": [
+  "MNMD"
+ ],
+ "regime": {
+  "label": "Lean risk-off",
+  "composite": -7.8
+ }
+}

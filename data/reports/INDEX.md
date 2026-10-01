@@ -13,3 +13,9 @@ One line per report, newest last. Written by the CLAUDE.md "How to answer" proto
 - 2026-09-25 [RARE over 5-10 years](2026-09-25-rare-long-horizon.md) — no insider buying; long case is public (two approvals, Crysvita, 2027 profit target, PRVs ≈ quarter of market cap), gated by launches and financing
 - 2026-09-25 [UNH in a high-rate environment](2026-09-25-unh-rates.md) — yes: ~7% FCF yield clears the 5.11% 10y, net debt ~1.9 years of FCF, float benefits from rates; the real risks are medical-cost inflation and MA policy; 13 Oct print decides the second half
 - 2026-09-25 [ZETA ticker brief](2026-09-25-zeta.md) — Hold/watch: strong delivery (rev +44%, FCF +73%) but ~+10% weighted upside vs -26% bear; accumulate $25.50–27.50 or buy a post-Q3 break above $32.80; allowlist cooling and contested
+- 2026-09-30 [Ticker briefs: RKLB, SPCX, ABCL, META, AMZN](2026-09-30-rklb-spcx-abcl-meta-amzn.md) — RKLB Avoid (6 months); SPCX Avoid (6 months); ABCL Avoid (1-3 months); META Hold (1-3 months); AMZN Hold (6 months)
+- 2026-09-30 [RKLB ticker brief](2026-09-30-rklb.md) — Avoid, 6 months: Do not open a new position
+- 2026-09-30 [SPCX ticker brief](2026-09-30-spcx.md) — Avoid, 6 months: No new buying; watch only until after the 24 October lock-up tranche
+- 2026-09-30 [ABCL ticker brief](2026-09-30-abcl.md) — Avoid, 1-3 months: No new money until the full Phase 2 data at the IMS conference
+- 2026-09-30 [META ticker brief](2026-09-30-meta.md) — Hold, 1-3 months: Add only on a pullback toward the 50-day average; do not chase
+- 2026-09-30 [AMZN ticker brief](2026-09-30-amzn.md) — Hold, 6 months: Keep it at watch size and do not add before the Q3 report

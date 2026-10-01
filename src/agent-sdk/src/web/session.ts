@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { appendFile, writeFile } from "node:fs/promises";
+import { basename, resolve } from "node:path";
 import { query, type Query } from "@anthropic-ai/claude-agent-sdk";
 import { createFileArtifactSink, type ArtifactSink } from "../../assets/tools/present/document.js";
 import type { AgentGraph } from "../agents/catalog.js";
@@ -27,7 +27,15 @@ export interface SessionLike {
   close(): void;
   artifact(n: number): string | undefined;
   readonly closed: boolean;
+  /** For the session list: when it began, its first message, the run folder once it exists, and what it is doing. */
+  readonly startedAt: string;
+  readonly title: string;
+  readonly runId?: string;
+  readonly state: "idle" | "running" | "closed";
 }
+
+/** The file in a run's workspace that keeps the web session's events, one JSON object per line (the Logs tab reads it after a restart). */
+export const EVENTS_FILE = "web-events.jsonl";
 
 /** An unbounded async queue: the SDK's streaming input, fed one user message at a time. */
 class Inbox {
@@ -68,10 +76,24 @@ export class ChatSession implements SessionLike {
   private starting: Promise<void> | undefined;
   private seq = 0;
   private _closed = false;
+  private eventsFile: string | undefined;
+  private writes: Promise<void> = Promise.resolve();
+  readonly startedAt = new Date().toISOString();
+  title = "";
+  runId: string | undefined;
+  state: "idle" | "running" | "closed" = "idle";
 
   constructor(readonly agent: string, private readonly config: RuntimeConfig, private readonly graph: AgentGraph) {}
 
   get closed(): boolean { return this._closed; }
+
+  /** Appends in order; a failed write never stops the conversation. */
+  private persist(events: readonly SequencedEvent[]): void {
+    const file = this.eventsFile;
+    if (!file || !events.length) return;
+    const lines = events.map((event) => JSON.stringify(event)).join("\n") + "\n";
+    this.writes = this.writes.then(() => appendFile(file, lines, "utf8")).catch(() => undefined);
+  }
 
   subscribe(listener: (event: SequencedEvent) => void): () => void {
     this.listeners.add(listener);
@@ -80,7 +102,9 @@ export class ChatSession implements SessionLike {
 
   private emit(event: UiEvent): void {
     const sequenced = { ...event, seq: ++this.seq, at: new Date().toISOString() } as SequencedEvent;
+    if (event.type === "status") this.state = event.state;
     this.events.push(sequenced);
+    this.persist([sequenced]);
     if (this.events.length > MAX_EVENTS) this.events.splice(0, this.events.length - MAX_EVENTS);
     for (const listener of this.listeners) listener(sequenced);
   }
@@ -89,6 +113,7 @@ export class ChatSession implements SessionLike {
     if (this._closed) throw new Error("This conversation is closed");
     const clean = text.trim().slice(0, MAX_MESSAGE_CHARS);
     if (!clean) throw new Error("Empty message");
+    this.title ||= clean.replace(/\s+/g, " ").slice(0, 120);
     this.emit({ type: "user", text: clean });
     this.emit({ type: "status", state: "running", agent: this.agent });
     if (!this.sdk) {
@@ -106,6 +131,11 @@ export class ChatSession implements SessionLike {
     const workspace: RunWorkspace = await createRunWorkspace(process.env.AGENT_RUNS_DIR ?? this.config.runsDirectory, this.agent, first);
     const prompt = buildInitialPrompt(workspace, first);
     await writeFile(resolve(workspace.root, "initial-prompt.md"), prompt, "utf8");
+    // From here every event is also kept on disk; the ones emitted before the workspace existed go first.
+    this.runId = basename(workspace.root);
+    this.eventsFile = resolve(workspace.root, EVENTS_FILE);
+    this.persist(this.events);
+    this.emit({ type: "system", text: `Run workspace ${this.runId}`, detail: `${workspace.root}\nAudit trail: audit.jsonl, per-agent tools.jsonl, ${EVENTS_FILE}` });
     const fileSink = createFileArtifactSink(workspace.root, fromRepoRoot());
     const sink: ArtifactSink = async (artifact) => {
       const published = await fileSink(artifact);

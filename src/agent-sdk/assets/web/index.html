@@ -12,6 +12,7 @@
   <div class="brand"><span class="logo" aria-hidden="true">◆</span> invest <span class="sub">research desk</span></div>
   <nav class="tabs" aria-label="View">
     <a href="#/chat" data-view="chat" aria-current="true">Chat</a>
+    <a href="#/logs" data-view="logs" aria-current="false">Logs</a>
     <a href="#/research" data-view="research" aria-current="false">Research</a>
   </nav>
   <div class="bar-mid">
@@ -28,6 +29,7 @@
 </header>
 
 <main id="scroll" class="scroll">
+  <section id="orch" class="orch" hidden aria-label="Orchestration"></section>
   <div id="thread" class="thread" aria-live="polite">
     <section id="empty" class="empty">
       <h1>What do you want researched?</h1>
@@ -38,6 +40,7 @@
   </div>
 </main>
 
+<main id="logs" class="logs" hidden></main>
 <main id="research" class="research" hidden></main>
 
 <footer class="composer-wrap">

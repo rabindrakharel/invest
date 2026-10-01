@@ -1,0 +1,156 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "META",
+ "as_of": "2026-09-30",
+ "inputs": {
+  "themes": "2026-09-30",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-30",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": 5
+ },
+ "macro": {
+  "as_of": "2026-09-30",
+  "call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+  "label": "Lean risk-off",
+  "composite": -7.8,
+  "duration": "hostile"
+ },
+ "regime": {
+  "as_of": "2026-09-24",
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": "quality_megacap",
+ "macro_fit": {
+  "fit": 0.09,
+  "stance": "neutral",
+  "runway_macro_fit_pts": 4,
+  "headwinds": [
+   "R_10Y_1M",
+   "R_REAL10"
+  ],
+  "tailwinds": [
+   "E_TREND",
+   "G_GDPNOW",
+   "V_VIX"
+  ]
+ },
+ "themes": [
+  {
+   "id": "mag7",
+   "name": "Magnificent 7",
+   "archetype": "quality_megacap",
+   "direction": "accelerating",
+   "rel_spy_3m": 8.9,
+   "trend": "uptrend",
+   "breadth_50d": 71.0,
+   "stance": "Accumulate",
+   "stance_score": 0.96,
+   "flags": []
+  },
+  {
+   "id": "internet_platforms",
+   "name": "Internet platforms",
+   "archetype": "quality_megacap",
+   "direction": "fading",
+   "rel_spy_3m": 2.7,
+   "trend": "above 200d, pulling back",
+   "breadth_50d": 17.0,
+   "stance": "Neutral",
+   "stance_score": 0.26,
+   "flags": []
+  }
+ ],
+ "price": {
+  "close": 738.79,
+  "as_of": "2026-09-29",
+  "ret_1m": 27.9,
+  "ret_3m": 31.3,
+  "ret_12m": -0.3,
+  "above_50d": true,
+  "above_200d": true,
+  "dd_52w_pct": -5.0,
+  "source": "https://finance.yahoo.com/quote/META"
+ },
+ "sentiment": {
+  "symbol": "META",
+  "posts_recent": 65,
+  "posts_prior": 72,
+  "accounts_recent": 7,
+  "accounts_total": 12,
+  "likes_recent": 40477,
+  "velocity": 3.61,
+  "velocity_rel": 2.51,
+  "tone_recent": 0.15,
+  "tone_window": 0.2,
+  "bull_share_recent": 0.23,
+  "bear_share_recent": 0.06,
+  "tone_source": "lexicon",
+  "evidence": [
+   {
+    "post_id": "2102909099054944558",
+    "author": "StockSavvyShay",
+    "day": "2026-09-24",
+    "likes": 5028,
+    "text": "$META just unveiled $1,299 VR glasses weighing only 100g by moving the battery and compute into an external pack. Bigger shift is that Muse becomes the interface because Zuck says you can \u201cjust talk to it\u201d while any flat"
+   },
+   {
+    "post_id": "2102919845411189086",
+    "author": "StockSavvyShay",
+    "day": "2026-09-24",
+    "likes": 2887,
+    "text": "$META is expanding its smart glasses lineup with two new styles including an ivory Kylie edition and a new collaboration with BLACKPINK\u2019s Lisa. Meta says it expects to have more than 100 different glasses styles availabl"
+   },
+   {
+    "post_id": "2102728538189439127",
+    "author": "StockSavvyShay",
+    "day": "2026-09-23",
+    "likes": 2128,
+    "text": "My wife and I are having our biggest disagreement in a while. Our son has his first Halloween next month and I want him to go as Muse in honor of $META being our top family portfolio position. She says we are not making "
+   }
+  ],
+  "stance": {
+   "accounts": 5,
+   "longs": 5,
+   "shorts": 1,
+   "net_long": 0.67,
+   "avg_conviction": 0.83,
+   "stances": "StockSavvyShay:long:0.98 StockSavvyShay:long:0.95 JaguarAnalytics:long:0.9 RealJGBanks:long:0.78 FeroceResearch:long:0.72 TheLongInvest:short:0.65"
+  },
+  "labels": [
+   "heating"
+  ]
+ },
+ "runway_score": {
+  "probe": "2026-09-24",
+  "tier": "no_runway",
+  "total": 37,
+  "points": {
+   "earnings": 3,
+   "prospect": 7,
+   "competition": 6,
+   "insider": 2,
+   "institutional": 7,
+   "retail": 0,
+   "upside": 0,
+   "risk_reward": 0,
+   "chart": 3,
+   "macro_fit": 4,
+   "narrative": 5
+  },
+  "gates_failed": [
+   "upside",
+   "insider",
+   "delivery"
+  ],
+  "upside_pct": -2.1322290667318278,
+  "risk_reward": -0.10939453629853808,
+  "close": 777.59,
+  "price_as_of": "2026-09-24"
+ },
+ "verdicts": [],
+ "gaps": []
+}

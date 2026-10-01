@@ -113,7 +113,7 @@ Add sections only as the intent needs them: a theme stance table for `themes` an
 | `/macro-regime` | 54 signals → risk-on/off, flags, quadrant, duration regime, archetype fit, analogs; the macro judgment | `research/<DATE>/macro/regime.json`, `narrative.json`, `regime.md` | macro-data (+ news) |
 | `/theme-pulse` | Benchmarks and about 30 baskets: relative strength, trend, breadth, direction | `market/<DATE>/yahoo/` + `research/<DATE>/themes/themes.json`, `theme-narrative.json` | `config/themes.json` |
 | `/x-sentiment` | Allowlist attention, velocity, tone, stances, crowding per ticker and theme | `research/<DATE>/sentiment/x-sentiment.json`, `sentiment-read.json` | the corpus |
-| `/ticker-brief` | One name: joins every product above plus the runway record | `research/<DATE>/tickers/<T>.json`, a report | the fresh products |
+| `/ticker-brief` | One name: joins every product above plus the runway record; the brief is rendered from a fixed template, never hand-written (a hook enforces it) | `research/<DATE>/tickers/<T>.json`, `<T>.judgment.json`, `reports/<DATE>-<t>.md` via `render_brief.py` | the fresh products |
 | `/market-outlook` | Orchestrator: risk budget plus a stance per theme | `research/<DATE>/outlook/outlook.json`, `outlook.md` | all of the above |
 | `/corpus-probe` | Mandate-driven Core/Watch/Satellite from the accounts | `probes/corpus/` | `/fetch`; research/<DATE>/macro (the regime rule) |
 | `/runway-probe` | Rank names by runway on twelve signals; register verdicts | `probes/runway/<PROBE_ID>/`, `ledger/verdicts.jsonl` | `/corpus-probe`, research/<DATE>/{macro,themes,sentiment} |

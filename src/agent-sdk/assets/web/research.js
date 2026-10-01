@@ -121,6 +121,12 @@ export function mountResearch(root, { ask }) {
       el("div", {}, el("h1", { text: symbol }), el("div", { class: "asof", text: latest ? `Latest brief ${d.briefs[0].date}${latest.regime?.call ? ` · regime: ${latest.regime.call}` : ""}` : "No ticker brief on file" })),
       el("div", { class: "actions" }, el("button", { class: "btn primary", onclick: () => ask(`What about ${symbol}?`) }, `Ask the desk about ${symbol}`)));
     const sections = [head];
+    const call = d.briefs[0]?.judgment;
+    if (call) {
+      sections.push(card(`Verdict, ${d.briefs[0].date}`, el("div", { class: "big", text: `${call.verdict}, ${call.horizon}` }), el("p", { class: "lead", text: call.answer }),
+        call.departure ? el("p", { class: "muted small", text: `Departs from the mechanical lean: ${call.departure}` }) : null,
+        d.briefs[0].report ? el("a", { href: docHref(d.briefs[0].report), text: "Read the brief" }) : null));
+    }
     if (!d.briefs.length && !d.runway.length && !d.verdicts.length && !d.reports.length) {
       sections.push(card(null, el("p", { text: `Nothing on file for ${symbol} yet. Ask the desk for a brief: it joins the regime, its themes, price trend, what the accounts say and any runway record.` })));
       pane.replaceChildren(...sections);

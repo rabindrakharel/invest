@@ -8,6 +8,7 @@ import { loadRuntimeConfig } from "../config/load.js";
 import { fromSdkRoot } from "../config/paths.js";
 import type { RuntimeConfig } from "../domain/types.js";
 import type { WebAnswer } from "./prompter.js";
+import { listRuns, readRunLog, runsRoot } from "./logs.js";
 import { defaultDataDir, readDocument, readOutlook, readVerdicts, researchIndex, tickerDossier } from "./research.js";
 import { ChatSession, type SessionLike } from "./session.js";
 
@@ -20,6 +21,7 @@ const STATIC: Record<string, { file: string; type: string }> = {
   "/app.js": { file: "assets/web/app.js", type: "text/javascript; charset=utf-8" },
   "/ui.js": { file: "assets/web/ui.js", type: "text/javascript; charset=utf-8" },
   "/research.js": { file: "assets/web/research.js", type: "text/javascript; charset=utf-8" },
+  "/logs.js": { file: "assets/web/logs.js", type: "text/javascript; charset=utf-8" },
   "/styles.css": { file: "assets/web/styles.css", type: "text/css; charset=utf-8" },
 };
 
@@ -34,6 +36,8 @@ export interface ServerOptions {
   token?: string;
   /** The data/ tree the research view reads; defaults to INVEST_DATA_DIR or the repo's data/. */
   dataDir?: string;
+  /** Where run workspaces live (the Logs tab's past runs); defaults to AGENT_RUNS_DIR or runtime.yaml's runsDirectory. */
+  runsDir?: string;
 }
 
 export interface RunningServer { server: Server; port: number; url: string; token: string; close(): Promise<void> }
@@ -72,6 +76,7 @@ export async function startServer(options: ServerOptions = {}): Promise<RunningS
   const sessions = new Map<string, SessionLike>();
   const createSession = options.createSession ?? ((agent: string) => new ChatSession(agent, config, graph));
   const dataDir = options.dataDir ?? defaultDataDir();
+  const runsDir = options.runsDir ?? runsRoot(config.runsDirectory);
   let port = options.port ?? DEFAULT_PORT;
 
   const allowedHosts = () => new Set([`127.0.0.1:${port}`, `localhost:${port}`]);
@@ -132,6 +137,12 @@ export async function startServer(options: ServerOptions = {}): Promise<RunningS
       }
       return json(res, 404, { error: "Not found" });
     }
+    if (method === "GET" && path === "/api/sessions") {
+      return json(res, 200, { sessions: [...sessions.values()].reverse().map((s) => ({ id: s.id, agent: s.agent, title: s.title, startedAt: s.startedAt, state: s.state, closed: s.closed, ...(s.runId ? { runId: s.runId } : {}) })) });
+    }
+    if (method === "GET" && path === "/api/runs") return json(res, 200, { runs: await listRuns(runsDir) });
+    const runLog = /^\/api\/runs\/([\w.-]+)\/events$/.exec(path);
+    if (method === "GET" && runLog) return json(res, 200, await readRunLog(runsDir, runLog[1]!));
     if (method === "POST" && path === "/api/sessions") {
       const body = (await readBody(req)) as { agent?: unknown };
       const agent = typeof body.agent === "string" ? body.agent : config.defaultAgent;

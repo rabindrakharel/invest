@@ -234,6 +234,16 @@ scripts:
       - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
       - {name: ticker, type: string, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "The ticker."}
 
+  - name: ticker_brief_render
+    family: analysis
+    description: "Render ticker briefs from <TICKER>.json (mechanical) and <TICKER>.judgment.json (ticker-judgment/1) into data/reports/<DATE>-<ticker>.md, a joint brief for several names, and their INDEX.md lines. Fixed title, header and sections; same inputs, same bytes. --check validates only; --verify fails on a hand edit."
+    run: [python3, src/agent-sdk/assets/tools/repo/ticker-brief/render_brief.py]
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+      - {name: check, flag: --check, type: boolean, description: "Validate the judgment files only; write nothing."}
+      - {name: verify, flag: --verify, type: boolean, description: "Fail if a rendered file differs from a fresh render."}
+      - {name: tickers, type: string_list, list: positional, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "One or more tickers, in report order."}
+
   - name: corpus_signals_mine
     family: analysis
     description: "Scan the raw session bundles for posts that mention a ticker with an analyst or institutional keyword; prints one block per ticker. Corpus-side context only."

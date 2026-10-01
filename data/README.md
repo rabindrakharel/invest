@@ -27,7 +27,7 @@ data/
 │   ├── themes/                 themes.json, themes.md, theme-narrative.json           /theme-pulse
 │   ├── sentiment/              x-sentiment.json, x-sentiment.md, sentiment-read.json, tone.json   /x-sentiment
 │   ├── outlook/                outlook.json, outlook.md, judgment.json                /market-outlook
-│   └── tickers/                <TICKER>.json                                           /ticker-brief
+│   └── tickers/                <TICKER>.json (ticker_context.py), <TICKER>.judgment.json (the agent)   /ticker-brief
 ├── probes/
 │   ├── corpus/                 <window_end>-probe.html                                 /corpus-probe
 │   ├── runway/<ID>/            probe.html | probe.md, evidence.md, records/            /runway-probe

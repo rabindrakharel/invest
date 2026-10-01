@@ -71,6 +71,24 @@ orchestrator. It is the same harness as `pnpm agents`, with three seams swapped 
   calls, subagent lanes opening and closing, artifacts, questions, results) sent over Server-Sent Events with replay,
   so a reload resumes the conversation.
 
+**Following a run.** The chat shows a live **orchestration map** pinned above the conversation:
+- The orchestrator is the root, with its state (running, waiting for you, idle), the current turn's elapsed time and
+  its tool calls.
+- Under it is one row per subagent dispatch, numbered per type in dispatch order (`ticker-analyst/1` … `/5`), so
+  parallel instances stay apart. Each row shows its state, elapsed time, tool and token counts, and a model-written
+  "what it is doing now" line (`agentProgressSummaries`, from the SDK's `task_progress` events).
+- While a question card waits for you, the map folds to its header.
+
+Every row links to the **Logs** tab (`#/logs`), the verbose view: every event of a session, filterable by agent (the
+orchestrator, or one dispatch), by kind (messages, tool calls, results, thinking, orchestration, system), by text and to
+errors only. Each tool call expands to its full input and output (clipped at 6,000 characters), and each dispatch to its
+brief. It follows the tail live and downloads as `.jsonl`.
+
+A web session also writes its events to `<run>/web-events.jsonl`, so its log survives a server restart. Runs without
+that file, such as headless runs and older ones, are rebuilt from `audit.jsonl`, the hooks' trail, where subagent
+instances are told apart by the SDK's `agent_id`. `GET /api/sessions` lists live sessions, `GET /api/runs` past runs,
+and `GET /api/runs/:id/events` reads one.
+
 The **Research** tab (`#/research`) is a read-only view of what the skills already wrote under `data/`, served by
 `src/web/research.ts` and drawn by `assets/web/research.js`. It computes nothing; every value comes from a file:
 
@@ -140,6 +158,14 @@ prompt, `progressive` shows one line and loads the body on demand (`load_skill`,
 - **The repo's invariants as hooks** (`protectAppendOnly`, `confineToRepository`): no direct write,
   overwrite or removal under `data/corpus/raw|picks|pick_tags|prices` or `data/ledger`; `.env` is never
   read or written; no path resolves outside the repository.
+- **Ticker research has one template** (`enforceTickerTemplate`). The rules live once, in
+  `assets/tools/repo/ticker-brief/brief_guard.py`. The harness pipes each PreToolUse event that names a report or a
+  ticker file to it, and `.claude/settings.json` runs the same script as a Claude Code command hook.
+  - Only `ticker_context.py` writes `research/<D>/tickers/<T>.json`.
+  - The agent's `<T>.judgment.json` is checked against `ticker-judgment/1` before it lands.
+  - Only `render_brief.py` writes the brief (`reports/<D>-<t>.md`, the joint brief and their `INDEX.md` lines), so the
+    title, header and sections are identical run to run.
+  - Shell writes to any of these are refused. If the guard cannot run, the write is refused (fail closed).
 - **Metered steps need a yes.** `task:capture`, `task:backfill`, `task:delta`, `task:resolve-accounts` and
   `task:extract` (X API reads about $0.005 per post, or model calls) are put to the operator by the permission
   bridge and never auto-allowed; a headless run denies them, because nothing can approve.

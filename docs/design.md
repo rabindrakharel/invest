@@ -205,11 +205,13 @@ The X API is about 75% of the bill, which is why read discipline is a cost contr
 | Whole chain, raw → markdown | `src/pipeline/pipeline.test.ts` |
 | Regime engine rules, gaps, determinism | `src/agent-sdk/assets/tools/repo/macro-regime/test_compute_regime.py` |
 | Runway forward metrics | `src/agent-sdk/assets/tools/repo/runway-probe/test_forward_metrics.py` |
+| Ticker-brief template, judgment schema, guard hook | `src/agent-sdk/assets/tools/repo/ticker-brief/test_render_brief.py` |
 
 ```bash
 pnpm test && pnpm typecheck && pnpm lint
 cd src/agent-sdk/assets/tools/repo/macro-regime && python3 -m unittest test_compute_regime
 cd src/agent-sdk/assets/tools/repo/runway-probe && python3 -m unittest test_forward_metrics
+cd src/agent-sdk/assets/tools/repo/ticker-brief && python3 -m unittest test_render_brief
 ```
 
 67 TypeScript tests, typecheck and lint pass in CI, plus the Python suites above.

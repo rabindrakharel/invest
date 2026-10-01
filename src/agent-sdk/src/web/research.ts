@@ -91,7 +91,7 @@ export async function readVerdicts(data: string): Promise<Record<string, unknown
 export async function researchIndex(data = defaultDataDir()): Promise<ResearchIndex> {
   const [reports, probes, dates, verdicts] = await Promise.all([readReports(data), readProbes(data), readDates(data), readVerdicts(data)]);
   const tickers = new Set<string>();
-  for (const day of dates) for (const file of day.parts.tickers ?? []) if (file.endsWith(".json")) tickers.add(basename(file, ".json"));
+  for (const day of dates) for (const file of day.parts.tickers ?? []) if (file.endsWith(".json") && TICKER.test(basename(file, ".json"))) tickers.add(basename(file, ".json"));
   for (const probe of probes) {
     if (probe.kind !== "runway") continue;
     for (const file of await list(resolve(data, "probes/runway", probe.id, "records"))) {
@@ -120,11 +120,14 @@ export async function tickerDossier(ticker: string, data = defaultDataDir()) {
   const symbol = ticker.toUpperCase();
   if (!TICKER.test(symbol)) throw Object.assign(new Error("Not a ticker"), { status: 400 });
   const dates = await readDates(data);
-  const briefs: { date: string; brief: unknown }[] = [];
+  const briefs: { date: string; brief: unknown; judgment?: unknown; report?: string }[] = [];
   for (const day of dates) {
     if (!day.parts.tickers?.includes(`${symbol}.json`)) continue;
     const brief = await readJson(resolve(data, "research", day.date, "tickers", `${symbol}.json`));
-    if (brief) briefs.push({ date: day.date, brief });
+    // The agent's judgment (ticker-judgment/1) and the brief render_brief.py made from the two, when they exist.
+    const judgment = day.parts.tickers.includes(`${symbol}.judgment.json`) ? await readJson(resolve(data, "research", day.date, "tickers", `${symbol}.judgment.json`)) : undefined;
+    const report = `reports/${day.date}-${symbol.toLowerCase()}.md`;
+    if (brief) briefs.push({ date: day.date, brief, ...(judgment ? { judgment } : {}), ...((await exists(resolve(data, report))) ? { report } : {}) });
   }
   const runway: { probe: string; record?: unknown; score?: ScoreRow; page?: string }[] = [];
   for (const probe of (await readProbes(data)).filter((p) => p.kind === "runway")) {

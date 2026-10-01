@@ -16,8 +16,9 @@ Produce the ticker brief for the requested name and date, with a one-line verdic
 ## Success criteria
 
 1. Run /ticker-brief as its skill states, only on products the orchestrator reports fresh. In this harness a subagent cannot dispatch another subagent: where the skill says to launch a subagent, the orchestrator that dispatched you does it.
-2. Every stance cites a post_id; every price fact comes from the price files, cited with its as-of date; write 'not found' rather than guess.
-3. Say what would change the verdict, with dated tells, and name any kill criterion a registered verdict carries.
+2. The brief is rendered, never hand-written: write <TICKER>.judgment.json (ticker-judgment/1), then run render_brief.py. A hook refuses anything else, and its reason lists what to fix.
+3. Every stance cites a post_id; every number comes from the context file, which the renderer prints; write 'not found' rather than guess.
+4. Say what would change the verdict, with dated tells, and name any kill criterion a registered verdict carries.
 
 ## Skills
 
@@ -41,6 +42,7 @@ In the SDK run these are the `mcp__invest__<name>` tools; in a session run the c
 - `sentiment_compute`: `python3 src/agent-sdk/assets/tools/repo/x-sentiment/compute_x_sentiment.py [--date <date>] [--recent <recent>] [--prior <prior>] [--min-posts <min_posts>]`
 - `outlook_build`: `python3 src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py [--date <date>]`
 - `ticker_context`: `python3 src/agent-sdk/assets/tools/repo/ticker-brief/ticker_context.py [--date <date>] <ticker>`
+- `ticker_brief_render`: `python3 src/agent-sdk/assets/tools/repo/ticker-brief/render_brief.py [--date <date>] [--check] [--verify] <tickers>...`
 - `corpus_signals_mine`: `python3 src/agent-sdk/assets/tools/repo/runway-probe/mine-corpus-signals.py <tickers>...`
 - `scorecard_build`: `python3 src/agent-sdk/assets/tools/repo/runway-probe/build-scorecard.py <probe_id>`
 
@@ -50,6 +52,6 @@ In the SDK run these are the `mcp__invest__<name>` tools; in a session run the c
 
 ## Deliver
 
-- `ticker-analyst-report.md`: One-line verdict, macro fit, theme and trend, allowlist stances with post_ids, the runway record, and what would change it.
+- `ticker-analyst-report.md`: The verdict and horizon, the paths of the judgment file and the rendered data/reports/<DATE>-<ticker>.md, and any departure from the mechanical lean.
 
 In a session there is no run ledger: return these as your final message, and write any data files the skill assigns to you under `data/`. Escalate only when: Escalate only when the ticker is not in the universe.

@@ -1,0 +1,26 @@
+{
+ "schema": "ticker-judgment/1",
+ "ticker": "RKLB",
+ "as_of": "2026-09-30",
+ "verdict": "Avoid",
+ "horizon": "6 months",
+ "answer": "Do not open a new position. The bounce sits inside space, the weakest of the 29 baskets, and long-duration growth carries the regime's worst fit while the stock remains below its 200-day average.",
+ "departure": "The space basket is Underweight, which implies Trim for a holder; for new money the verdict is Avoid because the registered verdict already sized it as a pass and nothing since has cleared its gates.",
+ "why": {
+  "macro_fit": "Long-duration growth, the archetype most exposed to rising real and long yields, so the regime is a direct headwind.",
+  "theme_price": "Down sharply over three months and more than half off its 52-week high, back above its 50-day but below its 200-day average, inside a space basket in downtrend.",
+  "allowlist": "Attention is heating but small, three accounts and all long, with recent tone slightly negative (posts 2101177184463523985, 2102550672738766885).",
+  "record": "The 2026-09-24 runway probe rated it one_leg_missing, failing the insider gate; the registered verdict was a pass, with the kill test of Neutron not on the pad by 2026-12-31, not yet hit."
+ },
+ "changes": [
+  {
+   "date": "2026-10-14",
+   "tell": "CPI: a soft core print that pulls the 10-year back below 4.75% would lift the long-duration cap and the space basket with it."
+  },
+  {
+   "date": "2026-12-31",
+   "tell": "Neutron on the pad by year end, with the stock retaking its 200-day average, would reopen the case; missing it fires the kill."
+  }
+ ],
+ "gaps": []
+}

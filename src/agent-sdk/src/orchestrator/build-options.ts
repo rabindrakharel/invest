@@ -6,7 +6,7 @@ import { discoverSkills } from "../catalog/skills.js";
 import { loadSdkConfig } from "../config/load.js";
 import { fromRepoRoot } from "../config/paths.js";
 import type { AgentSpec, RunWorkspace, RuntimeConfig } from "../domain/types.js";
-import { attributeContextWriteToCaller, auditHook, boundDispatchBrief, boundUnlimitedRead, claimWritePaths, closeDispatchOnReturn, confineToRepository, deliverSteering, finalizeAgentOutput, gateMeteredSpend, meteredSpend, prepareAgentContext, protectAppendOnly, requireLoadedGuide } from "../hooks/policy.js";
+import { attributeContextWriteToCaller, auditHook, boundDispatchBrief, boundUnlimitedRead, claimWritePaths, closeDispatchOnReturn, confineToRepository, deliverSteering, enforceTickerTemplate, finalizeAgentOutput, gateMeteredSpend, meteredSpend, prepareAgentContext, protectAppendOnly, requireLoadedGuide } from "../hooks/policy.js";
 import { createCircuitBreaker } from "../hooks/circuit-breaker.js";
 import { buildToolCatalog, scriptToolName } from "../../assets/tools/catalog.js";
 import { createPermissionBridge } from "../../assets/tools/hitl/tool.js";
@@ -71,6 +71,9 @@ export async function buildOptions(config: RuntimeConfig, selected: AgentSpec, w
     // Forward subagent text/thinking into the parent stream so the terminal renderer
     // can narrate delegated work, not just heartbeat tool calls.
     forwardSubagentText: true,
+    // A short model-written "what it is doing now" line on each running subagent's progress events, for the
+    // web chat's orchestration map and the terminal. The fork reuses the subagent's prompt cache, so it is cheap.
+    agentProgressSummaries: true,
     // Exactly ONE seam carries the auto-approve list. With a prompter the bridge
     // approves it; also passing it as bare `allowedTools` would approve those tools
     // before the bridge is consulted, so the bridge could never see them.
@@ -83,7 +86,7 @@ export async function buildOptions(config: RuntimeConfig, selected: AgentSpec, w
     agents,
     mcpServers: mcp.servers,
     hooks: {
-      PreToolUse: [{ hooks: [deliverSteering(steering, selected.name, dispatches), breaker.preToolUse, confineToRepository(), protectAppendOnly(), gateMeteredSpend(Boolean(prompter?.interactive), meteredTools), boundUnlimitedRead(), requireLoadedGuide(mcp.toolAreas, mcp.loadedGuides), claimWritePaths(selected.name, dispatches), boundDispatchBrief(), attributeContextWriteToCaller(new Set(graph.agents.keys()), dispatches), auditHook(workspace, selected.name, dispatches)] }],
+      PreToolUse: [{ hooks: [deliverSteering(steering, selected.name, dispatches), breaker.preToolUse, confineToRepository(), protectAppendOnly(), enforceTickerTemplate(), gateMeteredSpend(Boolean(prompter?.interactive), meteredTools), boundUnlimitedRead(), requireLoadedGuide(mcp.toolAreas, mcp.loadedGuides), claimWritePaths(selected.name, dispatches), boundDispatchBrief(), attributeContextWriteToCaller(new Set(graph.agents.keys()), dispatches), auditHook(workspace, selected.name, dispatches)] }],
       PostToolUse: [{ hooks: [breaker.postToolUse, closeDispatchOnReturn(workspace, graph.agents, dispatches), auditHook(workspace, selected.name, dispatches)] }],
       PostToolUseFailure: [{ hooks: [auditHook(workspace, selected.name, dispatches)] }],
       PostToolBatch: [{ hooks: [auditHook(workspace, selected.name, dispatches)] }],

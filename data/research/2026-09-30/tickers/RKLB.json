@@ -1,0 +1,153 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "RKLB",
+ "as_of": "2026-09-30",
+ "inputs": {
+  "themes": "2026-09-30",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-30",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": 5
+ },
+ "macro": {
+  "as_of": "2026-09-30",
+  "call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+  "label": "Lean risk-off",
+  "composite": -7.8,
+  "duration": "hostile"
+ },
+ "regime": {
+  "as_of": "2026-09-24",
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": "long_duration_growth",
+ "macro_fit": {
+  "fit": -1.41,
+  "stance": "headwind",
+  "runway_macro_fit_pts": 1,
+  "headwinds": [
+   "R_REAL10",
+   "R_10Y_1M",
+   "R_LONG_END"
+  ],
+  "tailwinds": []
+ },
+ "themes": [
+  {
+   "id": "space",
+   "name": "Space",
+   "archetype": "long_duration_growth",
+   "direction": "lagging",
+   "rel_spy_3m": -27.4,
+   "trend": "downtrend",
+   "breadth_50d": 43.0,
+   "stance": "Underweight",
+   "stance_score": -0.9,
+   "flags": []
+  }
+ ],
+ "price": {
+  "close": 69.7,
+  "as_of": "2026-09-29",
+  "ret_1m": 8.2,
+  "ret_3m": -31.4,
+  "ret_12m": 50.7,
+  "above_50d": true,
+  "above_200d": false,
+  "dd_52w_pct": -53.6,
+  "source": "https://finance.yahoo.com/quote/RKLB"
+ },
+ "sentiment": {
+  "symbol": "RKLB",
+  "posts_recent": 21,
+  "posts_prior": 22,
+  "accounts_recent": 3,
+  "accounts_total": 6,
+  "likes_recent": 15063,
+  "velocity": 3.82,
+  "velocity_rel": 2.65,
+  "tone_recent": -0.05,
+  "tone_window": 0.07,
+  "bull_share_recent": 0.14,
+  "bear_share_recent": 0.19,
+  "tone_source": "lexicon",
+  "evidence": [
+   {
+    "post_id": "2101177184463523985",
+    "author": "StockSavvyShay",
+    "day": "2026-09-19",
+    "likes": 1666,
+    "text": "$RKLB successfully completed its 96th Electron launch. https://t.co/8ojuN1qRLZ"
+   },
+   {
+    "post_id": "2102550672738766885",
+    "author": "StockSavvyShay",
+    "day": "2026-09-23",
+    "likes": 1590,
+    "text": "Cathie Wood bought ~$26M of $RKLB today https://t.co/ip6na0YOfK"
+   },
+   {
+    "post_id": "2102219648460837209",
+    "author": "StockSavvyShay",
+    "day": "2026-09-22",
+    "likes": 1032,
+    "text": "$RKLB CEO Peter Beck says space is really three layers with rockets, spacecraft and the applications built on top. \u201cWe build rockets, we build satellites, and with our acquisition of Iridium, we\u2019re also a services compan"
+   }
+  ],
+  "stance": {
+   "accounts": 3,
+   "longs": 4,
+   "shorts": 0,
+   "net_long": 1.0,
+   "avg_conviction": 0.76,
+   "stances": "StockSavvyShay:long:0.9 JaguarAnalytics:long:0.83 StockSavvyShay:long:0.65 TradexWhisperer:long:0.65"
+  },
+  "labels": [
+   "heating"
+  ]
+ },
+ "runway_score": {
+  "probe": "2026-09-24",
+  "tier": "one_leg_missing",
+  "total": 48,
+  "points": {
+   "earnings": 6,
+   "prospect": 4,
+   "competition": 4,
+   "insider": 0,
+   "institutional": 9,
+   "retail": 3,
+   "upside": 8,
+   "risk_reward": 10,
+   "chart": 2,
+   "macro_fit": 1,
+   "narrative": 1
+  },
+  "gates_failed": [
+   "insider"
+  ],
+  "upside_pct": 48.58035592990084,
+  "risk_reward": 3.7211238293444335,
+  "close": 73.61,
+  "price_as_of": "2026-09-24"
+ },
+ "verdicts": [
+  {
+   "probe": "2026-09-24",
+   "tier": "one_leg_missing",
+   "close": 73.61,
+   "price_as_of": "2026-09-24",
+   "expected_return": -0.0463252275506045,
+   "kill": {
+    "observation": "Neutron first launch not on the pad by 31 Dec",
+    "by": "2026-12-31"
+   },
+   "size": "pass",
+   "horizon_months": 6
+  }
+ ],
+ "gaps": []
+}

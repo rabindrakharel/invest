@@ -1,0 +1,29 @@
+{
+ "schema": "ticker-judgment/1",
+ "ticker": "ABCL",
+ "as_of": "2026-09-30",
+ "verdict": "Avoid",
+ "horizon": "1-3 months",
+ "answer": "No new money until the full Phase 2 data at the IMS conference. ABCL is at its 52-week high after a large three-month run, well above the price the runway probe scored, and the readout is binary.",
+ "departure": null,
+ "why": {
+  "macro_fit": "Not in a theme basket, so it is mapped by judgment to long-duration biotech, which the hostile discount rate penalises.",
+  "theme_price": "At its 52-week high and far above its three-month base; the AI health basket it sits closest to is leading, but the move is a single-name catalyst trade.",
+  "allowlist": "Not found: no allowlist posts in the sentiment window, so attention cannot confirm or contradict the move.",
+  "record": "The 2026-09-24 runway probe rated it no_runway at 43, failing the delivery gate; there is no registered verdict, and the 2026-09-18 probe's test (IMS durability and safety, ABCL575 in Q4) is not yet testable."
+ },
+ "changes": [
+  {
+   "date": "2026-10-03",
+   "tell": "The IMS readout ends: durable, safe data followed by a base nearer $10.50 to $11.25 would open a small satellite position; a miss is the exit for any holder."
+  },
+  {
+   "date": "2026-10-14",
+   "tell": "CPI: a soft print that eases long yields would help the long-duration biotech fit, but only after the data."
+  }
+ ],
+ "gaps": [
+  "The insider record conflicts: the 2026-09-18 probe reports about $1.55M of buys and the 2026-09-24 probe reports none.",
+  "Not in any theme basket, so the macro fit is mapped by judgment."
+ ]
+}

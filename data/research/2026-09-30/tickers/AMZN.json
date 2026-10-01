@@ -1,0 +1,166 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "AMZN",
+ "as_of": "2026-09-30",
+ "inputs": {
+  "themes": "2026-09-30",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-30",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": 5
+ },
+ "macro": {
+  "as_of": "2026-09-30",
+  "call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+  "label": "Lean risk-off",
+  "composite": -7.8,
+  "duration": "hostile"
+ },
+ "regime": {
+  "as_of": "2026-09-24",
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": "quality_megacap",
+ "macro_fit": {
+  "fit": 0.09,
+  "stance": "neutral",
+  "runway_macro_fit_pts": 4,
+  "headwinds": [
+   "R_10Y_1M",
+   "R_REAL10"
+  ],
+  "tailwinds": [
+   "E_TREND",
+   "G_GDPNOW",
+   "V_VIX"
+  ]
+ },
+ "themes": [
+  {
+   "id": "mag7",
+   "name": "Magnificent 7",
+   "archetype": "quality_megacap",
+   "direction": "accelerating",
+   "rel_spy_3m": 8.9,
+   "trend": "uptrend",
+   "breadth_50d": 71.0,
+   "stance": "Accumulate",
+   "stance_score": 0.96,
+   "flags": []
+  },
+  {
+   "id": "internet_platforms",
+   "name": "Internet platforms",
+   "archetype": "quality_megacap",
+   "direction": "fading",
+   "rel_spy_3m": 2.7,
+   "trend": "above 200d, pulling back",
+   "breadth_50d": 17.0,
+   "stance": "Neutral",
+   "stance_score": 0.26,
+   "flags": []
+  }
+ ],
+ "price": {
+  "close": 246.67,
+  "as_of": "2026-09-29",
+  "ret_1m": -7.4,
+  "ret_3m": 3.5,
+  "ret_12m": 12.2,
+  "above_50d": false,
+  "above_200d": true,
+  "dd_52w_pct": -13.2,
+  "source": "https://finance.yahoo.com/quote/AMZN"
+ },
+ "sentiment": {
+  "symbol": "AMZN",
+  "posts_recent": 12,
+  "posts_prior": 45,
+  "accounts_recent": 3,
+  "accounts_total": 8,
+  "likes_recent": 5532,
+  "velocity": 1.07,
+  "velocity_rel": 0.74,
+  "tone_recent": -0.01,
+  "tone_window": 0.14,
+  "bull_share_recent": 0.0,
+  "bear_share_recent": 0.0,
+  "tone_source": "lexicon",
+  "evidence": [
+   {
+    "post_id": "2102015288304939101",
+    "author": "StockSavvyShay",
+    "day": "2026-09-21",
+    "likes": 1684,
+    "text": "$AMZN just blocked $META Muse from shopping on its website saying agent violates its terms while Meta says Muse never sees passwords or payment details. Wild to see AI agents already starting to sit between consumers and"
+   },
+   {
+    "post_id": "2102748915766620535",
+    "author": "StockSavvyShay",
+    "day": "2026-09-23",
+    "likes": 665,
+    "text": "$AMZN is rolling out a Claude-powered Seller Assistant that can monitor and act on pricing, inventory, ads and compliance 24/7. Its already live for 90%+ of sellers globally with recommendations accepted over 90% of the "
+   },
+   {
+    "post_id": "2103111052892479690",
+    "author": "StockSavvyShay",
+    "day": "2026-09-24",
+    "likes": 619,
+    "text": "$AMZN is investing $100M+ in a new Indiana robotics plant that will help double its robot manufacturing footprint by 2028. Amazon has already deployed 1M+ robots across 300+ sites with robotics now assisting ~75% of cust"
+   }
+  ],
+  "stance": {
+   "accounts": 2,
+   "longs": 2,
+   "shorts": 0,
+   "net_long": 1.0,
+   "avg_conviction": 0.61,
+   "stances": "TheLongInvest:long:0.81 stocktalkweekly:long:0.4"
+  },
+  "labels": []
+ },
+ "runway_score": {
+  "probe": "2026-09-24",
+  "tier": "one_leg_missing",
+  "total": 59,
+  "points": {
+   "earnings": 6,
+   "prospect": 6,
+   "competition": 6,
+   "insider": 2,
+   "institutional": 7,
+   "retail": 3,
+   "upside": 6,
+   "risk_reward": 10,
+   "chart": 3,
+   "macro_fit": 4,
+   "narrative": 6
+  },
+  "gates_failed": [
+   "insider"
+  ],
+  "upside_pct": 31.614403721228655,
+  "risk_reward": 4.068111455108362,
+  "close": 249.38,
+  "price_as_of": "2026-09-24"
+ },
+ "verdicts": [
+  {
+   "probe": "2026-09-24",
+   "tier": "one_leg_missing",
+   "close": 249.38,
+   "price_as_of": "2026-09-24",
+   "expected_return": 0.06664528029513193,
+   "kill": {
+    "observation": "AWS growth below 30% in the Q3 print",
+    "by": "2026-11-05"
+   },
+   "size": "watch",
+   "horizon_months": 6
+  }
+ ],
+ "gaps": []
+}

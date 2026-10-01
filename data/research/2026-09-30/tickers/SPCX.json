@@ -1,0 +1,132 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "SPCX",
+ "as_of": "2026-09-30",
+ "inputs": {
+  "themes": "2026-09-30",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-30",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": 5
+ },
+ "macro": {
+  "as_of": "2026-09-30",
+  "call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+  "label": "Lean risk-off",
+  "composite": -7.8,
+  "duration": "hostile"
+ },
+ "regime": {
+  "as_of": "2026-09-24",
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": null,
+ "macro_fit": null,
+ "themes": [],
+ "price": {
+  "close": 149.24,
+  "as_of": "2026-09-29",
+  "ret_1m": 5.5,
+  "ret_3m": -12.7,
+  "ret_12m": null,
+  "above_50d": true,
+  "above_200d": false,
+  "dd_52w_pct": -29.4,
+  "source": "https://finance.yahoo.com/quote/SPCX"
+ },
+ "sentiment": {
+  "symbol": "SPCX",
+  "posts_recent": 21,
+  "posts_prior": 44,
+  "accounts_recent": 4,
+  "accounts_total": 4,
+  "likes_recent": 6831,
+  "velocity": 1.91,
+  "velocity_rel": 1.33,
+  "tone_recent": 0.18,
+  "tone_window": 0.04,
+  "bull_share_recent": 0.24,
+  "bear_share_recent": 0.05,
+  "tone_source": "lexicon",
+  "evidence": [
+   {
+    "post_id": "2102115445725896943",
+    "author": "StockSavvyShay",
+    "day": "2026-09-21",
+    "likes": 1173,
+    "text": "Morgan Stanley says $SPCX and $TSLA are converging into one physical AI stack as the next decade gets decided by who can \u201cbuild, power, connect, and instrument AI in the physical world.\u201d SpaceX brings compute, connectivi"
+   },
+   {
+    "post_id": "2102830487140196595",
+    "author": "StockSavvyShay",
+    "day": "2026-09-23",
+    "likes": 1166,
+    "text": "$SPCX struck a deal with the U.S. Space Force giving it access to Pentagon\u2019s most detailed classified space tracking data. In exchange SpaceX is sharing Stargaze data from ~30,000 Starlink cameras to improve collision tr"
+   },
+   {
+    "post_id": "2102005732254335067",
+    "author": "StockSavvyShay",
+    "day": "2026-09-21",
+    "likes": 957,
+    "text": "Cantor says $RKLB remains a good entry point with Neutron positioned to become \u201cthe only viable alternative\u201d to $SPCX Falcon 9 once operational. It also expects the Iridium acquisition to roughly double annual revenue an"
+   }
+  ],
+  "stance": {
+   "accounts": 2,
+   "longs": 1,
+   "shorts": 1,
+   "net_long": 0.0,
+   "avg_conviction": 0.6,
+   "stances": "TheLongInvest:short:0.8 StockSavvyShay:long:0.4"
+  },
+  "labels": [
+   "contested"
+  ]
+ },
+ "runway_score": {
+  "probe": "2026-09-24",
+  "tier": "one_leg_missing",
+  "total": 55,
+  "points": {
+   "earnings": 6,
+   "prospect": 5,
+   "competition": 6,
+   "insider": 2,
+   "institutional": 7,
+   "retail": 3,
+   "upside": 10,
+   "risk_reward": 10,
+   "chart": 3,
+   "macro_fit": 1,
+   "narrative": 2
+  },
+  "gates_failed": [
+   "insider"
+  ],
+  "upside_pct": 50.25332702830507,
+  "risk_reward": 9.264009962640097,
+  "close": 148.03,
+  "price_as_of": "2026-09-24"
+ },
+ "verdicts": [
+  {
+   "probe": "2026-09-24",
+   "tier": "one_leg_missing",
+   "close": 148.03,
+   "price_as_of": "2026-09-24",
+   "expected_return": 0.008241572654191759,
+   "kill": {
+    "observation": "price below the $135 IPO after the 24 Oct lock-up tranche",
+    "by": "2026-11-15"
+   },
+   "size": "watch",
+   "horizon_months": 6
+  }
+ ],
+ "gaps": [
+  "not in any theme basket: add it to config/themes.json if it recurs"
+ ]
+}

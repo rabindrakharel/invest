@@ -104,7 +104,9 @@ pnpm web                 # http://127.0.0.1:4317  (--port N, --open)
 
 Chat with an orchestrator in the browser. Ask a research question and the desk dispatches its specialists,
 shows each one's progress, stops to ask you (checkboxes for choices, approve/deny for anything that costs
-money or needs a permission), and answers with a designed HTML page inline. It is loopback-only and every
+money or needs a permission), and answers with a designed HTML page inline. A live map above the chat shows
+the orchestrator and every subagent it has running, and the **Logs** tab shows the verbose log of any session or
+past run, per agent. It is loopback-only and every
 API call needs the token printed by that launch. The **Research** tab browses what is already on disk: the
 latest outlook as a desk dashboard, a dossier per ticker (briefs, runway scores, verdicts, the reports that
 mention it), the verdict ledger, and every report and probe page. See [`docs/agents.md`](docs/agents.md#the-web-chat).

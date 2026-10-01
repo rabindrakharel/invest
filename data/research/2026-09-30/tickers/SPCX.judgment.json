@@ -1,0 +1,28 @@
+{
+ "schema": "ticker-judgment/1",
+ "ticker": "SPCX",
+ "as_of": "2026-09-30",
+ "verdict": "Avoid",
+ "horizon": "6 months",
+ "answer": "No new buying; watch only until after the 24 October lock-up tranche. SPCX beats the space names but has no basket, maps to long-duration growth under a hostile discount rate, and its registered watch verdict is still open.",
+ "departure": null,
+ "why": {
+  "macro_fit": "Not in a theme basket, so its archetype is mapped by judgment to long-duration growth, the archetype the hostile duration regime penalises most.",
+  "theme_price": "Up over one month but down over three months and below its 200-day average, though still ahead of the space basket it would belong to.",
+  "allowlist": "Attention is heating but split: the formal stances point both ways, a short from TheLongInvest and a long from StockSavvyShay, with recent posts on defense and AI deals (posts 2102115445725896943, 2102830487140196595).",
+  "record": "The 2026-09-24 runway probe rated it one_leg_missing, failing the insider gate; the registered watch verdict's kill is a close below $135 after the lock-up, by 2026-11-15."
+ },
+ "changes": [
+  {
+   "date": "2026-10-24",
+   "tell": "The lock-up tranche: holding above $135 through it, with the insider gate cleared, upgrades to Accumulate on weakness; a close below $135 afterwards fires the kill."
+  },
+  {
+   "date": "2026-11-15",
+   "tell": "The registered verdict's kill deadline."
+  }
+ ],
+ "gaps": [
+  "Not in any theme basket, so the macro fit is mapped by judgment; propose adding it to config/themes.json if it recurs."
+ ]
+}

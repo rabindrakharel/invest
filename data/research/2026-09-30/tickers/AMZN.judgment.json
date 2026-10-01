@@ -1,0 +1,26 @@
+{
+ "schema": "ticker-judgment/1",
+ "ticker": "AMZN",
+ "as_of": "2026-09-30",
+ "verdict": "Hold",
+ "horizon": "6 months",
+ "answer": "Keep it at watch size and do not add before the Q3 report. AMZN lags its Magnificent 7 basket, sits below its 50-day average, and its registered watch verdict turns on AWS growth in the print.",
+ "departure": "The Magnificent 7 stance is Accumulate, but AMZN trades like the fading internet-platforms basket rather than the leaders, and its own record is a watch verdict with a kill test due at the Q3 print, so it stays at watch size until that resolves.",
+ "why": {
+  "macro_fit": "Quality mega cap with a neutral fit: rising long yields weigh on the multiple, while the trend and growth signals offset it.",
+  "theme_price": "Down over one month and below its 50-day average while the Magnificent 7 basket accelerates: a laggard inside a leading theme.",
+  "allowlist": "Attention is cooling and nobody is crowding in; the recent posts are news relays, not calls (posts 2102015288304939101, 2102748915766620535).",
+  "record": "The 2026-09-24 runway probe rated it one_leg_missing, failing the insider gate, and the registered watch verdict carries the kill test of AWS growth below 30% in Q3 by 2026-11-05, not yet testable."
+ },
+ "changes": [
+  {
+   "date": "2026-10-30",
+   "tell": "Q3 results: AWS growth of 30% or more with the stock back above its 50-day average upgrades to Accumulate on weakness; AWS below 30% fires the registered kill."
+  },
+  {
+   "date": "2026-11-05",
+   "tell": "The registered verdict's kill deadline: if the print has not cleared the AWS test by then, the watch verdict is closed as a miss."
+  }
+ ],
+ "gaps": []
+}
