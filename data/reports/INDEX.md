@@ -19,3 +19,5 @@ One line per report, newest last. Written by the CLAUDE.md "How to answer" proto
 - 2026-09-30 [ABCL ticker brief](2026-09-30-abcl.md) — Avoid, 1-3 months: No new money until the full Phase 2 data at the IMS conference
 - 2026-09-30 [META ticker brief](2026-09-30-meta.md) — Hold, 1-3 months: Add only on a pullback toward the 50-day average; do not chase
 - 2026-09-30 [AMZN ticker brief](2026-09-30-amzn.md) — Hold, 6 months: Keep it at watch size and do not add before the Q3 report
+- 2026-09-30 [NVDA ticker brief](2026-09-30-nvda.md) — Accumulate on weakness, 6 months: NVDA sits near its 52-week high in an uptrend, carried by an accelerating Magnificent 7 basket, while the regime is lean risk-off on a hostile discount rate
+- 2026-09-30 [SPCX: what has changed since the 2026-09-30 brief](2026-09-30-spcx-whats-changed.md) — Nothing: every input predates the brief; rebuilt context identical; Avoid, 6 months stands

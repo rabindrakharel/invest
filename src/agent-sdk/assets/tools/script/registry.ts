@@ -18,6 +18,25 @@ export interface ScriptParam {
   description: string;
 }
 
+/**
+ * A script's determinism contract: what it writes, and how the runtime proves at a dispatch's stop that the files on
+ * disk are exactly what the script produces from the inputs on disk now.
+ *   rerun   record each product's hash when the script ran; at stop, re-run it with the same arguments and require
+ *           the same bytes. A product edited after the run, or a rerun that changes it, fails the check.
+ *   verify  re-run it with `verify` (parameter overrides that put the script in its own self-check mode) and
+ *           require exit 0.
+ * `obliged_by` names files whose write makes a passing check mandatory before the writer may stop, even if the
+ * script never ran (a judgment file obliges its rendered brief). Templates are repository-relative paths with
+ * `<PARAM>` placeholders (the parameter's name upper-cased; `<DATE>` defaults to today) and an optional `:upper` or
+ * `:lower` case filter.
+ */
+export interface DeterminismSpec {
+  check: "rerun" | "verify";
+  products?: string[];
+  verify?: Record<string, unknown>;
+  obliged_by?: string[];
+}
+
 export interface ScriptSpec {
   name: string;
   family: string;
@@ -26,6 +45,32 @@ export interface ScriptSpec {
   metered?: boolean;
   timeoutSeconds?: number;
   params?: ScriptParam[];
+  determinism?: DeterminismSpec;
+}
+
+const PLACEHOLDER = /<([A-Z][A-Z0-9_]*)(?::(upper|lower))?>/g;
+
+function validateDeterminism(spec: ScriptSpec, where: string): void {
+  const contract = spec.determinism;
+  if (!contract) return;
+  if (spec.metered) throw new Error(`${where}: a metered script cannot be re-run to prove determinism`);
+  const params = new Map((spec.params ?? []).map((param) => [param.name, param]));
+  const templates = [...(contract.products ?? []), ...(contract.obliged_by ?? [])];
+  for (const template of templates) {
+    if (template.startsWith("/") || template.includes("..")) throw new Error(`${where}: determinism template '${template}' must be repository-relative`);
+    for (const [, name] of template.matchAll(PLACEHOLDER)) {
+      if (name !== "DATE" && !params.has(name!.toLowerCase())) throw new Error(`${where}: determinism template '${template}' names <${name}>, which is not a parameter`);
+    }
+  }
+  if (contract.check === "rerun") {
+    if (!contract.products?.length) throw new Error(`${where}: determinism check 'rerun' needs products`);
+    if (contract.verify) throw new Error(`${where}: determinism check 'rerun' takes no verify overrides`);
+  } else if (contract.check === "verify") {
+    if (!contract.verify || !Object.keys(contract.verify).length) throw new Error(`${where}: determinism check 'verify' needs verify overrides`);
+    for (const name of Object.keys(contract.verify)) if (!params.has(name)) throw new Error(`${where}: verify override '${name}' is not a parameter`);
+  } else {
+    throw new Error(`${where}: determinism check must be 'rerun' or 'verify'`);
+  }
 }
 
 /**
@@ -61,6 +106,7 @@ export async function loadScriptSpecs(): Promise<ScriptSpec[]> {
       if (param.list === "positional" && param.flag) throw new Error(`${at}: a positional list takes no flag`);
       if (param.pattern) new RegExp(param.pattern);
     }
+    validateDeterminism(spec, where);
   }
   return specs;
 }

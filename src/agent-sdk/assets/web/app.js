@@ -3,28 +3,46 @@
 // (never innerHTML), and presented pages load in a sandboxed frame from their own endpoint.
 
 import { $, api, el, markdown, token } from "./ui.js";
-import { mountResearch } from "./research.js";
+import { hitlCard, markAnswered } from "./hitl.js";
 import { mountLogs } from "./logs.js";
+import { createOrchestrationMap, plain } from "./orch.js";
+import { mountResearch } from "./research.js";
 
+// Front-page starters. `prompt` is what is sent (the title when absent); `featured` spans the row and leads the list.
+const DEMO_PROMPT = [
+  "Demo of the research desk's subagent architecture. Use today's date and run it in two waves.",
+  "Wave 1, in parallel (one message, five dispatches): news-scout collects today's macro news; macro-analyst refreshes the macro data and the risk-on/risk-off regime; theme-analyst runs the theme pulse; sentiment-analyst reads allowlist sentiment from the corpus already on disk (do not refresh the X corpus, it is metered); record-keeper checks the registered verdicts against current prices.",
+  "When wave 1 has returned, ask me with a multi-select question which names to brief, offering NVDA, META, MU, AMZN and RKLB.",
+  "Wave 2, in parallel: one ticker-analyst per name I pick, each rendering its brief through the template.",
+  "Then write one combined report: the regime and risk budget, the three leading and three weakest themes, what the record shows, and a one-line call per name. Ask me before anything costs money.",
+].join(" ");
+// "Daily brief" opens the prompt on purpose: the harness arms its format gate on it (hooks/daily-brief.ts).
+const DAILY_BRIEF_PROMPT = [
+  "Daily brief for today's date (intent outlook).",
+  "Run state.py --intent outlook and bring only the stale products up to date through their specialists (news, macro data and regime, theme pulse, sentiment from the corpus on disk; do not refresh the X corpus, it is metered).",
+  "Then build today's outlook with build_outlook.py, write outlook/judgment.json (summary, top_calls, risks, what_changes) and rerun build_outlook.py so the judgment is embedded.",
+  "Your final message is data/research/<DATE>/outlook/outlook.md verbatim, exactly as rendered: no preface, no summary, no page, nothing after it.",
+].join(" ");
 const SUGGESTIONS = {
   chief: [
-    ["Risk on or off?", "The macro regime, the risk budget and what would change it."],
-    ["Which themes lead?", "Semis, AI infrastructure, biotech, Mag 7 vs the rest: who is accelerating and who is fading."],
-    ["What about NVDA?", "One name joined across regime, themes, price trend and what the accounts say."],
-    ["Give me the market outlook", "The full read: a risk budget and a stance for every theme."],
+    { title: "Demo: the full desk, two waves", hint: "Five specialists in parallel (news, macro, themes, sentiment, record), then a question with checkboxes, then one ticker analyst per name you pick, also in parallel. Watch the orchestration map and the Logs tab.", prompt: DEMO_PROMPT, featured: true },
+    { title: "Daily brief", hint: "Today's market outlook in its fixed format: the call and risk budget, the read, top calls, theme stances, archetypes, tilts, dated events and allowlist attention.", prompt: DAILY_BRIEF_PROMPT },
+    { title: "Risk on or off?", hint: "The macro regime, the risk budget and what would change it." },
+    { title: "Which themes lead?", hint: "Semis, AI infrastructure, biotech, Mag 7 vs the rest: who is accelerating and who is fading." },
+    { title: "What about NVDA?", hint: "One name joined across regime, themes, price trend and what the accounts say." },
+    { title: "Give me the market outlook", hint: "The full read: a risk budget and a stance for every theme." },
   ],
   "corpus-lead": [
-    ["Refresh the corpus and re-tier it", "Delta capture (asks before it spends), extraction, then the Corpus Probe."],
-    ["What are the accounts saying about semis?", "Stances and crowding from the paid X corpus."],
+    { title: "Refresh the corpus and re-tier it", hint: "Delta capture (asks before it spends), extraction, then the Corpus Probe." },
+    { title: "What are the accounts saying about semis?", hint: "Stances and crowding from the paid X corpus." },
   ],
   "runway-lead": [
-    ["Which of the corpus picks have runway?", "Rank the Corpus Probe's names on twelve signals with a red-team pass."],
+    { title: "Which of the corpus picks have runway?", hint: "Rank the Corpus Probe's names on twelve signals with a red-team pass." },
   ],
 };
 
-const state = { agents: [], agent: null, id: null, source: null, lastSeq: 0, turn: null, lanes: new Map(), tools: new Map(), hitl: new Map(), state: "idle", open: 0, sending: false,
-  // The live orchestration map: the orchestrator's current turn and every subagent dispatch, by its Agent call id.
-  orch: { turn: 0, turnStart: null, tools: 0, lastTool: "", dispatches: new Map(), collapsed: false } };
+const state = { agents: [], agent: null, id: null, source: null, lastSeq: 0, turn: null, lanes: new Map(), tools: new Map(), hitl: new Map(), state: "idle", open: 0, sending: false };
+const orch = createOrchestrationMap($("orch"), { session: () => ({ id: state.id, agent: state.agent, state: state.state, open: state.open }) });
 
 // ---------- thread ----------
 const thread = $("thread");
@@ -58,14 +76,14 @@ function setState(next) {
   pill.textContent = waiting ? "Waiting for you" : next === "running" ? "Working…" : next === "closed" ? "Ended" : "Idle";
   $("stop").hidden = next !== "running";
   $("send").disabled = next === "closed";
-  scheduleOrch();
+  orch.schedule();
 }
 
 // ---------- events ----------
 function onEvent(event) {
   if (event.seq <= state.lastSeq) return;
   state.lastSeq = event.seq;
-  trackOrch(event);
+  orch.track(event);
   switch (event.type) {
     case "status": setState(event.state); break;
     case "user": state.turn = null; add(el("div", { class: "msg user", text: event.text })); break;
@@ -94,7 +112,12 @@ function onEvent(event) {
       break;
     }
     case "artifact": add(artifactCard(event)); break;
-    case "hitl": add(hitlCard(event)); state.open++; setState(state.state); break;
+    case "hitl": {
+      const card = hitlCard(event, { submit: (answers) => api(`/api/sessions/${state.id}/answer`, { method: "POST", body: JSON.stringify({ id: event.id, answers }) }) });
+      state.hitl.set(event.id, card);
+      add(card); state.open++; setState(state.state);
+      break;
+    }
     case "hitl_done": {
       const card = state.hitl.get(event.id);
       if (card && !card.classList.contains("done")) markAnswered(card, event.answered ? null : "Cancelled");
@@ -113,139 +136,37 @@ function onEvent(event) {
     }
     case "error": settleActivity("Failed"); add(el("div", { class: "banner", role: "alert", text: event.message })); break;
     case "notice": add(el("div", { class: "notice", text: event.text })); break;
+    case "check": {
+      // A determinism check at an agent's stop: a step in the turn when it passes, a visible warning when it gives up.
+      const turn = activity();
+      turn.steps.append(el("div", { class: `tool${event.ok ? "" : " err"}` }, el("span", { class: "t", text: `${event.agent} · determinism` }),
+        el("span", { class: "s", text: event.ok ? "outputs match a fresh run" : event.findings.map((f) => `${f.script}: ${f.problem}`).join("; ") })));
+      if (event.gaveUp) add(el("div", { class: "banner", role: "alert", text: `${event.agent} stopped with outputs that are not deterministic: ${event.findings.map((f) => `${f.script} ${f.paths.join(", ")}`).join("; ")}. See Logs for the details.` }));
+      break;
+    }
   }
 }
 const fmt = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n));
 
-// ---------- the orchestration map ----------
-const since = (start, end) => { if (!start) return ""; const ms = (end ? Date.parse(end) : Date.now()) - Date.parse(start); const s = Math.max(0, Math.round(ms / 1000)); return s >= 60 ? `${Math.floor(s / 60)}m${String(s % 60).padStart(2, "0")}s` : `${s}s`; };
-const plain = (text) => String(text ?? "").replace(/\*\*|__|`/g, "").replace(/\s+/g, " ").trim();
-const kilo = (n) => (n >= 1000 ? `${Math.round(n / 1000)}k` : String(n ?? 0));
-
-function trackOrch(event) {
-  const o = state.orch;
-  switch (event.type) {
-    case "user": o.turn++; o.turnStart = event.at; o.turnEnd = null; o.tools = 0; o.lastTool = ""; break;
-    case "result": o.turnEnd = event.at; break;
-    case "tool": {
-      if (event.lane) { const d = o.dispatches.get(event.lane); if (d) { d.tools = Math.max(d.tools, (d.seen = (d.seen ?? 0) + 1)); d.lastTool = event.summary ? `${event.name}: ${event.summary}` : event.name; } }
-      else if (event.name !== "dispatch") { o.tools++; o.lastTool = event.summary ? `${event.name}: ${event.summary}` : event.name; }
-      break;
-    }
-    case "subagent": {
-      const d = o.dispatches.get(event.id) ?? { id: event.id, turn: o.turn, tools: 0, tokens: 0, start: event.at };
-      Object.assign(d, { name: event.name, state: event.state }, event.label ? { label: event.label } : {}, event.description ? { description: event.description } : {},
-        event.tools !== undefined ? { tools: event.tools } : {}, event.tokens !== undefined ? { tokens: event.tokens } : {}, event.state !== "running" ? { end: event.at, summary: event.stats ?? d.summary } : {});
-      o.dispatches.set(event.id, d);
-      break;
-    }
-    case "progress": {
-      const d = o.dispatches.get(event.id);
-      if (d) Object.assign(d, { tools: event.tools, tokens: event.tokens }, event.lastTool ? { lastTool: event.lastTool } : {}, event.summary ? { summary: event.summary } : {});
-      break;
-    }
-  }
-  // A question card needs the room: fold the map to its header while the run waits on the operator.
-  if (event.type === "hitl") { o.foldedForQuestion = !o.collapsed; o.collapsed = true; }
-  if (event.type === "hitl_done" && o.foldedForQuestion && state.open <= 1) { o.collapsed = false; o.foldedForQuestion = false; }
-  if (["user", "tool", "subagent", "progress", "status", "result", "hitl", "hitl_done"].includes(event.type)) scheduleOrch();
-}
-
-let orchFrame = 0;
-function scheduleOrch() { if (!orchFrame) orchFrame = requestAnimationFrame(() => { orchFrame = 0; renderOrch(); }); }
-function renderOrch() {
-  const o = state.orch;
-  const box = $("orch");
-  const all = [...o.dispatches.values()];
-  if (!o.turn && !all.length) { box.hidden = true; return; }
-  box.hidden = false;
-  const current = all.filter((d) => d.turn === o.turn);
-  const earlier = all.length - current.length;
-  const count = (s) => current.filter((d) => d.state === s).length;
-  const working = state.state === "running";
-  const status = state.open > 0 ? "waiting" : working ? "running" : state.state === "closed" ? "closed" : "idle";
-  const logHref = (lane) => `#/logs/s/${state.id}${lane ? `/${lane}` : ""}`;
-  const node = (cls, dot, title, meta, detail, href) => el("div", { class: `onode ${cls}` },
-    el("span", { class: `dot ${dot}` }),
-    el("div", { class: "obody" }, el("div", { class: "otitle" }, title, el("span", { class: "ometa", text: meta })), detail ? el("div", { class: "odetail", text: detail }) : null),
-    href ? el("a", { class: "olog", href, title: "Open this agent's log", text: "log" }) : null);
-  const head = el("button", { type: "button", class: "ohead", "aria-expanded": String(!o.collapsed), onclick: () => { o.collapsed = !o.collapsed; o.foldedForQuestion = false; renderOrch(); } },
-    el("span", { class: "ocaret", text: o.collapsed ? "▸" : "▾" }),
-    el("b", { text: "Orchestration" }),
-    el("span", { class: "ocounts" }, el("span", { class: "c running", text: `${count("running")} running` }), el("span", { class: "c done", text: `${count("done")} done` }), count("failed") ? el("span", { class: "c failed", text: `${count("failed")} failed` }) : null),
-    el("span", { class: "ometa", text: `turn ${o.turn}${o.turnStart ? ` · ${since(o.turnStart, o.turnEnd)}` : ""}` }));
-  const children = o.collapsed ? [] : [
-    node("root", status, el("span", {}, el("b", { text: state.agent }), el("span", { class: "orole", text: " orchestrator" })),
-      `${status === "waiting" ? "waiting for you" : status} · ${o.tools} tool call${o.tools === 1 ? "" : "s"}`, o.lastTool ? `last: ${o.lastTool}` : "", state.id ? logHref("orchestrator") : null),
-    // Running agents first, then finished ones; a finished agent is one line, so the map stays short.
-    el("div", { class: "okids" }, [...current].sort((x, y) => Number(y.state === "running") - Number(x.state === "running")).map((d) => node(`kid ${d.state}`, d.state,
-      el("span", {}, el("b", { text: d.label ?? d.name }), d.description ? el("span", { class: "orole", text: ` ${d.description}` }) : null),
-      [d.state === "running" ? since(d.start) : d.end ? since(d.start, d.end) : "", `${d.tools ?? 0} tools`, d.tokens ? `${kilo(d.tokens)} tokens` : ""].filter(Boolean).join(" · "),
-      plain(d.summary ?? (d.lastTool ? `last: ${d.lastTool}` : d.state === "running" ? "starting…" : "")), state.id ? logHref(d.id) : null))),
-    earlier ? el("div", { class: "oearlier", text: `${earlier} dispatch${earlier === 1 ? "" : "es"} in earlier turns · see Logs` }) : null,
-  ];
-  box.replaceChildren(head, ...children.filter(Boolean));
-}
-// Running timers tick once a second without re-rendering anything else.
-setInterval(() => { if (state.state === "running" && !$("orch").hidden) renderOrch(); }, 1000);
-
-// ---------- human in the loop ----------
-function hitlCard(event) {
-  const kindLabel = { question: "Needs your input", permission: "Permission", spend: "Spends money" }[event.kind];
-  const form = el("form", { class: `hitl ${event.kind}` });
-  form.append(el("div", { class: "head" }, el("span", { class: "tag", text: kindLabel }), event.agent ? el("span", { class: "from", text: `from ${event.agent}` }) : null));
-  const fields = event.questions.map((question, qi) => {
-    const group = el("fieldset", {}, el("legend", { text: question.header ? `${question.header}: ${question.question}` : question.question }));
-    const multi = Boolean(question.multiSelect);
-    const name = `q${event.id}-${qi}`;
-    question.options.forEach((option) => {
-      group.append(el("label", { class: "opt" }, el("input", { type: multi ? "checkbox" : "radio", name, value: option.label }), el("span", {}, el("span", { class: "l", text: option.label }), option.description ? el("span", { class: "d", text: option.description }) : null)));
-    });
-    const other = el("input", { class: "other", type: "text", placeholder: question.options.length ? "Or type something else…" : "Type your answer…", "aria-label": "Your own answer", maxlength: "4000" });
-    group.append(other);
-    return { question, name, other, multi, group };
-  });
-  const error = el("span", { class: "err", role: "alert" });
-  const submit = el("button", { class: `btn ${event.kind === "spend" ? "danger" : "primary"}`, type: "submit", text: event.kind === "spend" ? "Submit decision" : "Submit" });
-  for (const field of fields) form.append(field.group);
-  form.append(el("div", { class: "actions" }, submit, error));
-  form.addEventListener("submit", async (submitEvent) => {
-    submitEvent.preventDefault();
-    const answers = fields.map((field) => {
-      const picked = [...form.querySelectorAll(`input[name="${field.name}"]:checked`)].map((input) => input.value);
-      const text = field.other.value.trim();
-      return text ? { text } : { picked };
-    });
-    if (answers.some((answer) => !answer.text && !answer.picked.length)) { error.textContent = "Choose an option or type an answer."; return; }
-    submit.disabled = true; error.textContent = "";
-    try {
-      await api(`/api/sessions/${state.id}/answer`, { method: "POST", body: JSON.stringify({ id: event.id, answers }) });
-      markAnswered(form, answers.map((answer) => answer.text ?? answer.picked.join(", ")).join(" · "));
-    } catch (failure) { submit.disabled = false; error.textContent = failure.message; }
-  });
-  state.hitl.set(event.id, form);
-  setTimeout(() => form.querySelector("input")?.focus({ preventScroll: true }), 50);
-  return form;
-}
-function markAnswered(card, summary) {
-  card.className = "hitl done";
-  card.replaceChildren(el("span", { text: summary === null ? "Answered." : summary === "Cancelled" ? "Cancelled." : `Answered: ${summary}` }));
-}
-
 // ---------- artifacts ----------
+// Presented pages report their height from their sandboxed frame; one listener sizes whichever frame sent it.
+const frames = new Set();
+addEventListener("message", (message) => {
+  if (message.data?.type !== "invest-artifact-height") return;
+  for (const frame of frames) {
+    if (message.source !== frame.contentWindow) continue;
+    frame.style.height = `${Math.min(Math.max(Number(message.data.height) || 0, 120) + 4, 3200)}px`;
+    toBottom();
+  }
+});
 function artifactCard(event) {
   const base = `/api/sessions/${state.id}/artifacts/${event.n}?token=${token}`;
   const frame = el("iframe", { sandbox: "allow-scripts allow-popups allow-popups-to-escape-sandbox", src: base, title: event.title, loading: "eager", style: "height:240px" });
-  const card = el("article", { class: "artifact" },
+  frames.add(frame);
+  return el("article", { class: "artifact" },
     el("div", { class: "top" }, el("span", { class: "title", text: event.title }),
       el("span", { class: "tools" }, el("a", { href: base, target: "_blank", rel: "noopener", text: "Open" }), el("a", { href: base, download: `${event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.html`, text: "Download" }))),
     event.caption ? el("div", { class: "caption", text: event.caption }) : null, frame);
-  addEventListener("message", (message) => {
-    if (message.source !== frame.contentWindow || message.data?.type !== "invest-artifact-height") return;
-    frame.style.height = `${Math.min(Math.max(Number(message.data.height) || 0, 120) + 4, 3200)}px`;
-    toBottom();
-  });
-  return card;
 }
 
 // ---------- conversation lifecycle ----------
@@ -280,9 +201,8 @@ async function send(text) {
 async function reset() {
   const old = state.id;
   state.source?.close(); Object.assign(state, { id: null, source: null, lastSeq: 0, turn: null, open: 0 });
-  state.lanes.clear(); state.tools.clear(); state.hitl.clear();
-  state.orch = { turn: 0, turnStart: null, tools: 0, lastTool: "", dispatches: new Map(), collapsed: false };
-  $("orch").hidden = true;
+  state.lanes.clear(); state.tools.clear(); state.hitl.clear(); frames.clear();
+  orch.reset();
   sessionStorage.removeItem("invest.session");
   if (old) api(`/api/sessions/${old}`, { method: "DELETE" }).catch(() => undefined);
   thread.replaceChildren(emptyState());
@@ -294,7 +214,10 @@ function emptyState() {
     el("h1", { text: "What do you want researched?" }),
     el("p", { class: "lede", text: "Ask about the macro regime, thematic leadership, a ticker, or what the book should do. The desk dispatches its specialists, asks you before anything costs money, and answers with a page you can read at a glance." }),
     el("div", { id: "suggestions", class: "suggestions" }), el("p", { class: "fine", text: "Research, not investment advice. Every figure is sourced and dated." }));
-  for (const [title, hint] of SUGGESTIONS[state.agent] ?? []) box.querySelector("#suggestions").append(el("button", { class: "suggestion", type: "button", onclick: () => send(title) }, el("b", { text: title }), el("span", { text: hint })));
+  for (const { title, hint, prompt, featured } of SUGGESTIONS[state.agent] ?? []) {
+    box.querySelector("#suggestions").append(el("button", { class: `suggestion${featured ? " featured" : ""}`, type: "button", title: prompt ?? title, onclick: () => send(prompt ?? title) },
+      featured ? el("span", { class: "tag", text: "Subagent demo" }) : null, el("b", { text: title }), el("span", { text: hint })));
+  }
   return box;
 }
 
@@ -325,7 +248,7 @@ async function boot() {
   route();
 }
 
-// ---------- views: #/chat (default) and #/research[/…] ----------
+// ---------- views: #/chat (default), #/logs[/…] and #/research[/…] ----------
 const logs = mountLogs($("logs"), { currentSession: () => state.id });
 const research = mountResearch($("research"), {
   // "Ask the desk" from a dossier or a document: switch to the chat and send the question there.

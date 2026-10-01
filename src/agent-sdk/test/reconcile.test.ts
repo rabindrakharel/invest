@@ -7,7 +7,7 @@ import type { HookInput } from "@anthropic-ai/claude-agent-sdk";
 import { loadAgentGraph } from "../src/agents/catalog.js";
 import { HandoffBus } from "../src/handoffs/state.js";
 import { isTerminalStatus, reconcileOutcome } from "../src/handoffs/reconcile.js";
-import { finalizeAgentOutput } from "../src/hooks/policy.js";
+import { finalizeAgentOutput } from "../src/hooks/lifecycle.js";
 import { createRunWorkspace, ensureAgentWorkspace } from "../src/workspace/run-workspace.js";
 
 const signal = () => ({ signal: new AbortController().signal });

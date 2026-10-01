@@ -26,6 +26,8 @@ export type UiEvent =
   | { type: "hitl"; id: string; kind: "question" | "permission" | "spend"; source: string; agent?: string; questions: HitlQuestion[] }
   | { type: "hitl_done"; id: string; answered: boolean }
   | { type: "result"; ok: boolean; subtype: string; turns: number; durationMs: number; costUsd?: number; tokensIn?: number; tokensOut?: number; error?: string }
+  /** A determinism check at an agent's stop: `agent` is the dispatch key (ticker-analyst/2) or the orchestrator. */
+  | { type: "check"; agent: string; ok: boolean; gaveUp: boolean; findings: { script: string; problem: string; detail: string; paths: string[] }[] }
   /** Session-level facts for the log: the model, tools and MCP servers at start, and the run's workspace. */
   | { type: "system"; text: string; detail?: string }
   | { type: "error"; message: string }

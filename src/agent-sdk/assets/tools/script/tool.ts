@@ -49,6 +49,36 @@ export function buildArgv(spec: ScriptSpec, input: Record<string, unknown>): str
   return argv;
 }
 
+/**
+ * The inverse of {@link buildArgv}: the parameters a raw argv (after the spec's fixed prefix) supplies, or undefined
+ * when it uses a flag the spec does not declare. Lets a hook recognise a registered script typed into `Bash`.
+ */
+export function parseArgv(spec: ScriptSpec, argv: readonly string[]): Record<string, unknown> | undefined {
+  const params = spec.params ?? [];
+  const byFlag = new Map(params.filter((param) => param.flag).map((param) => [param.flag!, param]));
+  const positionals = params.filter((param) => !param.flag);
+  const input: Record<string, unknown> = {};
+  let next = 0;
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i]!;
+    const flagged = byFlag.get(arg.includes("=") && arg.startsWith("--") ? arg.slice(0, arg.indexOf("=")) : arg);
+    if (flagged) {
+      if (flagged.type === "boolean") { input[flagged.name] = true; continue; }
+      const raw = arg.includes("=") && arg.startsWith("--") ? arg.slice(arg.indexOf("=") + 1) : argv[++i];
+      if (raw === undefined) return undefined;
+      input[flagged.name] = flagged.type === "number" ? Number(raw) : flagged.type === "string_list" ? raw.split(",") : raw;
+      continue;
+    }
+    if (arg.startsWith("-") && !/^-\d/.test(arg)) return undefined;
+    const slot = positionals[next];
+    if (!slot) return undefined;
+    if (slot.type === "string_list") { input[slot.name] = [...((input[slot.name] as string[] | undefined) ?? []), arg]; continue; }
+    input[slot.name] = slot.type === "number" ? Number(arg) : arg;
+    next++;
+  }
+  return input;
+}
+
 const clip = (text: string): string => text.length <= MAX_OUTPUT_CHARS ? text
   : `${text.slice(0, MAX_OUTPUT_CHARS / 2)}\n... [${text.length - MAX_OUTPUT_CHARS} characters omitted] ...\n${text.slice(-MAX_OUTPUT_CHARS / 2)}`;
 

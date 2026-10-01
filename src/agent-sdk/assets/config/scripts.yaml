@@ -23,6 +23,16 @@
 #   pattern     a regex a string must match
 #   required    default false
 #   description shown to the model
+# determinism   the script's determinism contract, proved when the agent that ran it stops (SubagentStop/Stop):
+#   check       rerun: re-run with the same arguments and require identical bytes in every product, and no edit
+#               to a product since the script wrote it | verify: re-run with `verify` overrides (the script's own
+#               self-check mode) and require exit 0
+#   products    the files it writes (rerun), repository-relative with <PARAM> placeholders (<DATE> defaults to
+#               today; <PARAM:upper> or <PARAM:lower> fix the case); a template naming an unsupplied parameter is
+#               skipped
+#   verify      parameter overrides for the self-check run (verify)
+#   obliged_by  files whose write obliges a passing check before the writer may stop, even if it never ran
+#               the script (a ticker judgment obliges its rendered brief)
 scripts:
   # ---------------------------------------------------------------- x-api (metered) and corpus-ingest (local)
   - name: x_resolve_accounts
@@ -201,6 +211,9 @@ scripts:
       - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
       - {name: runway, flag: --runway, type: string, pattern: '^\d{4}-\d{2}-\d{2}(-[\w-]+)?$', description: "Runway Probe id <window_end>[-label]."}
       - {name: force, flag: --force, type: boolean, description: "Allow --runway to overwrite a probe's macro.json from another date."}
+    determinism:
+      check: rerun
+      products: [data/research/<DATE>/macro/regime.json, data/research/<DATE>/macro/regime.md, data/probes/runway/<RUNWAY>/records/macro.json]
 
   - name: themes_compute
     family: analysis
@@ -208,6 +221,9 @@ scripts:
     run: [python3, src/agent-sdk/assets/tools/repo/theme-pulse/compute_themes.py]
     params:
       - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+    determinism:
+      check: rerun
+      products: [data/research/<DATE>/themes/themes.json, data/research/<DATE>/themes/themes.md]
 
   - name: sentiment_compute
     family: analysis
@@ -218,13 +234,20 @@ scripts:
       - {name: recent, flag: --recent, type: number, description: "Recent window in days (default 7)."}
       - {name: prior, flag: --prior, type: number, description: "Prior window in days (default 28)."}
       - {name: min_posts, flag: --min-posts, type: number, description: "Symbols below this many posts are left out of the symbol table."}
+    determinism:
+      check: rerun
+      products: [data/research/<DATE>/sentiment/x-sentiment.json, data/research/<DATE>/sentiment/x-sentiment.md]
 
   - name: outlook_build
     family: analysis
-    description: "Join the macro, theme and sentiment products into the outlook: data/research/<DATE>/outlook/outlook.json with a risk budget and a stance per theme. Deterministic; judgment.json is written afterwards."
+    description: "Join the macro, theme and sentiment products into the outlook: data/research/<DATE>/outlook/outlook.json with a risk budget and a stance per theme. Deterministic; judgment.json is written afterwards, then it is rerun. --verify writes nothing and fails unless outlook.md is a fresh render with the judgment embedded (the daily brief format)."
     run: [python3, src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py]
     params:
       - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+      - {name: verify, flag: --verify, type: boolean, description: "Write nothing; fail unless outlook.md/json are a fresh render with the judgment embedded."}
+    determinism:
+      check: rerun
+      products: [data/research/<DATE>/outlook/outlook.json, data/research/<DATE>/outlook/outlook.md]
 
   - name: ticker_context
     family: analysis
@@ -233,6 +256,9 @@ scripts:
     params:
       - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
       - {name: ticker, type: string, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "The ticker."}
+    determinism:
+      check: rerun
+      products: [data/research/<DATE>/tickers/<TICKER:upper>.json]
 
   - name: ticker_brief_render
     family: analysis
@@ -243,6 +269,10 @@ scripts:
       - {name: check, flag: --check, type: boolean, description: "Validate the judgment files only; write nothing."}
       - {name: verify, flag: --verify, type: boolean, description: "Fail if a rendered file differs from a fresh render."}
       - {name: tickers, type: string_list, list: positional, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "One or more tickers, in report order."}
+    determinism:
+      check: verify
+      verify: {verify: true, check: false}
+      obliged_by: [data/research/<DATE>/tickers/<TICKERS:upper>.judgment.json]
 
   - name: corpus_signals_mine
     family: analysis
@@ -257,6 +287,9 @@ scripts:
     run: [python3, src/agent-sdk/assets/tools/repo/runway-probe/build-scorecard.py]
     params:
       - {name: probe_id, type: string, required: true, pattern: '^\d{4}-\d{2}-\d{2}(-[\w-]+)?$', description: "Runway Probe id <window_end>[-label]."}
+    determinism:
+      check: rerun
+      products: [data/probes/runway/<PROBE_ID>/records/scorecard.json, data/probes/runway/<PROBE_ID>/records/scorecard.md]
 
   # ---------------------------------------------------------------- ledger
   - name: verdicts_register

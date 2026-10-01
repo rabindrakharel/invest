@@ -8,7 +8,7 @@ import { buildAgents } from "../src/agents/build.js";
 import { loadAgentGraph, validateAgentGraph } from "../src/agents/catalog.js";
 import { check } from "../src/cli.js";
 import { loadRuntimeConfig } from "../src/config/load.js";
-import { confineToRepository, gateMeteredSpend, meteredSpend, protectAppendOnly, requireLoadedGuide } from "../src/hooks/policy.js";
+import { confineToRepository, gateMeteredSpend, meteredSpend, protectAppendOnly, requireLoadedGuide } from "../src/hooks/guards.js";
 import { renderShims, staleShims } from "../src/catalog/shims.js";
 import { createPermissionBridge } from "../assets/tools/hitl/tool.js";
 import { buildOptions } from "../src/orchestrator/build-options.js";

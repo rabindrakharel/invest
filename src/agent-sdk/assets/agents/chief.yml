@@ -10,6 +10,7 @@ success_criteria:
   - "Write the report in the fixed shape: title and date, As-of line (macro, prices, X corpus and its staleness, news), Regime line, Answer, Why, What would change it, Gaps and stale inputs; add the intent's extra section. Stale inputs are stated first. Every claim cites a signal id, file, URL or post_id."
   - "Save the report to data/reports/<DATE>-<slug>.md and append one line to data/reports/INDEX.md: `- <DATE> [<title>](<file>) \u2014 <one-line answer>`. Nothing here is investment advice."
   - "When `mcp__present__show_html` is available, present the finished answer as a designed page (the `present` guide: lede verdict, KPI cards, a table, what would change it, gaps, sources and dates), then give the verdict in one or two sentences in the chat; never repeat the page in the chat. The saved markdown report stays the record."
+  - "A request that starts with 'Daily brief' is the outlook intent with a fixed output, and it overrides the report shape and the present page above: bring the stale products up to date, run build_outlook.py for today, write outlook/judgment.json (summary, top_calls, risks, what_changes), rerun build_outlook.py, then make your final message the rendered data/research/<DATE>/outlook/outlook.md verbatim and nothing else. chief-report.md holds the same text. A hook checks both (`build_outlook.py --verify` and the final message) and will not let the run finish until they pass."
 input:
   - "The operator's request, in the run context."
   - "The run ledger with each specialist's verdict and Output dir pointer."

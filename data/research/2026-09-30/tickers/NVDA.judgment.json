@@ -1,0 +1,34 @@
+{
+  "schema": "ticker-judgment/1",
+  "ticker": "NVDA",
+  "as_of": "2026-09-30",
+  "verdict": "Accumulate on weakness",
+  "horizon": "6 months",
+  "answer": "NVDA sits near its 52-week high in an uptrend, carried by an accelerating Magnificent 7 basket, while the regime is lean risk-off on a hostile discount rate. The registered 2026-09-24 runway verdict is a core-starter with a 6-month horizon and a dated kill criterion, and nothing in today's context breaks it. Strength at the high is not the entry in this regime; a pullback toward the 50-day is, sized inside the long-duration cap.",
+  "departure": null,
+  "why": {
+    "macro_fit": "As a quality megacap the macro fit is neutral: earnings trend, GDPNow and a calm VIX are tailwinds, while the one-month move in the 10-year and real yields are the headwinds. In a lean risk-off regime with a hostile duration call, that is a hold-what-you-own fit, not a chase.",
+    "theme_price": "The Magnificent 7 basket is accelerating with an Accumulate stance and broad participation; Semiconductors is only Neutral, lagging SPY over three months but improving with very broad breadth, flagged as a quiet improvement. NVDA itself is above both its 50-day and 200-day averages and within a few percent of its 52-week high, so the price argues for buying dips rather than the current level.",
+    "allowlist": "Allowlist stance is unanimously long among accounts that took a side, with no shorts and recent tone positive, though recent post velocity is roughly flat to the prior window. The highest-engagement post (post 2102102242602213407) is a competitive caution, noting the size gap to AMD has narrowed sharply; post 2102149908912550071 is a constructive ecosystem read on the DSX Ready AI factory stack.",
+    "record": "The 2026-09-24 runway probe scored NVDA in the one_leg_missing tier, failing only the insider gate, with strong upside and risk-reward points and a registered core-starter verdict over 6 months. Its kill criterion is a Q4 FY27 revenue guide below $118B at the November print, or FY28 EPS consensus below 15.0 on 2026-12-15."
+  },
+  "changes": [
+    {
+      "date": "2026-10-07",
+      "tell": "A tail at the 10-year auction (30-year on 2026-10-08) would press long-duration multiples and likely deliver the 50-day pullback that is the entry; a clean auction with NVDA holding its highs argues for patience, not a chase."
+    },
+    {
+      "date": "2026-10-28",
+      "tell": "An FOMC hike that pushes real yields higher deepens the main headwind and caps adds at the long-duration limit; a pause eases it toward Add on a pullback."
+    },
+    {
+      "date": "2026-12-15",
+      "tell": "Kill date of the registered verdict: a Q4 FY27 revenue guide below $118B at the November print, or FY28 EPS consensus below 15.0 by this date, turns the verdict to Trim."
+    }
+  ],
+  "gaps": [
+    "The November earnings date is not in the events calendar; the kill criterion is dated by its 2026-12-15 deadline instead.",
+    "Allowlist sentiment, the outlook risk budget and the corpus are from 2026-09-24/25 and were not refreshed today; macro news is carried forward from 2026-09-24.",
+    "The insider gate failure is carried from the runway probe; no new insider research was done here (offer /runway-probe --tickers NVDA)."
+  ]
+}

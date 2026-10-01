@@ -9,6 +9,7 @@ import type { RunWorkspace, RuntimeConfig } from "../domain/types.js";
 import { buildOptions } from "../orchestrator/build-options.js";
 import { buildInitialPrompt, userMessage } from "../orchestrator/run.js";
 import { createRunWorkspace } from "../workspace/run-workspace.js";
+import type { DeterminismOutcome } from "../hooks/determinism.js";
 import { EventTranslator, type SequencedEvent, type UiEvent } from "./events.js";
 import { WebPrompter, type WebAnswer } from "./prompter.js";
 
@@ -143,7 +144,7 @@ export class ChatSession implements SessionLike {
       this.emit({ type: "artifact", n: published.n, title: artifact.title, ...(artifact.caption ? { caption: artifact.caption } : {}) });
       return published;
     };
-    const options = await buildOptions(this.config, spec, workspace, this.prompter, undefined, sink);
+    const options = await buildOptions(this.config, spec, workspace, { prompter: this.prompter, artifactSink: sink, request: first, onDeterminism: (outcome) => this.reportDeterminism(outcome) });
     const inbox = this.inbox;
     async function* input() {
       yield userMessage(prompt);
@@ -164,6 +165,10 @@ export class ChatSession implements SessionLike {
     } finally {
       this.close();
     }
+  }
+
+  private reportDeterminism(outcome: DeterminismOutcome): void {
+    this.emit({ type: "check", agent: outcome.key, ok: outcome.ok, gaveUp: outcome.gaveUp, findings: outcome.findings.map(({ script, problem, detail, paths }) => ({ script, problem, detail, paths })) });
   }
 
   answer(id: string, answers: WebAnswer[]): boolean {

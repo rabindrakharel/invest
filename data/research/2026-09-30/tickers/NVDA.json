@@ -1,0 +1,168 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "NVDA",
+ "as_of": "2026-09-30",
+ "inputs": {
+  "themes": "2026-09-30",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-30",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": 5
+ },
+ "macro": {
+  "as_of": "2026-09-30",
+  "call": "Lean risk-off: a hostile discount rate with the first crack in credit",
+  "label": "Lean risk-off",
+  "composite": -7.8,
+  "duration": "hostile"
+ },
+ "regime": {
+  "as_of": "2026-09-24",
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": "quality_megacap",
+ "macro_fit": {
+  "fit": 0.09,
+  "stance": "neutral",
+  "runway_macro_fit_pts": 4,
+  "headwinds": [
+   "R_10Y_1M",
+   "R_REAL10"
+  ],
+  "tailwinds": [
+   "E_TREND",
+   "G_GDPNOW",
+   "V_VIX"
+  ]
+ },
+ "themes": [
+  {
+   "id": "mag7",
+   "name": "Magnificent 7",
+   "archetype": "quality_megacap",
+   "direction": "accelerating",
+   "rel_spy_3m": 8.9,
+   "trend": "uptrend",
+   "breadth_50d": 71.0,
+   "stance": "Accumulate",
+   "stance_score": 0.96,
+   "flags": []
+  },
+  {
+   "id": "semis",
+   "name": "Semiconductors",
+   "archetype": "quality_megacap",
+   "direction": "improving",
+   "rel_spy_3m": -8.0,
+   "trend": "uptrend",
+   "breadth_50d": 86.0,
+   "stance": "Neutral",
+   "stance_score": 0.06,
+   "flags": [
+    "quiet improvement: price turning before the crowd"
+   ]
+  }
+ ],
+ "price": {
+  "close": 227.21,
+  "as_of": "2026-09-29",
+  "ret_1m": 4.6,
+  "ret_3m": 13.7,
+  "ret_12m": 27.8,
+  "above_50d": true,
+  "above_200d": true,
+  "dd_52w_pct": -3.4,
+  "source": "https://finance.yahoo.com/quote/NVDA"
+ },
+ "sentiment": {
+  "symbol": "NVDA",
+  "posts_recent": 62,
+  "posts_prior": 178,
+  "accounts_recent": 5,
+  "accounts_total": 9,
+  "likes_recent": 26520,
+  "velocity": 1.39,
+  "velocity_rel": 0.97,
+  "tone_recent": 0.27,
+  "tone_window": 0.13,
+  "bull_share_recent": 0.31,
+  "bear_share_recent": 0.03,
+  "tone_source": "lexicon",
+  "evidence": [
+   {
+    "post_id": "2102102242602213407",
+    "author": "StockSavvyShay",
+    "day": "2026-09-21",
+    "likes": 4512,
+    "text": "A year ago $NVDA was ~40x the size of $AMD. Today that gap is ~5x with AMD officially joining the $1 trillion club. Give Lisa her flowers. https://t.co/wMG5bi9qsN"
+   },
+   {
+    "post_id": "2101680505582412279",
+    "author": "StockSavvyShay",
+    "day": "2026-09-20",
+    "likes": 1399,
+    "text": "Jensen Huang could pay ~$8B in taxes over next 5 years and says \u201cI\u2019m not afraid of paying taxes. I\u2019m just afraid of being poor.\u201d That mindset also shows up in how $NVDA pays people where he says \u201cI try to pay people as m"
+   },
+   {
+    "post_id": "2102149908912550071",
+    "author": "StockSavvyShay",
+    "day": "2026-09-22",
+    "likes": 920,
+    "text": "$NVDA just qualified $TSLA Megapack for its DSX Ready AI factory designs putting Tesla storage directly into the approved stack for new deployments. What\u2019s wild is Nvidia requiring battery partners to show a path to 10x "
+   }
+  ],
+  "stance": {
+   "accounts": 5,
+   "longs": 6,
+   "shorts": 0,
+   "net_long": 1.0,
+   "avg_conviction": 0.73,
+   "stances": "StockSavvyShay:long:0.94 MarcosMillaYT:long:0.92 FeroceResearch:long:0.9 TheLongInvest:neutral:0.82 TheLongInvest:long:0.7 StockSavvyShay:long:0.65 StockSavvyShay:long:0.55 stocktalkweekly:neutral:0.35"
+  },
+  "labels": []
+ },
+ "runway_score": {
+  "probe": "2026-09-24",
+  "tier": "one_leg_missing",
+  "total": 60,
+  "points": {
+   "earnings": 6,
+   "prospect": 7,
+   "competition": 6,
+   "insider": 2,
+   "institutional": 7,
+   "retail": 0,
+   "upside": 8,
+   "risk_reward": 10,
+   "chart": 5,
+   "macro_fit": 4,
+   "narrative": 5
+  },
+  "gates_failed": [
+   "insider"
+  ],
+  "upside_pct": 45.91682251313563,
+  "risk_reward": 4.074666060811326,
+  "close": 224.58,
+  "price_as_of": "2026-09-24"
+ },
+ "verdicts": [
+  {
+   "probe": "2026-09-24",
+   "tier": "one_leg_missing",
+   "close": 224.58,
+   "price_as_of": "2026-09-24",
+   "expected_return": 0.08424614836583838,
+   "kill": {
+    "observation": "Q4 FY27 revenue guide below $118B at the November print, or FY28 EPS consensus below 15.0 on 15 Dec",
+    "by": "2026-12-15"
+   },
+   "size": "core-starter",
+   "horizon_months": 6
+  }
+ ],
+ "gaps": []
+}

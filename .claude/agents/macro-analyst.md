@@ -45,7 +45,7 @@ In the SDK run these are the `mcp__invest__<name>` tools; in a session run the c
 - `macro_regime_compute`: `python3 src/agent-sdk/assets/tools/repo/macro-regime/compute_regime.py [--date <date>] [--runway <runway>] [--force]`
 - `themes_compute`: `python3 src/agent-sdk/assets/tools/repo/theme-pulse/compute_themes.py [--date <date>]`
 - `sentiment_compute`: `python3 src/agent-sdk/assets/tools/repo/x-sentiment/compute_x_sentiment.py [--date <date>] [--recent <recent>] [--prior <prior>] [--min-posts <min_posts>]`
-- `outlook_build`: `python3 src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py [--date <date>]`
+- `outlook_build`: `python3 src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py [--date <date>] [--verify]`
 - `ticker_context`: `python3 src/agent-sdk/assets/tools/repo/ticker-brief/ticker_context.py [--date <date>] <ticker>`
 - `ticker_brief_render`: `python3 src/agent-sdk/assets/tools/repo/ticker-brief/render_brief.py [--date <date>] [--check] [--verify] <tickers>...`
 - `corpus_signals_mine`: `python3 src/agent-sdk/assets/tools/repo/runway-probe/mine-corpus-signals.py <tickers>...`

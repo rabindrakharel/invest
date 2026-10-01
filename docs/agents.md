@@ -53,7 +53,7 @@ shim lists the same tools as commands to run through Bash.
 
 ## The web chat
 
-`pnpm web` serves a local site (`src/agent-sdk/src/web/`, UI in `assets/web/`) for chatting with an
+`pnpm web` serves a local site for chatting with an
 orchestrator. It is the same harness as `pnpm agents`, with three seams swapped for the browser:
 
 - **The human.** `Prompter` is the interface everything that asks depends on (the question tool, the permission
@@ -108,6 +108,29 @@ anything else under it is refused.
 The server can run shell commands and spend money for the operator, so it is locked down like a local admin tool:
 loopback only; a Host allowlist (DNS rebinding); a same-origin check on every write (CSRF from another site); a
 per-launch token on every API call; request bodies capped at 256 KB; at most 20 live conversations.
+
+## Code map
+
+```
+src/agent-sdk/src/
+  hooks/          one concern per module, composed in index.ts (composeHooks: the order of the chain)
+    decisions.ts    the hook answers: deny, allowWith, addContext, blockStop, NO_OPINION
+    caller.ts       which dispatch a hook fired for (agent_id → ticker-analyst/2)
+    guards.ts       repository confinement, append-only areas, secrets, bounded reads, guide gate, metered spend
+    ticker-template.ts  pipes ticker-research writes to brief_guard.py
+    daily-brief.ts  the daily brief's format gate at stop (build_outlook.py --verify, final message = outlook.md)
+    dispatch.ts     disjoint writes across parallel dispatches, bounded briefs
+    context.ts      per-dispatch context, caller-attributed context writes, operator steering
+    lifecycle.ts    reconcile a returned dispatch, the required-outputs gate at stop
+    determinism.ts  record deterministic work, prove it at stop
+    audit.ts        audit.jsonl and each dispatch's tools.jsonl
+  determinism/    the contract machinery, free of the SDK: templates, shell parsing, ledger, path map, verify
+  web/            server.ts (security boundary, static assets, route table), http.ts (primitives),
+                  routes/{chat,logs,research}.ts, sessions.ts (store), session.ts (one conversation),
+                  events.ts (SDK → UI events), logs.ts, research.ts, prompter.ts
+assets/web/       app.js (thread, routing), orch.js (orchestration map), hitl.js (question cards), logs.js,
+                  research.js, ui.js (DOM, API, markdown)
+```
 
 ## The roster
 
@@ -166,6 +189,30 @@ prompt, `progressive` shows one line and loads the body on demand (`load_skill`,
   - Only `render_brief.py` writes the brief (`reports/<D>-<t>.md`, the joint brief and their `INDEX.md` lines), so the
     title, header and sections are identical run to run.
   - Shell writes to any of these are refused. If the guard cannot run, the write is refused (fail closed).
+- **The daily brief has one format** (`createDailyBriefGate`): `research/<D>/outlook/outlook.md` exactly as
+  `build_outlook.py` renders it, with the judgment (the read, top calls, risks, what changes the call) embedded.
+  - Any agent, subagent or root, that ran `build_outlook.py` or wrote into an `outlook/` folder cannot stop until
+    `build_outlook.py --date <D> --verify` passes (fresh render, judgment present, no hand edits).
+  - A request that starts with "Daily brief" (the web landing page's starter) also holds the root: it cannot finish
+    until today's outlook (or the one the run built) verifies and its final message is that outlook.md verbatim.
+  - After two refusals the agent is let go and the failure is reported (audit `DailyBrief`, the chat's check card).
+- **Outputs are deterministic at every agent's stop** (`recordDeterministicWork`, `enforceDeterministicOutputs`).
+  - **The contract:** each deterministic script declares one under `determinism:` in `scripts.yaml`, in one of two
+    forms. `rerun` lists the products it writes; `verify` gives the parameters that put it in its own self-check
+    mode. Optionally, `obliged_by` names files whose write makes a passing check mandatory.
+  - **Recording:** while an agent works, a `PostToolUse` hook records, per dispatch key, each deterministic script it
+    runs (through `mcp__invest__<name>` or typed into `Bash`) with the hash of every product. It also records each
+    write that obliges a check.
+  - **Enforcing:** at `SubagentStop` (and the orchestrator's own `Stop`), the outputs on disk must be exactly what the
+    script makes from the inputs on disk now. For a `rerun` contract that means no product changed since its run and
+    a rerun with the same arguments gives the same bytes. For a `verify` contract the script's own check must pass.
+  - **Failing:** a failure blocks the stop and tells the agent what to fix: re-run, never hand-edit. After two blocks
+    the agent may stop, and the failure is reported instead.
+  - **Visibility:** every outcome goes to `audit.jsonl` (`Determinism`) and to the web chat as a `check` event, shown
+    on the orchestration map and in the Logs tab.
+  - **Covered scripts:** the regime, theme, sentiment, outlook and scorecard scorers, `ticker_context`, and
+    `ticker_brief_render`. A ticker judgment obliges its rendered brief, so an agent cannot stop with a judgment it
+    never rendered.
 - **Metered steps need a yes.** `task:capture`, `task:backfill`, `task:delta`, `task:resolve-accounts` and
   `task:extract` (X API reads about $0.005 per post, or model calls) are put to the operator by the permission
   bridge and never auto-allowed; a headless run denies them, because nothing can approve.

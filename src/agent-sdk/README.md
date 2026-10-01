@@ -11,8 +11,8 @@ assets/config/   runtime.yaml, agent-sdk-config.yaml, agent_catalog.yaml (graph)
 assets/agents/   <agent>.yml: one profile per agent (persona, goal, outputs, skills, tools)
 assets/skills/   <skill>/SKILL.md with its scripts, briefs and templates
 assets/tools/    catalog.ts, script/ (registry and runner), present/ (inline HTML pages), one folder per family, repo/ (Python tools)
-assets/web/      the UI: index.html, app.js (chat and the orchestration map), logs.js (verbose per-agent logs), research.js (read-only research view), ui.js (shared), styles.css; no framework, no build
-src/             runtime: agents, catalog, config, domain, handoffs, hooks, orchestrator, prompt, web (the chat server; logs.ts, past runs; research.ts, the read side of data/), ...
+assets/web/      the UI: index.html, app.js (chat), orch.js (orchestration map), hitl.js (question cards), logs.js (verbose per-agent logs), research.js (read-only research view), ui.js (shared), styles.css; no framework, no build
+src/             runtime: agents, catalog, config, determinism, domain, handoffs, hooks (one module per concern, composed in hooks/index.ts), orchestrator, prompt, web (server, routes/, sessions, events, logs, research), ...
 test/            vitest
 ```
 

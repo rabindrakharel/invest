@@ -73,6 +73,9 @@ Read `outlook.md`. Then write `data/research/<DATE>/outlook/judgment.json`:
 ```
 
 Rerun `build_outlook.py` so the judgment is embedded.
+`build_outlook.py --date <DATE> --verify` writes nothing and fails unless `outlook.md` is a fresh render with
+the judgment embedded. That rendered file is the **daily brief**: a request starting "Daily brief" ends on it
+verbatim, and the harness will not let an agent that built the outlook stop until the check passes.
 
 ### 5. Publish
 

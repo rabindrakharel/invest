@@ -6,8 +6,11 @@ import { discoverSkills } from "../catalog/skills.js";
 import { loadSdkConfig } from "../config/load.js";
 import { fromRepoRoot } from "../config/paths.js";
 import type { AgentSpec, RunWorkspace, RuntimeConfig } from "../domain/types.js";
-import { attributeContextWriteToCaller, auditHook, boundDispatchBrief, boundUnlimitedRead, claimWritePaths, closeDispatchOnReturn, confineToRepository, deliverSteering, enforceTickerTemplate, finalizeAgentOutput, gateMeteredSpend, meteredSpend, prepareAgentContext, protectAppendOnly, requireLoadedGuide } from "../hooks/policy.js";
-import { createCircuitBreaker } from "../hooks/circuit-breaker.js";
+import { DeterminismLedger } from "../determinism/ledger.js";
+import type { DeterminismOutcome } from "../hooks/determinism.js";
+import { meteredSpend } from "../hooks/guards.js";
+import { isDailyBriefRequest } from "../hooks/daily-brief.js";
+import { composeHooks } from "../hooks/index.js";
 import { buildToolCatalog, scriptToolName } from "../../assets/tools/catalog.js";
 import { createPermissionBridge } from "../../assets/tools/hitl/tool.js";
 import type { ArtifactSink } from "../../assets/tools/present/document.js";
@@ -21,7 +24,19 @@ import { buildAgentContext } from "../prompt/assemble.js";
 import { toYaml } from "../prompt/yaml.js";
 import type { AgentContext } from "../prompt/model.js";
 
-export async function buildOptions(config: RuntimeConfig, selected: AgentSpec, workspace: RunWorkspace, prompter?: Prompter, steering?: SteeringBus, artifactSink?: ArtifactSink): Promise<Options> {
+/** What the host (terminal run, web session, test) plugs into a run. Everything is optional: a bare call is headless. */
+export interface RunHost {
+  prompter?: Prompter;
+  steering?: SteeringBus;
+  artifactSink?: ArtifactSink;
+  /** The run's first request; a daily-brief request arms the outlook format gate. */
+  request?: string;
+  /** Told every determinism check's outcome (the web session shows it in the chat and the log). */
+  onDeterminism?: (outcome: DeterminismOutcome) => void | Promise<void>;
+}
+
+export async function buildOptions(config: RuntimeConfig, selected: AgentSpec, workspace: RunWorkspace, host: RunHost = {}): Promise<Options> {
+  const { prompter, steering, artifactSink } = host;
   const [graph, skills, sdkConfig, toolCatalog] = await Promise.all([loadAgentGraph(), discoverSkills(), loadSdkConfig(), buildToolCatalog()]);
   // Tool policy is PROFILE-DERIVED and has exactly one source: the `tools:` grant in
   // each agent profile. Whatever a profile grants, that agent may call without a
@@ -46,10 +61,6 @@ export async function buildOptions(config: RuntimeConfig, selected: AgentSpec, w
     for (const grant of spec.tools) if (grant.disclosure === "mandatory") mcp.loadedGuides.add(grant.name);
   // Registered script tools that cost money: approved per call in a terminal, denied headless.
   const meteredTools = new Set(toolCatalog.scripts.filter((spec) => spec.metered).map((spec) => scriptToolName(spec.name)));
-  const outputGate = finalizeAgentOutput(workspace, selected, graph.agents, dispatches);
-  // Repeated-failure circuit breaker: stops an agent from looping on the same stuck
-  // tool call (denied or throwing) and tells it to report blocked instead.
-  const breaker = createCircuitBreaker();
   // `CLAUDE_MODEL` pins every agent; runtime.yaml's `model` is only the default for
   // a spec that declares none, so the catalog's per-agent models stand.
   const modelOverride = process.env.CLAUDE_MODEL;
@@ -85,17 +96,14 @@ export async function buildOptions(config: RuntimeConfig, selected: AgentSpec, w
     agent: selected.name,
     agents,
     mcpServers: mcp.servers,
-    hooks: {
-      PreToolUse: [{ hooks: [deliverSteering(steering, selected.name, dispatches), breaker.preToolUse, confineToRepository(), protectAppendOnly(), enforceTickerTemplate(), gateMeteredSpend(Boolean(prompter?.interactive), meteredTools), boundUnlimitedRead(), requireLoadedGuide(mcp.toolAreas, mcp.loadedGuides), claimWritePaths(selected.name, dispatches), boundDispatchBrief(), attributeContextWriteToCaller(new Set(graph.agents.keys()), dispatches), auditHook(workspace, selected.name, dispatches)] }],
-      PostToolUse: [{ hooks: [breaker.postToolUse, closeDispatchOnReturn(workspace, graph.agents, dispatches), auditHook(workspace, selected.name, dispatches)] }],
-      PostToolUseFailure: [{ hooks: [auditHook(workspace, selected.name, dispatches)] }],
-      PostToolBatch: [{ hooks: [auditHook(workspace, selected.name, dispatches)] }],
-      SubagentStart: [{ hooks: [prepareAgentContext(workspace, contexts, dispatches), auditHook(workspace, selected.name, dispatches)] }],
-      SubagentStop: [{ hooks: [outputGate, auditHook(workspace, selected.name, dispatches)] }],
-      // `graph.agents` is passed on Stop too: the root's own Stop is where the parent
-      // observes terminal background children and reconciles their ledger outcomes.
-      Stop: [{ hooks: [outputGate, auditHook(workspace, selected.name, dispatches)] }],
-    },
+    hooks: composeHooks({
+      workspace, selected, agents: graph.agents, contexts, dispatches, steering,
+      interactive: Boolean(prompter?.interactive), meteredTools,
+      toolAreas: mcp.toolAreas, loadedGuides: mcp.loadedGuides,
+      scripts: toolCatalog.scripts, ledger: new DeterminismLedger(fromRepoRoot()),
+      dailyBrief: isDailyBriefRequest(host.request ?? ""),
+      ...(host.onDeterminism ? { onDeterminism: host.onDeterminism } : {}),
+    }),
     env: {
       ...process.env,
       // SDK-level tuning (auto-memory/CLAUDE.md suppression, traffic, ...) is

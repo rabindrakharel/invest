@@ -69,7 +69,7 @@ export async function runAgent(agentName: string | undefined, request: string): 
     else if (submitted.accepted) process.stdout.write(`\n  ✳ steering queued for ${submitted.addressee ?? name}\n`);
     return submitted.accepted;
   });
-  const options = await buildOptions(config, agent, workspace, prompter, steering);
+  const options = await buildOptions(config, agent, workspace, { request, ...(prompter ? { prompter } : {}), ...(steering ? { steering } : {}) });
   const rawLog = createWriteStream(resolve(workspace.root, "messages.jsonl"), { flags: "a" });
   const render = createRenderer((line) => rawLog.write(line + "\n"), name, rel(workspace.root));
   const session = query({ prompt: runInput(prompt, steering), options });

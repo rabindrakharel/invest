@@ -75,6 +75,11 @@ export function auditToEvents(rows: Record<string, unknown>[]): SequencedEvent[]
         if (last) push({ type: "assistant", text: last }, row.at);
         break;
       }
+      case "Determinism": {
+        const findings = Array.isArray(row.data) ? (row.data as { script: string; problem: string; detail: string; paths: string[] }[]) : [];
+        push({ type: "check", agent: String(row.agent ?? ""), ok: row.status === "ok", gaveUp: row.status === "gave_up", findings }, row.at);
+        break;
+      }
       case "PreToolUse": {
         const name = typeof data.tool_name === "string" ? data.tool_name : "tool";
         const { label, summary } = describeTool(name, data.tool_input);

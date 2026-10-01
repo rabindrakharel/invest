@@ -5,7 +5,7 @@
 import { api, el, token } from "./ui.js";
 
 const KINDS = [["messages", "Messages"], ["tools", "Tool calls"], ["results", "Results"], ["thinking", "Thinking"], ["orchestration", "Orchestration"], ["system", "System"]];
-const kindOf = (e) => ({ assistant: "messages", user: "messages", thinking: "thinking", tool: "tools", tool_result: "results", subagent: "orchestration", progress: "orchestration", hitl: "orchestration", hitl_done: "orchestration", artifact: "orchestration", result: "system", status: "system", system: "system", notice: "system", error: "system" })[e.type] ?? "system";
+const kindOf = (e) => ({ check: "orchestration", assistant: "messages", user: "messages", thinking: "thinking", tool: "tools", tool_result: "results", subagent: "orchestration", progress: "orchestration", hitl: "orchestration", hitl_done: "orchestration", artifact: "orchestration", result: "system", status: "system", system: "system", notice: "system", error: "system" })[e.type] ?? "system";
 const clock = (at) => { const d = new Date(at); return Number.isNaN(d.getTime()) ? "" : `${d.toLocaleTimeString([], { hour12: false })}.${String(d.getMilliseconds()).padStart(3, "0")}`; };
 const secs = (ms) => (ms === undefined ? "" : ms >= 60000 ? `${Math.floor(ms / 60000)}m${String(Math.round((ms % 60000) / 1000)).padStart(2, "0")}s` : `${Math.round(ms / 1000)}s`);
 
@@ -60,6 +60,7 @@ export function mountLogs(root, { currentSession }) {
       case "hitl_done": return ["answered", e.answered ? "answered" : "cancelled"];
       case "artifact": return ["presents", e.title];
       case "result": return [e.ok ? "turn done" : "turn failed", [`${e.turns} turns`, secs(e.durationMs), e.costUsd !== undefined && `$${e.costUsd.toFixed(3)}`, e.tokensIn !== undefined && `${e.tokensIn} in / ${e.tokensOut} out`, e.error].filter(Boolean).join(" · ")];
+      case "check": return [e.ok ? "deterministic" : e.gaveUp ? "not deterministic" : "check blocked stop", e.ok ? `${e.agent}: outputs match a fresh run` : e.findings.map((f) => `${f.script} (${f.problem}) ${f.paths.join(", ")}`).join("; ")];
       case "status": return ["status", e.state];
       case "system": return ["system", e.text];
       case "notice": return ["notice", e.text];
@@ -75,11 +76,12 @@ export function mountLogs(root, { currentSession }) {
     if ((e.type === "assistant" || e.type === "thinking" || e.type === "user") && e.text.length > 160) blocks.push(["text", e.text]);
     if (e.type === "system" && e.detail) blocks.push(["detail", e.detail]);
     if (e.type === "hitl") blocks.push(["questions", JSON.stringify(e.questions, null, 2)]);
+    if (e.type === "check" && e.findings.length) blocks.push(["findings", e.findings.map((f) => `${f.script} · ${f.problem} · ${f.paths.join(", ")}\n${f.detail}`).join("\n\n")]);
     return blocks;
   }
   function row(e) {
     const [verb, text] = line(e);
-    const bad = e.type === "error" || (e.type === "tool_result" && e.error) || (e.type === "subagent" && e.state === "failed") || (e.type === "result" && !e.ok);
+    const bad = (e.type === "check" && !e.ok) || e.type === "error" || (e.type === "tool_result" && e.error) || (e.type === "subagent" && e.state === "failed") || (e.type === "result" && !e.ok);
     const id = owner(e);
     const head = el("div", { class: "lhead" },
       el("span", { class: "lt", text: clock(e.at) }),

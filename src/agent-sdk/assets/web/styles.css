@@ -46,6 +46,8 @@ button, select, textarea { font: inherit; color: inherit; }
 .suggestions { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; text-align: left; }
 .suggestion { border: 1px solid var(--border); background: var(--panel); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; text-align: left; box-shadow: var(--shadow); }
 .suggestion:hover { border-color: var(--accent); } .suggestion b { display: block; margin-bottom: 2px; } .suggestion span { color: var(--muted); font-size: .86rem; }
+.suggestion.featured { grid-column: 1 / -1; border: 2px solid var(--accent); background: linear-gradient(0deg, var(--accent-soft), var(--accent-soft)), var(--panel); }
+.suggestion.featured b { font-size: 1.05rem; } .suggestion .tag { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 4px; }
 .fine { color: var(--muted); font-size: .8rem; margin-top: 22px; }
 
 .msg { max-width: 100%; }
@@ -129,6 +131,8 @@ button, select, textarea { font: inherit; color: inherit; }
 .onode { display: flex; gap: 10px; align-items: flex-start; padding: 7px 12px; border: 1px solid var(--border); border-top: 0; font-size: .86rem; min-width: 0; }
 .onode .obody { flex: 1; min-width: 0; } .otitle { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; } .orole { color: var(--muted); font-weight: 400; }
 .ometa { color: var(--muted); font-size: .78rem; white-space: nowrap; } .odetail { color: var(--muted); font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.obadge { margin-left: 6px; font-size: .7rem; font-weight: 700; padding: 1px 7px; border-radius: 99px; background: var(--panel-2); color: var(--muted); }
+.obadge.ok { background: var(--good-soft); color: var(--good); } .obadge.blocked { background: var(--warn-soft); color: var(--warn); } .obadge.gave_up { background: var(--bad-soft); color: var(--bad); }
 .olog { font-size: .76rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 1px 6px; border-radius: 6px; } .olog:hover { background: var(--accent-soft); }
 .okids { border: 1px solid var(--border); border-top: 0; border-radius: 0 0 var(--radius) var(--radius); padding: 2px 0 6px; box-shadow: var(--shadow); max-height: 34vh; overflow-y: auto; }
 .okids .onode.done .odetail, .okids .onode.failed .odetail { display: none; } .okids .onode.done, .okids .onode.failed { padding-top: 4px; padding-bottom: 4px; }

@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { afterAll, beforeAll, test } from "vitest";
 import type { HookInput } from "@anthropic-ai/claude-agent-sdk";
-import { enforceTickerTemplate } from "../src/hooks/policy.js";
+import { enforceTickerTemplate } from "../src/hooks/ticker-template.js";
 
 // The harness hook pipes the event to brief_guard.py (the rules live there and have their own unittest);
 // these tests prove the wiring: what reaches the guard, what comes back, and that a broken guard fails closed.

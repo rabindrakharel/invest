@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Join the macro regime, theme pulse and X sentiment into one structured outlook.
 
-    python3 src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py [--date YYYY-MM-DD]
+    python3 src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py [--date YYYY-MM-DD] [--verify]
 
 Reads data/research/<DATE>/ (locations from src/agent-sdk/assets/tools/repo/lib/paths.py). The first three are
 required; the judgment files are optional and labelled:
@@ -15,6 +15,10 @@ Writes data/research/<DATE>/outlook/outlook.json and outlook.md.  The theme stan
   >= 1.0 Overweight · 0.4..1.0 Accumulate · -0.4..0.4 Neutral · -1.0..-0.4 Underweight · <= -1.0 Avoid
 sentiment_adj: heating with price >= 0 +1; improving and neglected +0.5; crowded and fading
 or lagging -1.5; cooling with price <= 0 -0.5; otherwise 0.
+
+--verify writes nothing. It fails unless outlook.md and outlook.json on disk are exactly a fresh render
+and the judgment (summary, top calls, risks, what changes the call) is embedded: the daily brief's
+fixed format, which the harness checks before an agent that built the outlook may stop.
 """
 from __future__ import annotations
 
@@ -61,6 +65,7 @@ def stance(score: float) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=paths.today())
+    ap.add_argument("--verify", action="store_true", help="write nothing; fail unless the files on disk are a fresh render with the judgment embedded")
     args = ap.parse_args()
     P = lambda part: paths.research(args.date, part)  # noqa: E731
     regime = read(P("macro") / "regime.json")
@@ -142,11 +147,35 @@ def main() -> None:
         "judgment": judgment,
     }
     out = P("outlook")
+    files = {"outlook.json": json.dumps(doc, indent=1), "outlook.md": render(doc)}
+    if args.verify:
+        verify(out, files, judgment)
+        return
     out.mkdir(parents=True, exist_ok=True)
-    (out / "outlook.json").write_text(json.dumps(doc, indent=1))
-    (out / "outlook.md").write_text(render(doc))
+    for name, text in files.items():
+        (out / name).write_text(text)
     print(f"outlook {args.date}: {call}, gross {doc['risk_budget']['gross_exposure_pct']}%, "
           f"{sum(1 for x in rows if x['stance'] == 'Overweight')} overweight / {sum(1 for x in rows if x['stance'] == 'Avoid')} avoid themes")
+
+
+JUDGMENT_PARTS = (("summary", "The read"), ("top_calls", "Top calls"), ("risks", "Risks"), ("what_changes", "What changes the call"))
+
+
+def verify(out: Path, files: dict[str, str], judgment: dict | None) -> None:
+    problems = []
+    if not judgment:
+        problems.append(f"{out / 'judgment.json'} is missing: write it (summary, top_calls, risks, what_changes), then rerun build_outlook.py")
+    else:
+        problems += [f"judgment.json has no {key} (the '{title}' part of the outlook)" for key, title in JUDGMENT_PARTS if not judgment.get(key)]
+    for name, text in files.items():
+        path = out / name
+        if not path.exists():
+            problems.append(f"{path} is missing: run build_outlook.py")
+        elif path.read_text() != text:
+            problems.append(f"{path} is not a fresh render (hand-edited, or an input or judgment.json changed after it ran): rerun build_outlook.py")
+    if problems:
+        raise SystemExit("outlook format check failed:\n" + "\n".join(f"- {p}" for p in problems))
+    print(f"outlook {out.parent.name}: verified, the files are a fresh render with the judgment embedded")
 
 
 def f(x, spec="+.1f"):

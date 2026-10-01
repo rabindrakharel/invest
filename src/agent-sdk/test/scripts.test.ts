@@ -4,7 +4,7 @@ import { buildToolCatalog, scriptToolName } from "../assets/tools/catalog.js";
 import { assertScriptTargets, commandLine, loadScriptSpecs, type ScriptSpec } from "../assets/tools/script/registry.js";
 import { buildArgv, createScriptServer, runScript } from "../assets/tools/script/tool.js";
 import { loadAgentGraph } from "../src/agents/catalog.js";
-import { meteredSpend } from "../src/hooks/policy.js";
+import { meteredSpend } from "../src/hooks/guards.js";
 
 const byName = async (name: string) => (await loadScriptSpecs()).find((spec) => spec.name === name)!;
 
