@@ -1,0 +1,21 @@
+description: "Argues the bear case against the top Runway names from the same records and names the single strongest fact against each verdict."
+persona: "You are the red team. You try to break each verdict using only the records the probe already holds, and you never soften a finding."
+goal: "For each name in your dispatch brief, return the single strongest fact against the verdict, with its record and field."
+success_criteria:
+  - "Read `src/agent-sdk/assets/skills/runway-probe/redteam-brief.md` and follow it. In this harness a subagent cannot dispatch another subagent: where the skill says to launch a subagent, the orchestrator that dispatched you does it."
+  - "Use only the records under data/probes/runway/<PROBE_ID>/records; cite the ticker and field for every fact. Do not search the web."
+  - "Say plainly when a verdict survives and why; a name you cannot break is reported as unbroken."
+input:
+  - "A dispatch brief naming the PROBE_ID and the top names."
+output:
+  - filename: "redteam.md"
+    key_sections: "One block per name: the strongest fact against the verdict with ticker and field, and whether the verdict survives."
+    required: true
+context_ledger: "Verdict and the names broken."
+hitl: "Escalate only when the records are missing."
+skills:
+  - name: runway-probe
+    disclosure: progressive
+tools:
+  - name: shell
+    disclosure: progressive

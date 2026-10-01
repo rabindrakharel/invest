@@ -1,0 +1,194 @@
+# The agent graph: infrastructure only. Persona, skills and tool grants live in each
+# agent's profile (assets/agents/<name>.yml); this file carries the graph edges,
+# required outputs and native Claude Agent SDK subagent controls.
+#
+# - An orchestrator (`orchestrator: true`) runs as the session's MAIN thread and is the
+#   only kind of agent that dispatches; `handoffs` is its roster of subagents.
+# - A subagent (`orchestrator: false`) is dispatched one-shot and context-isolated, and
+#   never dispatches. Dispatch is one level deep by construction.
+#
+# Skills that fan out their own workers (/fetch, /corpus-probe, /runway-probe) belong to an
+# orchestrator; the workers they launch are the leaf subagents below.
+agents:
+
+  - name: chief
+    agentProfile: assets/agents/chief.yml
+    handoffs: [news-scout, macro-analyst, theme-analyst, sentiment-analyst, tone-grader, ticker-analyst, record-keeper]
+    requiredOutputs: [chief-report.md]
+    orchestrator: true
+    sdk:
+      model: claude-opus-5-5
+      effort: high
+      maxTurns: 100
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: corpus-lead
+    agentProfile: assets/agents/corpus-lead.yml
+    handoffs: [macro-analyst, news-scout, extractor, evidence-reader]
+    requiredOutputs: [corpus-lead-report.md]
+    orchestrator: true
+    sdk:
+      model: claude-opus-5-5
+      effort: high
+      maxTurns: 150
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: runway-lead
+    agentProfile: assets/agents/runway-lead.yml
+    handoffs: [macro-analyst, news-scout, theme-analyst, sentiment-analyst, tone-grader, researcher, red-team]
+    requiredOutputs: [runway-lead-report.md]
+    orchestrator: true
+    sdk:
+      model: claude-opus-5-5
+      effort: high
+      maxTurns: 150
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: news-scout
+    agentProfile: assets/agents/news-scout.yml
+    handoffs: []
+    requiredOutputs: [news-scout-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 200
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: macro-analyst
+    agentProfile: assets/agents/macro-analyst.yml
+    handoffs: []
+    requiredOutputs: [macro-analyst-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 60
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: theme-analyst
+    agentProfile: assets/agents/theme-analyst.yml
+    handoffs: []
+    requiredOutputs: [theme-analyst-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 50
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: sentiment-analyst
+    agentProfile: assets/agents/sentiment-analyst.yml
+    handoffs: []
+    requiredOutputs: [sentiment-analyst-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 50
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: tone-grader
+    agentProfile: assets/agents/tone-grader.yml
+    handoffs: []
+    requiredOutputs: [tone-grader-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 40
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: ticker-analyst
+    agentProfile: assets/agents/ticker-analyst.yml
+    handoffs: []
+    requiredOutputs: [ticker-analyst-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 40
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: record-keeper
+    agentProfile: assets/agents/record-keeper.yml
+    handoffs: []
+    requiredOutputs: [record-keeper-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 30
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: extractor
+    agentProfile: assets/agents/extractor.yml
+    handoffs: []
+    requiredOutputs: [extractor-report.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 60
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: evidence-reader
+    agentProfile: assets/agents/evidence-reader.yml
+    handoffs: []
+    requiredOutputs: [evidence-notes.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 50
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: researcher
+    agentProfile: assets/agents/researcher.yml
+    handoffs: []
+    requiredOutputs: [group-table.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 90
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]
+
+  - name: red-team
+    agentProfile: assets/agents/red-team.yml
+    handoffs: []
+    requiredOutputs: [redteam.md]
+    orchestrator: false
+    sdk:
+      model: claude-opus-5-5
+      effort: medium
+      maxTurns: 30
+      permissionMode: default
+      background: false
+      mcpServers: [run_context, run_guide]

@@ -13,11 +13,11 @@ export default tseslint.config([
     },
     rules: {
       // Price facts have exactly one source and it is not the model.
-      // src/extract/** must never import the price layer.
+      // src/pipeline/extract/** must never import the price layer.
       'no-restricted-imports': ['error', {
         patterns: [{
           group: ['**/prices/*'],
-          message: 'Price facts are computed in src/prices/ only. The extraction lane must never produce ytd/mtd/yoy.',
+          message: 'Price facts are computed in src/pipeline/prices/ only. The extraction lane must never produce ytd/mtd/yoy.',
         }],
       }],
     },
@@ -25,7 +25,7 @@ export default tseslint.config([
   {
     // The rule above is scoped to the extraction lane; everything else may
     // legitimately read the price layer.
-    files: ['src/prices/**/*.ts', 'src/render/**/*.ts', 'src/rebuild.ts'],
+    files: ['src/pipeline/prices/**/*.ts', 'src/pipeline/render/**/*.ts', 'src/pipeline/rebuild.ts'],
     rules: { 'no-restricted-imports': 'off' },
   },
 ])

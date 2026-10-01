@@ -3,16 +3,28 @@
 Daily research corpus built from a strict 14-account X allowlist, plus a daily briefing.
 
 - **How Claude answers, and which skill owns what:** [`CLAUDE.md`](CLAUDE.md)
-- **Business design — outcome, use cases, products, economics, success measures:** [`_plan/business.md`](_plan/business.md)
-- **Technical design — architecture, decisions, and what was rejected:** [`_plan/design.md`](_plan/design.md)
+- **Business design — outcome, use cases, products, economics, success measures:** [`docs/business.md`](docs/business.md)
+- **Technical design — architecture, decisions, and what was rejected:** [`docs/design.md`](docs/design.md)
 - **The only sanctioned read path:** [`sql/views.sql`](sql/views.sql)
-- **Saved analyses:** [`queries/`](queries/)
+- **Saved analyses:** [`sql/queries/`](sql/queries/)
+
+## Layout
+
+```
+config/          accounts.json and the reference lists (taxonomy, symbols, themes, universe): configuration, not data
+data/            every byte of data; the tree and its owners are in data/README.md
+docs/            business.md, design.md, agents.md
+sql/             views.sql (the only read path) and queries/ (saved analyses, pnpm q)
+src/pipeline/    the TypeScript pipeline: capture, normalize, extract, prices, render, duck
+src/agent-sdk/   the agent harness: agent profiles, skills, tool registry, Python tools, runtime
+.claude/         generated pointers only (pnpm agents:shims); never edited
+```
 
 ```bash
 pnpm install
 
 # once
-pnpm task:resolve-accounts   # needs X_BEARER_TOKEN -> fills in accounts.json
+pnpm task:resolve-accounts   # needs X_BEARER_TOKEN -> fills in config/accounts.json
 pnpm task:sync-universe      # listed symbols from nasdaqtrader.com (free, no key)
 
 # the daily chain (GitHub Actions runs this at 16:15 ET)
@@ -45,7 +57,7 @@ pnpm q first-mention --symbol NVDA
 pnpm q account-convergence       # names more than one account took a position on
 pnpm q account-repertoire        # what each account actually does
 
-# The Claude Code chain (skills in .claude/skills/). Each SKILL.md explains the problem it
+# The Claude Code chain (skills in src/agent-sdk/assets/skills/). Each SKILL.md explains the problem it
 # solves step by step; run them in this order.
 /fetch "from 2026-07-07 to 2026-09-06"   # X API backfill -> normalize -> bundles -> one subagent per
                                         # account in this session (no Anthropic key) -> ingest -> render
@@ -83,3 +95,32 @@ derived from it is free to recompute. `data/corpus/raw/` is append-only; the res
 
 Private by design — X's developer terms restrict redistribution of post content.
 Nothing here is investment advice.
+
+## Web chat
+
+```bash
+pnpm web                 # http://127.0.0.1:4317  (--port N, --open)
+```
+
+Chat with an orchestrator in the browser. Ask a research question and the desk dispatches its specialists,
+shows each one's progress, stops to ask you (checkboxes for choices, approve/deny for anything that costs
+money or needs a permission), and answers with a designed HTML page inline. It is loopback-only and every
+API call needs the token printed by that launch. The **Research** tab browses what is already on disk: the
+latest outlook as a desk dashboard, a dossier per ticker (briefs, runway scores, verdicts, the reports that
+mention it), the verdict ledger, and every report and probe page. See [`docs/agents.md`](docs/agents.md#the-web-chat).
+
+## Agents
+
+The agent harness (`src/agent-sdk`, configured under `src/agent-sdk/assets/`) runs an orchestrator that
+dispatches one-shot subagents, each granted the skills and tool families it owns. Every pipeline
+entry point, scraper and scorer is registered as a typed tool in
+[`scripts.yaml`](src/agent-sdk/assets/config/scripts.yaml). See [`docs/agents.md`](docs/agents.md).
+
+```bash
+pnpm agents:check                     # validate graph, profiles, skills, tool families, composed prompts
+pnpm agents:shims                     # regenerate the .claude/ pointers (skills, /chief, native subagents)
+pnpm agents:list                      # orchestrators, subagents, skills, tool families
+pnpm agents "Risk on or off?"         # launch the default orchestrator (runs a Claude session)
+pnpm agents --agent corpus-lead "Refresh the corpus and re-tier"      # metered: asks before any X API spend
+pnpm agents --agent macro-analyst "Score the regime for 2026-09-30"   # one agent alone
+```

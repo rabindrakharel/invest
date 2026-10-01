@@ -17,3 +17,7 @@ data/cache/
 
 # Python bytecode from the skill scripts.
 __pycache__/
+
+# Agent run workspaces (ledger, per-agent outputs, tool logs, raw message stream):
+# regenerable from a rerun and large. Reports the agents write go to data/reports/.
+data/runs/

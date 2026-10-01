@@ -1,0 +1,78 @@
+/* The design system every presented artifact renders in. An agent writes a semantic HTML fragment and
+   uses these classes; it never needs its own stylesheet. Light and dark follow the viewer's system. */
+:root {
+  --bg: #ffffff; --surface: #f6f7f9; --surface-2: #eceef2; --fg: #14171f; --muted: #5a6275; --border: #d9dde5;
+  --accent: #2456e6; --accent-soft: #e6edff;
+  --good: #0a7d4f; --good-soft: #dff5ea; --warn: #9a5b00; --warn-soft: #fff0d4; --bad: #b3261e; --bad-soft: #fde4e1;
+  --radius: 10px; --gap: 14px;
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1218; --surface: #171b24; --surface-2: #1f2430; --fg: #e8ebf2; --muted: #9aa3b5; --border: #2b3242;
+    --accent: #7ea2ff; --accent-soft: #1c2747;
+    --good: #4cd19a; --good-soft: #0f2a21; --warn: #f0b456; --warn-soft: #2e2310; --bad: #ff8a80; --bad-soft: #341716;
+  }
+}
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body { margin: 0; background: transparent; color: var(--fg); font: 15px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+.artifact { padding: 4px 2px 10px; max-width: 100%; }
+.artifact > :first-child { margin-top: 0; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 1.3em 0 .45em; letter-spacing: -.01em; }
+h1 { font-size: 1.55rem; } h2 { font-size: 1.22rem; } h3 { font-size: 1.04rem; } h4 { font-size: .92rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+p { margin: .55em 0; } a { color: var(--accent); }
+ul, ol { padding-left: 1.25em; margin: .5em 0; } li { margin: .2em 0; }
+code { font: .88em var(--mono); background: var(--surface-2); padding: .1em .35em; border-radius: 5px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 1.4em 0; }
+.lede { font-size: 1.12rem; line-height: 1.5; margin: .3em 0 1em; }
+.muted { color: var(--muted); } .small { font-size: .85rem; } .num { font-variant-numeric: tabular-nums; }
+.good { color: var(--good); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+
+.grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin: var(--gap) 0; }
+.grid.wide { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.card > :first-child { margin-top: 0; } .card > :last-child { margin-bottom: 0; }
+.card h3 { margin-top: 0; }
+
+.kpi .label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.kpi .value { font-size: 1.85rem; font-weight: 650; line-height: 1.15; margin: 2px 0; font-variant-numeric: tabular-nums; }
+.kpi .delta { font-size: .86rem; color: var(--muted); }
+.kpi .delta.good { color: var(--good); } .kpi .delta.bad { color: var(--bad); } .kpi .delta.warn { color: var(--warn); }
+
+.badge { display: inline-block; font-size: .76rem; font-weight: 600; line-height: 1; padding: 4px 9px; border-radius: 999px; background: var(--surface-2); color: var(--fg); vertical-align: middle; white-space: nowrap; }
+.badge.good { background: var(--good-soft); color: var(--good); } .badge.warn { background: var(--warn-soft); color: var(--warn); }
+.badge.bad { background: var(--bad-soft); color: var(--bad); } .badge.info { background: var(--accent-soft); color: var(--accent); }
+
+.callout { border: 1px solid var(--border); border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 10px 14px; margin: var(--gap) 0; }
+.callout.good { border-left-color: var(--good); background: var(--good-soft); } .callout.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+.callout.bad { border-left-color: var(--bad); background: var(--bad-soft); }
+.callout > :first-child { margin-top: 0; } .callout > :last-child { margin-bottom: 0; }
+
+.table-wrap { overflow-x: auto; margin: var(--gap) 0; border: 1px solid var(--border); border-radius: var(--radius); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.table-wrap table { margin: 0; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--surface); position: sticky; top: 0; }
+tbody tr:last-child td { border-bottom: 0; } tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface) 55%, transparent); }
+td.r, th.r { text-align: right; }
+
+.bar { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; min-width: 60px; }
+.bar > span { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+.bar.good > span { background: var(--good); } .bar.warn > span { background: var(--warn); } .bar.bad > span { background: var(--bad); }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.spread { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+
+.steps { list-style: none; padding: 0; counter-reset: s; }
+.steps li { counter-increment: s; position: relative; padding: 2px 0 10px 34px; }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 650; font-size: .82rem; display: grid; place-items: center; }
+
+figure { margin: var(--gap) 0; } figcaption { font-size: .82rem; color: var(--muted); margin-top: 6px; }
+svg { max-width: 100%; height: auto; } svg text { fill: var(--muted); font: 12px var(--font); }
+svg.chart { display: block; width: 100%; max-width: 760px; }
+.chart .axis { stroke: var(--border); } .chart .grid-line { stroke: var(--border); stroke-dasharray: 3 3; }
+.chart .s1 { stroke: var(--accent); fill: var(--accent); } .chart .s2 { stroke: var(--good); fill: var(--good); } .chart .s3 { stroke: var(--warn); fill: var(--warn); } .chart .s4 { stroke: var(--bad); fill: var(--bad); }
+.chart .line { fill: none; stroke-width: 2; }
+.src { margin-top: 1.4em; padding-top: .7em; border-top: 1px solid var(--border); font-size: .8rem; color: var(--muted); }
+.disclaimer { font-size: .78rem; color: var(--muted); font-style: italic; }

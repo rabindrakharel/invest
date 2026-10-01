@@ -24,7 +24,7 @@ skills to run and how to present the result.
 ## Step 0: Know what is current
 
 ```bash
-python3 .claude/tools/state.py --intent <intent>
+python3 src/agent-sdk/assets/tools/repo/state/state.py --intent <intent>
 ```
 
 The script prints each product's date, age and freshness, and the ordered commands that
@@ -87,6 +87,8 @@ Add sections only as the intent needs them: a theme stance table for `themes` an
   `data/reports/INDEX.md`: `- <DATE> [<title>](<file>) — <one-line answer>`.
 - Reply in the terminal with the report itself when it is short (under about 40 lines).
   Otherwise reply with the Answer section and the file path.
+- In the web chat (`pnpm web`) the orchestrator shows the finished report inline with `present` (see
+  `src/agent-sdk/assets/tools/present/guide.md`); the saved report below stays the record.
 - Publish as an artifact (load `artifact-design` first) when the operator asks, or for the
   full `outlook`, Corpus Probe and Runway Probe pages. For anything else, offer it in one
   line.
@@ -95,7 +97,7 @@ Add sections only as the intent needs them: a theme stance table for `themes` an
 
 - A new source failure goes into the owning skill's source-behaviour table.
 - A ticker asked about twice that sits outside every basket gets proposed for
-  `ref/themes.json`.
+  `config/themes.json`.
 - A verdict or call made in a report that is meant to be tracked goes into the ledger
   through `/runway-probe`'s register step, not by hand.
 
@@ -109,14 +111,17 @@ Add sections only as the intent needs them: a theme stance table for `themes` an
 | `/macro-data` | FRED (about 60) and Yahoo (about 50) macro series. Data only | `market/<DATE>/` | network |
 | `/macro-news` | Dated news: Fed, auctions, housing, oil, outlooks, themes, events | `research/<DATE>/macro/news.json` | WebSearch/WebFetch subagent |
 | `/macro-regime` | 54 signals → risk-on/off, flags, quadrant, duration regime, archetype fit, analogs; the macro judgment | `research/<DATE>/macro/regime.json`, `narrative.json`, `regime.md` | macro-data (+ news) |
-| `/theme-pulse` | Benchmarks and about 30 baskets: relative strength, trend, breadth, direction | `market/<DATE>/yahoo/` + `research/<DATE>/themes/themes.json`, `theme-narrative.json` | `ref/themes.json` |
+| `/theme-pulse` | Benchmarks and about 30 baskets: relative strength, trend, breadth, direction | `market/<DATE>/yahoo/` + `research/<DATE>/themes/themes.json`, `theme-narrative.json` | `config/themes.json` |
 | `/x-sentiment` | Allowlist attention, velocity, tone, stances, crowding per ticker and theme | `research/<DATE>/sentiment/x-sentiment.json`, `sentiment-read.json` | the corpus |
 | `/ticker-brief` | One name: joins every product above plus the runway record | `research/<DATE>/tickers/<T>.json`, a report | the fresh products |
 | `/market-outlook` | Orchestrator: risk budget plus a stance per theme | `research/<DATE>/outlook/outlook.json`, `outlook.md` | all of the above |
 | `/corpus-probe` | Mandate-driven Core/Watch/Satellite from the accounts | `probes/corpus/` | `/fetch`; research/<DATE>/macro (the regime rule) |
 | `/runway-probe` | Rank names by runway on twelve signals; register verdicts | `probes/runway/<PROBE_ID>/`, `ledger/verdicts.jsonl` | `/corpus-probe`, research/<DATE>/{macro,themes,sentiment} |
 
-`.claude/tools/state.py` is the router's eyes. Each skill's SKILL.md has a "Report
+Skills and the repo's Python tools live once, under `src/agent-sdk/assets/` (`skills/`, `tools/repo/`).
+`.claude/skills/` and `.claude/agents/` hold generated pointers to them (`pnpm agents:shims`), so each
+skill is a slash-command here and, through `pnpm agents`, work a subagent owns.
+`src/agent-sdk/assets/tools/repo/state/state.py` is the router's eyes. Each skill's SKILL.md has a "Report
 contract" saying which Part I sections it fills.
 
 ## Conventions every skill follows
@@ -131,20 +136,20 @@ contract" saying which Part I sections it fills.
    `sources` and `as_of`. Never guess a number; write "not found". Cite `post_id`s for
    anything an account said.
 4. **One data location.** All data lives under `data/`; the tree and its owners are in
-   `data/README.md`. Python resolves every path through `.claude/tools/paths.py`, TypeScript
-   through `src/duck/connect.ts`. Scripts take `--date`, not paths. Outputs are dated
+   `data/README.md`. Python resolves every path through `src/agent-sdk/assets/tools/repo/lib/paths.py`, TypeScript
+   through `src/pipeline/duck/connect.ts`. Scripts take `--date`, not paths. Outputs are dated
    (`research/<DATE>/<part>/`, `market/<DATE>/`), and a date is never overwritten by a
    later one.
 5. **Stale inputs are stated first**, in the report's As-of line.
 6. **One definition per list.**
-   - Macro series: `.claude/skills/macro-data/scripts/catalog.py`.
-   - Themes and benchmarks: `ref/themes.json`.
-   - Corpus reads: `queries/*.sql` via `pnpm q`, over `sql/views.sql`.
-   - Accounts: `accounts.json`.
+   - Macro series: `src/agent-sdk/assets/tools/repo/macro-data/catalog.py`.
+   - Themes and benchmarks: `config/themes.json`.
+   - Corpus reads: `sql/queries/*.sql` via `pnpm q`, over `sql/views.sql`.
+   - Accounts: `config/accounts.json`.
 7. **Source failures are logged forward** in the owning skill.
 8. Python scripts use the standard library only. Do not add pandas.
 9. **Wiring is checked, not hoped for.** After changing any skill, script, command or
-   path, run `python3 .claude/tools/check_wiring.py`. It verifies that every skill is in the
+   path, run `python3 src/agent-sdk/assets/tools/repo/wiring/check_wiring.py`. It verifies that every skill is in the
    table above, every documented command, flag and saved query exists, every `data/` path
    sits in a defined area, and no script hard-codes a path. Probe placeholders are
    `<DATE>` and `<PROBE_ID>` (`<window_end>[-label]`).
@@ -155,17 +160,18 @@ contract" saying which Part I sections it fills.
 
 | Document | Concern | Read it before |
 |---|---|---|
-| [`_plan/business.md`](_plan/business.md) | Outcome, users, use cases U1-U11, value chain, products and their first readings, economics, success measures, non-goals, risks, roadmap | scoping new work, judging whether a feature is in scope, anything about cost or X's terms, reporting on progress or the record |
-| [`_plan/design.md`](_plan/design.md) | Storage decision and rejected options, data layout, append-only rules, pipeline, correctness boundaries, design-review corrections, data findings, deployment, verification | touching `src/`, `sql/`, `data/` layout, capture, normalize, extract, the price layer, CI, or any claim about determinism |
+| [`docs/business.md`](docs/business.md) | Outcome, users, use cases U1-U11, value chain, products and their first readings, economics, success measures, non-goals, risks, roadmap | scoping new work, judging whether a feature is in scope, anything about cost or X's terms, reporting on progress or the record |
+| [`docs/agents.md`](docs/agents.md) | The agent harness (`src/agent-sdk`): orchestrator and subagents, profiles, tool families, hooks, what was ported from pmo | adding or changing an agent, a tool family or a hook; running `pnpm agents` |
+| [`docs/design.md`](docs/design.md) | Storage decision and rejected options, data layout, append-only rules, pipeline, correctness boundaries, design-review corrections, data findings, deployment, verification | touching `src/`, `sql/`, `data/` layout, capture, normalize, extract, the price layer, CI, or any claim about determinism |
 | [`data/README.md`](data/README.md) | The data tree: every area, its owner, what is committed or ignored, where things moved from | reading or writing any data, adding a skill output |
 | [`README.md`](README.md) | Commands | running a `pnpm` task |
-| `.claude/skills/<skill>/SKILL.md` | Each skill's procedure and report contract | running that skill |
-| `.claude/skills/macro-regime/{indicators,history,playbook}.md` | What macro signals mean, the historical eras, the transmission from regime to stocks | writing any macro judgment |
+| `src/agent-sdk/assets/skills/<skill>/SKILL.md` | Each skill's procedure and report contract | running that skill |
+| `src/agent-sdk/assets/skills/macro-regime/{indicators,history,playbook}.md` | What macro signals mean, the historical eras, the transmission from regime to stocks | writing any macro judgment |
 
 **Invariants to remember without opening them:**
 - `data/corpus/raw/` is paid for, irreplaceable and append-only.
 - DuckDB is a query engine over files, never a committed database.
 - Picks and prices are never regenerated.
-- Read the corpus only through `sql/views.sql` and `queries/`.
+- Read the corpus only through `sql/views.sql` and `sql/queries/`.
 - The model never produces a price fact.
 - Nothing here is investment advice, and the repo stays private.

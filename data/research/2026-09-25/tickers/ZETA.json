@@ -1,0 +1,112 @@
+{
+ "schema": "ticker-context/1",
+ "ticker": "ZETA",
+ "as_of": "2026-09-25",
+ "inputs": {
+  "themes": "2026-09-25",
+  "outlook": "2026-09-24",
+  "regime": "2026-09-25",
+  "x_sentiment": "2026-09-24",
+  "corpus_last_day": "2026-09-25",
+  "corpus_stale_days": -1
+ },
+ "regime": {
+  "call": "Lean risk-off: a strong tape on a hostile discount rate",
+  "gross_exposure_pct": 60,
+  "long_duration_cap_pct": 15
+ },
+ "archetype": "long_duration_growth",
+ "macro_fit": {
+  "fit": -1.29,
+  "stance": "headwind",
+  "runway_macro_fit_pts": 1,
+  "headwinds": [
+   "R_REAL10",
+   "R_10Y_1M",
+   "R_LONG_END"
+  ],
+  "tailwinds": []
+ },
+ "themes": [
+  {
+   "id": "ai_software",
+   "name": "AI applications and data",
+   "archetype": "long_duration_growth",
+   "direction": "fading",
+   "rel_spy_3m": 31.3,
+   "trend": "uptrend",
+   "breadth_50d": 75.0,
+   "stance": "Accumulate",
+   "stance_score": 0.45,
+   "flags": [
+    "price fights macro: leadership that needs the regime to change; size small, trail stops"
+   ]
+  }
+ ],
+ "price": {
+  "close": 29.57,
+  "as_of": "2026-09-24",
+  "ret_1m": 6.1,
+  "ret_3m": 65.4,
+  "ret_12m": 37.2,
+  "above_50d": true,
+  "above_200d": true,
+  "dd_52w_pct": -9.5,
+  "source": "https://finance.yahoo.com/quote/ZETA"
+ },
+ "sentiment": {
+  "symbol": "ZETA",
+  "posts_recent": 3,
+  "posts_prior": 26,
+  "accounts_recent": 1,
+  "accounts_total": 2,
+  "likes_recent": 421,
+  "velocity": 0.46,
+  "velocity_rel": 0.32,
+  "tone_recent": 0.33,
+  "tone_window": 0.21,
+  "bull_share_recent": 0.33,
+  "bear_share_recent": 0.0,
+  "tone_source": "lexicon",
+  "evidence": [
+   {
+    "post_id": "2102761636310516127",
+    "author": "TheLongInvest",
+    "day": "2026-09-23",
+    "likes": 199,
+    "text": "$ZETA 21 STRAIGHT REVENUE BEATS https://t.co/86znBqZBSJ"
+   },
+   {
+    "post_id": "2103168861290033243",
+    "author": "TheLongInvest",
+    "day": "2026-09-24",
+    "likes": 176,
+    "text": "$ZETA at $21, was infact $PLTR when it was $21 And can still 5 X from here with this management https://t.co/dYYt52toW7"
+   },
+   {
+    "post_id": "2102078178621595709",
+    "author": "TheLongInvest",
+    "day": "2026-09-21",
+    "likes": 46,
+    "text": "@TheCADInvest $NVO is the position I advertised the most, over $AMD? Or my Christmas gifts $PLTR, $OSCR, $ZETA\u2026or $HIMS are you broken?"
+   }
+  ],
+  "stance": {
+   "accounts": 2,
+   "longs": 1,
+   "shorts": 1,
+   "net_long": 0.0,
+   "avg_conviction": 0.66,
+   "stances": "TheLongInvest:long:0.92 stocktalkweekly:short:0.4"
+  },
+  "labels": [
+   "cooling",
+   "contested"
+  ]
+ },
+ "runway_score": null,
+ "verdicts": [],
+ "gaps": [
+  "never scored by a runway probe"
+ ]
+}

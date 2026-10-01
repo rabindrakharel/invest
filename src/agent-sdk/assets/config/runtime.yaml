@@ -1,0 +1,16 @@
+# Runtime defaults for the agent harness (src/agent-sdk). Declarative; one concern.
+# Every launch starts here unless `--agent <name>` names another agent.
+defaultAgent: chief
+# Fallback only: each agent declares its own model in catalog.yaml.
+# CLAUDE_MODEL is the true override (pins every agent for one invocation).
+model: claude-opus-5-5
+maxTurns: 40
+permissionMode: default
+# Each agent's system context is fully composed by the harness (rendered profile +
+# granted skills + tool families). Inheriting the repo CLAUDE.md and auto-memory
+# through filesystem setting sources would re-pay thousands of task-irrelevant tokens
+# on every agent boot, so keep this empty. Permissions and hooks are set explicitly
+# in src/agent-sdk/orchestrator/build-options.ts, not from disk.
+settingSources: []
+# Run workspaces (ledger, per-agent outputs, tool logs). Gitignored; see data/README.md.
+runsDirectory: data/runs

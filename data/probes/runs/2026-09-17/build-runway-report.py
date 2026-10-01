@@ -83,7 +83,7 @@ def report_evidence():
 
 
 def report_html():
-    template = (ROOT / ".claude/skills/runway-probe/template.html").read_text()
+    template = (ROOT / "src/agent-sdk/assets/skills/runway-probe/template.html").read_text()
     head = template.split('<div class="page">', 1)[0]
     by_t = {r["ticker"]: r for r in rows}
     appx = []

@@ -2,8 +2,8 @@
 
 Every script and skill reads and writes here, and nowhere else. The layout is encoded once
 for each language:
-- Python: `.claude/tools/paths.py`. Skills import it; none hard-codes a path.
-- TypeScript: `src/duck/connect.ts` (`dataDir()`, `dataRoot()`, `outputRoot()`).
+- Python: `src/agent-sdk/assets/tools/repo/lib/paths.py`. Skills import it; none hard-codes a path.
+- TypeScript: `src/pipeline/duck/connect.ts` (`dataDir()`, `dataRoot()`, `outputRoot()`).
 
 Move the whole tree with `INVEST_DATA_DIR`.
 
@@ -36,6 +36,7 @@ data/
 │   └── runs/<DATE>/            probe build workspaces (scripts, bundles, intermediate tables)
 ├── cache/<DATE>-<topic>/       web pages fetched as evidence (Finviz and the like)    gitignored
 ├── reports/                    INDEX.md + <DATE>-<slug>.md: every answer (CLAUDE.md, step 4)
+├── runs/<run-id>/              agent run workspaces: CONTEXT.md ledger, <agent>/output/, tools.jsonl   gitignored (src/agent)
 └── ledger/verdicts.jsonl       registered verdicts: append-only, scored by later probes
 ```
 
@@ -49,12 +50,12 @@ data/
    `prices` and `ledger/`. Everything else can be rebuilt from them or re-downloaded.
 4. **Committed vs ignored.**
    - Committed: corpus layers, rendered, research, probes, reports, ledger.
-   - Ignored: `market/` and `cache/`, which are large and free to re-fetch; research outputs
+   - Ignored: `market/`, `cache/` and `runs/`, which are large and free to re-fetch or rerun; research outputs
      cite their URLs and dates. Also `corpus/_session/`.
 5. **Read the corpus through `sql/views.sql`** (`pnpm q`), never through the Parquet
    files directly. The same `post_id` appears in several capture partitions.
 6. **Configuration is not data.** Lists and definitions (allowlist, tag taxonomy, theme
-   baskets, symbol universe) live in `ref/` and `accounts.json`, versioned with the code.
+   baskets, symbol universe) live in `ref/` and `config/accounts.json`, versioned with the code.
 
 ## Where things came from (moved 2026-09-24)
 

@@ -7,7 +7,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 REC = ROOT / "data/probes/runway/2026-09-24/records"
-TPL = ROOT / ".claude/skills/runway-probe/template.html"
+TPL = ROOT / "src/agent-sdk/assets/skills/runway-probe/template.html"
 OUT = ROOT / "data/probes/runway/2026-09-24/probe.html"
 import sys; sys.path.insert(0, str(HERE))
 import prose  # noqa: E402

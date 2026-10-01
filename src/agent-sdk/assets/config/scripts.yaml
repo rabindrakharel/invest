@@ -1,0 +1,257 @@
+# The script-tool registry: the calling main function of every pipeline, scraper and analysis
+# script, declared once. Each entry becomes one typed in-process MCP tool,
+# `mcp__invest__<name>`, run from the repository root WITHOUT a shell (argv only), so a
+# parameter can never inject a flag or a command.
+#
+# The code itself lives elsewhere and is not part of the harness: the TypeScript pipeline in
+# src/pipeline/ (run through its `pnpm` tasks) and the Python tools in assets/tools/repo/.
+# This file only says how to call each one.
+#
+# name          tool name (snake_case; unique)
+# family        the tool family an agent profile grants (declared in tools.yaml with `scripts: true`)
+# description   what it does, what it reads and writes, what it costs
+# run           the fixed argv prefix
+# metered       true: it spends money (X API reads about $0.005 per post, or model calls). The
+#               operator approves each call in a terminal run; a headless run denies it.
+# timeoutSeconds  hard stop for the process (default 600)
+# params        typed parameters, in argv order
+#   name        parameter name the model passes
+#   flag        `--flag value`; omit for a positional
+#   type        string | number | boolean | string_list | enum
+#   list        joined with commas after the flag (string_list) or passed as several positionals
+#   values      the allowed values of an enum
+#   pattern     a regex a string must match
+#   required    default false
+#   description shown to the model
+scripts:
+  # ---------------------------------------------------------------- x-api (metered) and corpus-ingest (local)
+  - name: x_resolve_accounts
+    family: x-api
+    description: "Resolve every handle in config/accounts.json to its immutable numeric X user id and write it back. One-shot and metered (reads the X API). Run once after adding an account."
+    run: [pnpm, -s, task:resolve-accounts]
+    metered: true
+    timeoutSeconds: 300
+
+  - name: x_capture
+    family: x-api
+    description: "Capture the newest posts of every allowlisted account from the X API into data/corpus/raw (append-only, paid). Metered: about $0.005 per post read. Prefer x_delta for a gap-verified delta capture."
+    run: [pnpm, -s, task:capture]
+    metered: true
+    timeoutSeconds: 1800
+    params:
+      - {name: max_pages, flag: --max-pages, type: number, description: "Stop after this many result pages per query."}
+      - {name: max_results, flag: --max-results, type: number, description: "Posts per page (X allows 10 to 100)."}
+
+  - name: x_backfill
+    family: x-api
+    description: "Backfill account history from the X API for a window into data/corpus/raw (append-only, paid). Metered: a real bill, so max_posts is a hard stop (default 2000). Use dry_run first to see what it would read."
+    run: [pnpm, -s, task:backfill]
+    metered: true
+    timeoutSeconds: 3600
+    params:
+      - {name: months, flag: --months, type: number, description: "How many months back from now (default 2). Ignored when start is given."}
+      - {name: start, flag: --start, type: string, pattern: '^\d{4}-\d{2}-\d{2}(T[\d:.]+Z)?$', description: "Window start, e.g. 2026-07-07T00:00:00Z."}
+      - {name: end, flag: --end, type: string, pattern: '^\d{4}-\d{2}-\d{2}(T[\d:.]+Z)?$', description: "Window end."}
+      - {name: max_posts, flag: --max-posts, type: number, description: "Hard stop on metered posts (default 2000)."}
+      - {name: max_pages, flag: --max-pages, type: number, description: "Page cap per account."}
+      - {name: max_results, flag: --max-results, type: number, description: "Posts per page."}
+      - {name: accounts, flag: --accounts, type: string_list, list: comma, description: "Only these handles (resume the ones a 402 or the cap cut off)."}
+      - {name: dry_run, flag: --dry-run, type: boolean, description: "Plan and report cost; read nothing."}
+      - {name: refetch, flag: --refetch, type: boolean, description: "Re-read posts already held (costs money again)."}
+
+  - name: x_delta
+    family: x-api
+    description: "Capture only the delta since each account's last held post (one month back, gap-verified) into data/corpus/raw. Metered, but never re-reads a held post. This is the default refresh."
+    run: [pnpm, -s, task:delta]
+    metered: true
+    timeoutSeconds: 3600
+    params:
+      - {name: max_posts, flag: --max-posts, type: number, description: "Hard stop on metered posts."}
+      - {name: accounts, flag: --accounts, type: string_list, list: comma, description: "Only these handles."}
+      - {name: dry_run, flag: --dry-run, type: boolean, description: "Plan and report cost; read nothing."}
+
+  - name: universe_sync
+    family: market-data
+    description: "Refresh config/universe.txt, the listed US symbols, from nasdaqtrader.com. Free, no key."
+    run: [pnpm, -s, task:sync-universe]
+    timeoutSeconds: 120
+
+  - name: corpus_normalize
+    family: corpus-ingest
+    description: "Normalize raw captures into the derived posts and mentions Parquet layers under data/corpus (rebuildable). No network."
+    run: [pnpm, -s, task:normalize]
+    params:
+      - {name: from, flag: --from, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Only partitions from this ingest date."}
+
+  - name: corpus_extract_api
+    family: x-api
+    description: "API lane of pick extraction: one Claude API call per session into data/corpus/analysis. Metered (model spend) and only for a run with an API key; the in-session lane (corpus_session_dump, extractors, corpus_session_ingest) needs no key."
+    run: [pnpm, -s, task:extract]
+    metered: true
+    timeoutSeconds: 3600
+    params:
+      - {name: from, flag: --from, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Only days from this date."}
+      - {name: day, flag: --day, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Only this day."}
+
+  - name: corpus_session_dump
+    family: corpus-ingest
+    description: "Dump per-account text bundles and the extraction contract (SPEC.md, WINDOW.json) into data/corpus/_session for the extractors. Re-dumping replaces the bundles; since_last moves finished outputs aside first. No network."
+    run: [pnpm, -s, task:session-dump]
+    params:
+      - {name: since_last, flag: --since-last, type: boolean, description: "Only the posts after each account's last analysed post."}
+      - {name: accounts, flag: --accounts, type: string_list, list: comma, description: "Only these handles."}
+      - {name: from, flag: --from, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Window start."}
+      - {name: to, flag: --to, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Window end."}
+
+  - name: corpus_session_ingest
+    family: corpus-ingest
+    description: "Validate the extractors' JSON files (verbatim quotes, real post_ids, enums from config/) and ingest them into data/corpus/analysis/accounts and the picks layer (append-only). With check true it validates and writes nothing; nothing is written if any file fails."
+    run: [pnpm, -s, task:session-ingest]
+    params:
+      - {name: check, flag: --check, type: boolean, description: "Validate only; write nothing."}
+      - {name: in_dir, flag: --in, type: string, pattern: '^[\w./-]+$', description: "Read extractor files from this directory instead of data/corpus/_session/out."}
+
+  - name: corpus_render
+    family: corpus-ingest
+    description: "Render data/rendered (INDEX.md and per-ticker markdown) from the corpus and the price layer. No network."
+    run: [pnpm, -s, task:render]
+
+  - name: corpus_rebuild
+    family: corpus-ingest
+    description: "Re-derive posts, mentions and the rendered markdown from raw. Never regenerates picks or prices (append-only). No network."
+    run: [pnpm, -s, rebuild]
+    params:
+      - {name: from, flag: --from, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Only partitions from this ingest date."}
+
+  - name: prices_enrich
+    family: corpus-ingest
+    description: "Compute end-of-day closes and YTD, MTD and YoY into the append-only price layer. Price facts come from here only, never from a model."
+    run: [pnpm, -s, task:enrich]
+    timeoutSeconds: 900
+
+  # ---------------------------------------------------------------- corpus-query
+  - name: corpus_query
+    family: corpus-query
+    description: "Run a saved DuckDB query over the corpus views (sql/views.sql, sql/queries/<name>.sql); the only sanctioned way to read the corpus. Call with no name to list the saved queries. Named parameters: symbol, symbols, days."
+    run: [pnpm, -s, q]
+    params:
+      - {name: name, type: string, pattern: '^[a-z0-9-]+$', description: "Saved query name, e.g. corpus-coverage, retail-interest, first-mention, account-convergence. Omit to list them."}
+      - {name: symbol, flag: --symbol, type: string, pattern: '^[A-Za-z.\-]{1,10}$', description: "One ticker, for first-mention and similar."}
+      - {name: symbols, flag: --symbols, type: string, pattern: '^[A-Za-z.,\-]{1,200}$', description: "Comma-separated tickers, for retail-interest."}
+      - {name: days, flag: --days, type: number, description: "Lookback window in days."}
+      - {name: json, flag: --json, type: boolean, description: "Print rows as JSON."}
+
+  # ---------------------------------------------------------------- market-data: scrapers
+  - name: macro_fetch
+    family: market-data
+    description: "Download the macro dataset: about 60 FRED series and about 50 Yahoo series into data/market/<DATE>/ with a fetch log (gitignored, free, re-downloadable). Data only, no interpretation. Network."
+    run: [python3, src/agent-sdk/assets/tools/repo/macro-data/fetch_macro.py]
+    timeoutSeconds: 900
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Snapshot date (default today)."}
+      - {name: only, flag: --only, type: enum, values: [fred, yahoo], description: "Only one source."}
+      - {name: workers, flag: --workers, type: number, description: "Parallel FRED requests."}
+      - {name: pause, flag: --pause, type: number, description: "Seconds between Yahoo requests."}
+
+  - name: theme_prices_fetch
+    family: market-data
+    description: "Download daily prices for every benchmark, theme member and theme ETF in config/themes.json into data/market/<DATE>/yahoo. Network, free."
+    run: [python3, src/agent-sdk/assets/tools/repo/theme-pulse/fetch_theme_prices.py]
+    timeoutSeconds: 900
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Snapshot date (default today)."}
+      - {name: pause, flag: --pause, type: number, description: "Seconds between requests."}
+
+  - name: finviz_snapshots_fetch
+    family: market-data
+    description: "Cache Finviz snapshot pages (insider tables, moving-average distances) for tickers into data/cache/<DATE>-runway/finviz. Network; Finviz is the working substitute for blocked insider sources."
+    run: [python3, src/agent-sdk/assets/tools/repo/runway-probe/fetch-finviz-snapshots.py]
+    timeoutSeconds: 600
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Cache date (default today)."}
+      - {name: pause, flag: --pause, type: number, description: "Seconds between requests."}
+      - {name: tickers, type: string_list, list: positional, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "One or more tickers."}
+
+  - name: forward_inputs_fetch
+    family: market-data
+    description: "Cache raw forward estimates for one ticker from a provider API into data/cache/<DATE>-runway/estimates. The key comes only from the environment and is never printed. Network; needs FMP or Alpha Vantage credentials."
+    run: [python3, src/agent-sdk/assets/tools/repo/runway-probe/fetch-forward-inputs.py]
+    timeoutSeconds: 300
+    params:
+      - {name: provider, flag: --provider, type: enum, values: [fmp, alphavantage], required: true, description: "Estimates provider."}
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Cache date (default today)."}
+      - {name: ticker, type: string, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "The ticker."}
+
+  # ---------------------------------------------------------------- analysis: deterministic scorers
+  - name: state_router
+    family: analysis
+    description: "Print each product's date, age and freshness and the ordered commands that bring an intent up to date (CLAUDE.md step 0). Run it first, run only what it lists, and never rerun a fresh product."
+    run: [python3, src/agent-sdk/assets/tools/repo/state/state.py]
+    timeoutSeconds: 120
+    params:
+      - {name: intent, flag: --intent, type: enum, values: [corpus, macro, outlook, record, runway, sentiment, themes, ticker], description: "The intent to plan for."}
+      - {name: today, flag: --today, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Override today's date."}
+      - {name: json, flag: --json, type: boolean, description: "Machine-readable output."}
+
+  - name: macro_regime_compute
+    family: analysis
+    description: "Score the 54 macro signals into the regime, flags, quadrant, duration regime, archetype fits and analogs: data/research/<DATE>/macro/regime.json. Deterministic. With runway it also writes that probe's records/macro.json."
+    run: [python3, src/agent-sdk/assets/tools/repo/macro-regime/compute_regime.py]
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+      - {name: runway, flag: --runway, type: string, pattern: '^\d{4}-\d{2}-\d{2}(-[\w-]+)?$', description: "Runway Probe id <window_end>[-label]."}
+      - {name: force, flag: --force, type: boolean, description: "Allow --runway to overwrite a probe's macro.json from another date."}
+
+  - name: themes_compute
+    family: analysis
+    description: "Score benchmarks and thematic baskets (relative strength, trend, breadth, drawdown, direction): data/research/<DATE>/themes/themes.json. Deterministic; needs theme_prices_fetch first."
+    run: [python3, src/agent-sdk/assets/tools/repo/theme-pulse/compute_themes.py]
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+
+  - name: sentiment_compute
+    family: analysis
+    description: "Score allowlist attention, velocity, tone, stances and crowding per ticker and theme: data/research/<DATE>/sentiment/x-sentiment.json. Deterministic; reads the corpus through saved queries and picks up tone.json when present."
+    run: [python3, src/agent-sdk/assets/tools/repo/x-sentiment/compute_x_sentiment.py]
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+      - {name: recent, flag: --recent, type: number, description: "Recent window in days (default 7)."}
+      - {name: prior, flag: --prior, type: number, description: "Prior window in days (default 28)."}
+      - {name: min_posts, flag: --min-posts, type: number, description: "Symbols below this many posts are left out of the symbol table."}
+
+  - name: outlook_build
+    family: analysis
+    description: "Join the macro, theme and sentiment products into the outlook: data/research/<DATE>/outlook/outlook.json with a risk budget and a stance per theme. Deterministic; judgment.json is written afterwards."
+    run: [python3, src/agent-sdk/assets/tools/repo/market-outlook/build_outlook.py]
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+
+  - name: ticker_context
+    family: analysis
+    description: "Join everything the repo knows about one ticker (themes, archetype fit, trend, allowlist stances, runway record, registered verdict): data/research/<DATE>/tickers/<TICKER>.json."
+    run: [python3, src/agent-sdk/assets/tools/repo/ticker-brief/ticker_context.py]
+    params:
+      - {name: date, flag: --date, type: string, pattern: '^\d{4}-\d{2}-\d{2}$', description: "Research date (default today)."}
+      - {name: ticker, type: string, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "The ticker."}
+
+  - name: corpus_signals_mine
+    family: analysis
+    description: "Scan the raw session bundles for posts that mention a ticker with an analyst or institutional keyword; prints one block per ticker. Corpus-side context only."
+    run: [python3, src/agent-sdk/assets/tools/repo/runway-probe/mine-corpus-signals.py]
+    params:
+      - {name: tickers, type: string_list, list: positional, required: true, pattern: '^[A-Za-z.\-]{1,10}$', description: "One or more tickers."}
+
+  - name: scorecard_build
+    family: analysis
+    description: "Compute the deterministic part of a Runway Probe scorecard (mechanical points, gates, totals) from data/probes/runway/<PROBE_ID>/records into scorecard.json and scorecard.md; judgment blocks are read as written."
+    run: [python3, src/agent-sdk/assets/tools/repo/runway-probe/build-scorecard.py]
+    params:
+      - {name: probe_id, type: string, required: true, pattern: '^\d{4}-\d{2}-\d{2}(-[\w-]+)?$', description: "Runway Probe id <window_end>[-label]."}
+
+  # ---------------------------------------------------------------- ledger
+  - name: verdicts_register
+    family: ledger
+    description: "Append a probe's verdicts to data/ledger/verdicts.jsonl so later probes can score them. APPEND-ONLY and outward-facing for the record: run it once per probe, only for verdicts meant to be tracked, and only after the red-team pass."
+    run: [python3, src/agent-sdk/assets/tools/repo/runway-probe/register-verdicts.py]
+    params:
+      - {name: probe_id, type: string, required: true, pattern: '^\d{4}-\d{2}-\d{2}(-[\w-]+)?$', description: "Runway Probe id <window_end>[-label]."}

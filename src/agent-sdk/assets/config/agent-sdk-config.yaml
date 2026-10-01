@@ -1,0 +1,21 @@
+# SDK-level tuning, centralized. `env` is merged into the environment of every spawned
+# agent process by src/agent-sdk/orchestrator/build-options.ts. Values must be strings.
+# Per-agent settings live in catalog.yaml `sdk:`; routing defaults in runtime.yaml.
+
+# External (out-of-process) MCP servers attached to every run, resolved from the
+# repo-root `.mcp.json` (their one home). `settingSources: []` means the spawned CLI
+# never discovers that file itself. A named-but-missing server fails startup.
+external_mcp_servers:
+  source: .mcp.json
+  attach: []
+
+env:
+  # Suppress the CLI's project auto-memory injection: every spawned agent would
+  # otherwise receive the operator's MEMORY.md (irrelevant to the routed task).
+  CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1"
+  # Suppress CLAUDE.md discovery for the same reason: the agent contract is composed
+  # by the harness, and the repo CLAUDE.md is the operator-session router, not a
+  # subagent's brief.
+  CLAUDE_CODE_DISABLE_CLAUDE_MDS: "1"
+  # Trim background/telemetry traffic from unattended runs.
+  CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"

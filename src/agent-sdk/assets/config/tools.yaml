@@ -1,0 +1,55 @@
+# Tool families an agent profile may grant (`tools: [{name, disclosure}]`).
+#
+# The always-on baseline is in code (assets/tools/catalog.ts) and is never listed in
+# a profile: Read/Glob/Grep, the run-context tools (read_context, publish_output,
+# record_outcome, wait_for_outcome), the guide tools (load_guide, load_skill) and the
+# human-in-the-loop question tool.
+#
+# name    the family an agent profile grants
+# guide   markdown under the SDK root; its frontmatter `description` is the one line every
+#         prompt shows, its body is the full contract (inlined when a grant is `mandatory`,
+#         fetched with load_guide when `progressive`)
+# gated   true: the family's tools are denied until the agent has loaded the guide
+# tools   the concrete tool names granted (a trailing `*` grants an external MCP surface)
+# scripts true: the family grants every script in scripts.yaml that names it (mcp__invest__<name>)
+families:
+  - name: shell
+    guide: assets/tools/shell/guide.md
+    gated: true
+    tools: [Bash]
+  - name: files
+    guide: assets/tools/files/guide.md
+    gated: true
+    tools: [Write, Edit]
+  - name: web
+    guide: assets/tools/web/guide.md
+    gated: false
+    tools: [WebSearch, WebFetch]
+  - name: x-api
+    guide: assets/tools/x-api/guide.md
+    gated: true
+    scripts: true
+  - name: corpus-ingest
+    guide: assets/tools/corpus-ingest/guide.md
+    gated: false
+    scripts: true
+  - name: corpus-query
+    guide: assets/tools/corpus-query/guide.md
+    gated: false
+    scripts: true
+  - name: market-data
+    guide: assets/tools/market-data/guide.md
+    gated: false
+    scripts: true
+  - name: analysis
+    guide: assets/tools/analysis/guide.md
+    gated: false
+    scripts: true
+  - name: ledger
+    guide: assets/tools/ledger/guide.md
+    gated: true
+    scripts: true
+  - name: present
+    guide: assets/tools/present/guide.md
+    gated: false
+    tools: [mcp__present__show_html]

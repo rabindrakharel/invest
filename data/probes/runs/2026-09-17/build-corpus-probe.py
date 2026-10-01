@@ -3,7 +3,7 @@
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
-template = (ROOT / ".claude/skills/corpus-probe/template.html").read_text()
+template = (ROOT / "src/agent-sdk/assets/skills/corpus-probe/template.html").read_text()
 head = template.split('<div class="page">', 1)[0]
 body = r'''<div class="page">
   <div class="eyebrow">Invest corpus · 14-account window · 7 Sep to 17 Sep 2026</div>
